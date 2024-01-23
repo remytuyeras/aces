@@ -10,7 +10,7 @@ This package proposes an implementation for the ACES cryptosystem where we take 
 
 # Installation
 
-At this time, the only way to install the package is to download its code and use it in your own code as follows.
+Currently, the sole method for installing the package is to download its code and incorporate it into your own project using the following line.
 
 ```python
 from aces import *
