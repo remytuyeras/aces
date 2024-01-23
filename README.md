@@ -41,7 +41,7 @@ The encryption of the messages $3$ and $5$ is done as follows:
 [11]^9+[9]^8+[2]^7+[3]^6+[6]^5+[22]^4+[16]^3+[19]^2+[13]^1+[20]^0 (27)
 ```
 To do arithmetic on encrypted information, use the class ```ACESAlgebra```. For example, we have:
-```
+```python
 >>> alg = ACESAlgebra(intmod,dim,u,tensor)
 >>> alice = ACESReader(ac.x,intmod,dim,u)
 >>> alice.decrypt(alg.add(c_a,c_b))
@@ -52,6 +52,8 @@ To do arithmetic on encrypted information, use the class ```ACESAlgebra```. For 
 A canonical attack for the ACES cryptosystem is the evaluation of the encryption polynomial at $\omega=1$. For most parameterizations, we can verify that this attack collects what empirically appears to be a random distribution.
 
 ```python
+from aces import *
+
 # Setup the cryptosystem parameters
 ac = ArithChannel(27,10)
 (f0,f1,intmod,dim,u,tensor) = ac.publish(fhe = True)
