@@ -40,7 +40,7 @@ The encryption of the messages $3$ and $5$ is done as follows:
 >>> print(c_b[1])
 [11]^9+[9]^8+[2]^7+[3]^6+[6]^5+[22]^4+[16]^3+[19]^2+[13]^1+[20]^0 (27)
 ```
-To do arithmetic on encrypted information, use the class ```ACESAlgebra```. For example, we have the following behaviour where ```ac.x``` is the private key $x$ used in the research paper.
+To do arithmetic on encrypted information, use the class ```ACESAlgebra```. For example, we have the following behaviour (here ```ac.x``` refers to the private key $x$ from the research paper).
 ```python
 >>> alg = ACESAlgebra(intmod,dim,u,tensor)
 >>> alice = ACESReader(ac.x,intmod,dim,u)
