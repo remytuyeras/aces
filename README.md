@@ -6,7 +6,7 @@
 
 # Presentation
 
-This package proposes an implementation for the ACES cryptosystem where we take the parameters $\omega = 1$, $N=1$ and $\mathsf{deg}(u) = n$. Details are available in the preprint <em>"Constructing a Fully Homomorphic Encryption Scheme with the Yoneda Lemma"</em>.
+This package proposes an implementation for the ACES cryptosystem where we take the parameters $\omega = 1$, $N=1$ and $\mathsf{deg}(u) = n$. Details are available in the preprint [<em>"Constructing a Fully Homomorphic Encryption Scheme with the Yoneda Lemma"</em>](https://arxiv.org/abs/2401.13255).
 
 # Installation
 
