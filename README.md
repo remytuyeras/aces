@@ -42,29 +42,29 @@ $$\mathbf{c} \in \mathcal{S}_{\mathsf{C}, p}(m)$$
 To elaborate further, initiating a multiplication operation results in a level of $p^3$, whereas commencing with an addition operation yields a level of $2p$. Consequently, a combination of additions and multiplications in the form:
 $x_1 \cdot y_1 + x_2 \cdot y_2 + \dots + x_h \cdot y_h$
 will produce a ciphertext with a level in $O(p^3)$. Thus, utilizing approximately $K$ layers of such combinations leads to a ciphertext with a level in $O(p^{3\cdot 2^{K-1}}p^{2^{K-1}-1})$. Considering our desire for this level to be significantly less than $q/p$, the following inequality should be satisfied for the use of around $K$ layers of additions and multiplications:
-$K_0 p^{2^{K+1}} \ll q
-$
+
+$$K_0 p^{2^{K+1}} \ll q$$
 
 A recurring inquiry revolves around the influence of $p$ and $q$ on the noisy components incorporated in an encryption $(c, c')$, where $c' = r(m) + c^Tx + e$. The following two section address this concern.
 
 
 ## Noise on messages
 The noise $r$ that acts on the message $m$ is encoded as a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ such that we have:
-$$
-r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i
-$$
+
+$$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i$$
+
 If we evaluate the representative polynomial obtained for $r(m)$ at $\omega=1$ in $\mathbb{Z}$ and we send that value to $\mathbb{Z}_q$, then we obtain the equation $r(m)(1) = m$ in $\mathbb{Z}_q$. However, the same evaluation sent to $\mathbb{Z}_p$ gives us the following formula:
-$$
-r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)\,(\mathsf{mod}\,q) + \sum_{i=1}^{n-1}a_i\quad\quad(\mathsf{mod}\,p)
-$$
+
+$$r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)\,(\mathsf{mod}\,q) + \sum_{i=1}^{n-1}a_i\quad\quad(\mathsf{mod}\,p)$$
+
 If $\mathsf{Bob}$ happens to select $a_0,a_1,\dots,a_{n-1}$ such that the inequality 
-$$
-m < \sum_{i=1}^{n-1}a_i < q
-$$
+
+$$m < \sum_{i=1}^{n-1}a_i < q$$
+
 holds in $\mathbb{Z}$, then the term $m - \sum_{i=1}^{n-1}a_i$ can be outside of the interval $[0,q-1]$ and can add an extra term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. As a result, we have the equivalence: 
-$$
-r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)
-$$
+
+$$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
+
 If we take $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is completely driven by the "randomness" of $k_0$, which is determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$.
 
 ## Vanishing noise
