@@ -119,10 +119,10 @@ By uniqueness of the complex and real parts, we would then obtain:
 
 Note that without the complex structure, deducing the values of $\lambda_1$ and $\lambda_2$ would be challenging. This underscores how $\mathbb{C}$ introduces a mathematical structure that cannot be recovered by $\mathbb{R}$. In a parallel manner, we leverage the polynomial ring $\mathbb{Z}[X]$ to encapsulate the homomorphic properties of ACES. After performing arithmetic operations on polynomials to compute homomorphic sums and products, we can seamlessly revert to $\mathbb{Z}$ for decrypting the encrypted data.
 
->:note:
-> Overall, ACES secureness is ensured by the LWE-problem for integers and for polynomials.
+> [!NOTE]
+> Overall, ACES secureness is ensured by the LWE-problem on integers and polynomials.
 >
->
+
 ## Take away
 
 Throughout the preceding sections, it became evident that users must adhere to the following requirements when selecting values for $p$ and $q$:
