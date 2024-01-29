@@ -274,7 +274,7 @@ First, let us see what the algorithm is meant to output for the values in ```arr
 >>> truth % 32
 26
 ```
-Now, let us shift our focus to the server side. To recap, we previously set $q = p^{2^2+1}+1$, implying that the ACESAlgebra can likely accommodate only a single layer of a sum of multiplication. However, the ```send_fun``` function incorporates two such layers. In this specific case, it becomes apparent that this configuration is sufficient to surpass the levels beyond $q/p$, resulting in a failure of the leveled FHE procedure, as demonstrated below.
+Now, let us shift our focus to the server side. To recap, we previously set $q = p^{2^2+1}+1$, implying that ```ACESAlgebra``` can likely accommodate only a single layer of a sum of multiplication. However, the ```send_fun``` function incorporates two such layers. In this specific case, it becomes apparent that this configuration is sufficient to surpass the levels beyond $q/p$, resulting in a failure of the leveled FHE procedure, as demonstrated below.
 ```python
 >>> online = send_fun(send_array)
 >>> online.uplvl
