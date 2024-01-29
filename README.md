@@ -86,7 +86,7 @@ With these generations, the evaluation of the polynomial $e$ at $\omega = 1$ in 
 
 $$e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0,p,2p,\dots,p^2\rbrace$$
 
-Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\alpha/(p+1+\alpha)$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0,p,2p,\dots,p^2\rbrace$ with the following probabilities:
+Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\mathbb{P}_0$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0,p,2p,\dots,p^2\rbrace$ with the following probabilities:
 
 $$\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}$$
 
