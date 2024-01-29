@@ -194,7 +194,7 @@ In the preceding example, the integer ```k3``` represents the minimal encryption
 
 Given that $\mathsf{lvl}(c,c') = 25$, the encryption $(c,c')$ of $m=3$ falls within either of the two sets outlined below:
 
-$$S^{x}_{\mathsf{C},25}(m) \subseteq S^{x}_{\mathsf{C},32}(m)$$
+$$S_{\mathsf{C},25}(m) \subseteq S_{\mathsf{C},32}(m)$$
 
 To decrypt an encrypted message, utilize the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
 ```python
