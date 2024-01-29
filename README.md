@@ -215,7 +215,7 @@ $$\mathsf{Dec}(\mathsf{Enc}(3) + \mathsf{Enc}(5)) = 5+3\quad\quad\mathsf{Dec}(\m
 
 # FHE protocol
 
-Now that we have explored the features of the leveled FHE underlying ACES, let us illustrate the FHE protocol described in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255). Specifically, we want to consider a list ```array``` of non-encrypted data and its encrypted image. WE can illustrate this with the folloiwng lines of code.
+Now that we have explored the features of the leveled FHE underlying ACES, let us illustrate the FHE protocol described in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255). Specifically, we want to consider a list ```array``` of data and its encryption through ACES. We can illustrate this with the following lines of code.
 ```python
 >>> import random as rd
 >>> array = [rd.randint(0,5) for _ in range(8)]
