@@ -181,9 +181,8 @@ $$30858957 X^9 + 16000274X^8 + \dots + 10597696$$
 In the preceding example, the integer ```k3``` represents the minimal encryption level of $(c,c')$, while the integer ```enc3.uplvl``` represents an upper bound on the level of $(c,c')$ known to all parties, including $\mathsf{Alice}$, $\mathsf{Bob}$, and $\mathsf{Carol}$. It is crucial to emphasize that in practical scenarios, the integer ```k3``` should remain confidential, and only its theoretical upper bound ```enc3.uplvl``` is deemed safe to share. In fact, it is strongly recommended to retain only an integer $0 \leq k' \leq k3$ and securely erase the memory of $k3$ from the computer.
 
 Given that $\mathsf{lvl}(c,c') = 25$, the encryption $(c,c')$ of $m=3$ falls within either of the two sets outlined below:
-$$
-\mathcal{S}^{x}_{\mathsf{C},25}(m) \subseteq \mathcal{S}^{x}_{\mathsf{C},32}(m)
-$$
+
+$$\mathcal{S}^{x}_{\mathsf{C},25}(m) \subseteq \mathcal{S}^{x}_{\mathsf{C},32}(m)$$
 
 To decrypt an encrypted message, utilize the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
 ```python
@@ -192,10 +191,9 @@ To decrypt an encrypted message, utilize the ```ACESReader``` class. The subsequ
 3
 ```
 To do arithmetic on encrypted information, use the class ```ACESAlgebra```. The following example shows how to recover the homomorphism properties:
-$$\mathsf{Dec}(\mathsf{Enc}(3) + \mathsf{Enc}(5)) = 5+3
-\quad\quad
-\mathsf{Dec}(\mathsf{Enc}(3) \cdot \mathsf{Enc}(5)) = 5 \cdot 3
-$$
+
+$$\mathsf{Dec}(\mathsf{Enc}(3) + \mathsf{Enc}(5)) = 5+3\quad\quad\mathsf{Dec}(\mathsf{Enc}(3) \cdot \mathsf{Enc}(5)) = 5 \cdot 3$$
+
 ```python
 >>> alg = ACESAlgebra(vanmod,intmod,dim,u,tensor)
 >>> enc5, k5 = bob.encrypt(5)
