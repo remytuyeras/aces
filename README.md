@@ -27,7 +27,7 @@ The following sections address considerations to add to $p$ and $q$ if you inten
 
 ACEs is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $c_1 \in \mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $c_1 \in\mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
 $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in \mathcal{S}_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
@@ -71,40 +71,40 @@ If we take $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ i
 The noise $e$ is computed as a product $be'$ of two polynomials $b$ and $e'$ in $\mathbb{Z}_q[X]_u$. First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
 - the equation $\delta_0 = 0$ with probability $\mathbb{P}_0$ 
 - and the following expression:
-$$
-e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i
-$$
+- 
+$$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i$$
+
 Then, the polynomial $b$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $b_0,b_1,\dots,b_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ such that we have:
-$$
-b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n b_iX^i
-$$
+
+$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n b_iX^i$$
+
 With these generations, the evaluation of the polynomial $e$ at $\omega = 1$ in $\mathbb{Z}_q$ gives us the following relations when sent to $\mathbb{Z}_q$ (since we have $p^2 < q$):
-$$
-e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0,p,2p,\dots,p^2\rbrace
-$$
+
+$$e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0,p,2p,\dots,p^2\rbrace$$
+
 Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\alpha/(p+1+\alpha)$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0,p,2p,\dots,p^2\rbrace$ with the following probabilities:
-$$
-\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}
-$$
-$$
-\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\mathbb{P}_0}{p+1}
-$$
+
+$$\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}$$
+
+$$\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\mathbb{P}_0}{p+1}$$
+
 However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear to us as uniformly chosen from the set $\mathbb{Z}_p$. Indeed, the two coefficients $\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)$ and $\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)$, in the expressions of $e'$ and $b$, have the potential to add extra terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
-$$
-e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)
-$$
+
+$$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
+
 If we take $p$ and $q$ to be coprime, then the "randomness" of the terms $qk_0$ and $qk_0'$ are completely driven by the "randomness" of $k_0$ and $k_0'$, which are respectively determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$ and $b_0,b_1,\dots,b_{n-1}$.
+
 ## Homomorphism
 Even though ACES's decryption takes place in $\mathbb{Z}$ and the homomorphism structure in determined in $\mathbb{Z}[X]$. Here, you should try to likened this process to the way complex numbers are used to compute things that would be harder to compute with real numbers (E.g., as with the computation of solutions of polynomials or the analysis of signals).
 
 Specifically, ACES determins 3-tensors $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ for which the the relation holds, where $x = (x_1,\dots,x_k)$ is the private key:
-$$
-x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k
-$$
+
+$$x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k$$
+
 If we tried to imagine what the previous type of equation would give with complex numbers, we would want to determine real numbers $\lambda_1$ and $\lambda_2$ such that:
-$$
-(a_1+ib_1)(a_2+ib_2) = \lambda_1 \cdot (a_1+ib_1) + \lambda_2 \cdot (a_2+ib_2)
-$$
+
+$$(a_1+ib_1)(a_2+ib_2) = \lambda_1 \cdot (a_1+ib_1) + \lambda_2 \cdot (a_2+ib_2)$$
+
 By uniqueness of the complex and real parts, we would then obtain:
 - $\lambda_1 a_1 + \lambda_2 a_2 = a_1a_2-b_1b_2$
 - $\lambda_1 b_1 + \lambda_2 b_2 = a_1b_2+a_2b_1$
@@ -122,9 +122,8 @@ Throughout the preceding sections, it became evident that users must adhere to t
 - To successfully process $K$ layers of operations, it is essential to ensure that $K_0 p^{2^{K+1}} \ll q$ holds true for some constant $K_0$.
 
 In light of these conditions, users are advised to consider using a formula as follows, where $t \geq 2$ and $K \geq 1$:
-$$
-q = p^{t^K} + 1
-$$
+
+$$q = p^{t^K} + 1$$
 
 # Quickstart
 
@@ -150,10 +149,9 @@ To encrypt messages $m \in \mathbb{Z}_p$, use the class ```ACES``` as shown belo
 >>> bob = ACES(f0,f1,vanmod,intmod,dim,u)
 ```
 The following example illustrates an encryption of the message $m=3$. The encryption algorithm outputs a ciphertext $(c,c')$ and its associated level $k = \mathsf{lvl}(c,c')$. We also display the polynomials
-
- $$121075X^9+5649435X^8 + \dots + 27465466$$
- $$\vdots$$
- $$30386758X^9+1334087X^8+\dots+22929201$$
+ - $121075X^9+5649435X^8 + \dots + 27465466$
+ - $\vdots$
+ - $30386758X^9+1334087X^8+\dots+22929201$
 
 encoding the component $c \in \mathbb{Z}_q[X]_u^{(n)}$ and the polynomial 
 $$30858957 X^9 + 16000274X^8 + \dots + 10597696$$
