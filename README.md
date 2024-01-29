@@ -27,7 +27,7 @@ The following sections address considerations to add to $p$ and $q$ if you inten
 
 ACEs is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $\mathbf{c}_{1} \in \mathcal{S}_{\mathsf{C},k_{1}}(m_{1})$ and $\mathbf{c}_{2} \in \mathcal{S}_{\mathsf{C},k_{2}}(m_{2})$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $\mathbf{c}_{1} \in \mathcal{S}_{\mathsf{C},k_{1}}(m_{1})$ and $\mathbf{c}_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
 $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c'_1) \oplus (c_2, c'_2) \in \mathcal{S}_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
@@ -72,21 +72,21 @@ $$
 If we take $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is completely driven by the "randomness" of $k_0$, which is determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$.
 
 ## Vanishing noise
-The noise $e$ is computed as a product $be'$ of two polynomials $b$ and $e'$ in $\mathbb{Z}_q[X]_u$. First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \{0,1\}$ such that we have 
+The noise $e$ is computed as a product $be'$ of two polynomials $b$ and $e'$ in $\mathbb{Z}_q[X]_u$. First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
 - the equation $\delta_0 = 0$ with probability $\mathbb{P}_0$ 
 - and the following expression:
 $$
 e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i
 $$
-Then, the polynomial $b$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $b_0,b_1,\dots,b_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_1 \in \{0,1,\dots,p\}$ such that we have:
+Then, the polynomial $b$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $b_0,b_1,\dots,b_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ such that we have:
 $$
 b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n b_iX^i
 $$
 With these generations, the evaluation of the polynomial $e$ at $\omega = 1$ in $\mathbb{Z}_q$ gives us the following relations when sent to $\mathbb{Z}_q$ (since we have $p^2 < q$):
 $$
-e(1) = p \delta_0 \cdot \delta_1 \in \{0,p,2p,\dots,p^2\}
+e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0,p,2p,\dots,p^2\rbrace
 $$
-Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\alpha/(p+1+\alpha)$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\{0,p,2p,\dots,p^2\}$ with the following probabilities:
+Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\alpha/(p+1+\alpha)$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0,p,2p,\dots,p^2\rbrace$ with the following probabilities:
 $$
 \mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}
 $$
@@ -234,7 +234,7 @@ We now have the following data:
 ```
 Note that the list ```keep_array``` contains a considerable number of zero values, potentially posing a concern if an attacker were aware of our level distribution biased towards 0. While LWE-based cryptosystems utilize a Gaussian distribution and are centered at a specific value, ACES offers the flexibility to recalibrate the distribution of levels using the formulas from [Vanishing noise](#vanishing-noise). However, this adjustment increases the likelihood of the refresh operation being needed sooner to access the full homomorphic property of ACES compared to scenarios where more zero values are present.
 
-In our specific case, let us consider the scenario where $\mathsf{Bob}$ desires greater randomness in the levels of the ciphertexts. The ```ACES``` class provides the capability to incorporate the probability $\mathbb{P}_0$, as introduced in [Vanishing noise](#vanishing-noise), as an input parameter. In the forthcoming example, we set $\mathbb{P}_0 = 0.01$ to achieve an almost uniform distribution of levels within the set $\{0,1,p,2p,\dots,p^2\}$.
+In our specific case, let us consider the scenario where $\mathsf{Bob}$ desires greater randomness in the levels of the ciphertexts. The ```ACES``` class provides the capability to incorporate the probability $\mathbb{P}_0$, as introduced in [Vanishing noise](#vanishing-noise), as an input parameter. In the forthcoming example, we set $\mathbb{P}_0 = 0.01$ to achieve an almost uniform distribution of levels within the set $\lbrace 0,1,p,2p,\dots,p^2\rbrace$.
 ```python
 >>> bob = ACES(f0,f1,vanmod,intmod,dim,u,0.01)
 >>> array = [rd.randint(0,5) for _ in range(8)]
