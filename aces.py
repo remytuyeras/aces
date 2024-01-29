@@ -148,12 +148,17 @@ class RandIso(object):
 class ArithChannel(object):
 
   #dim is both n = dim(x) and degre(u)
-  def __init__(self,intmod,dim):
+  def __init__(self,vanmod,intmod,dim):
     # Implicit values for omega and N:
     self.omega = 1
     self.N = 1
-    # Generated values for q, n, u, x, f0
-    self.intmod = intmod
+    # Generated values for p, q, n, u, x, f0
+    if vanmod**2 < intmod and math.gcd(intmod,vanmod) == 1:
+      self.vanmod = vanmod
+      self.intmod = intmod
+    else:
+       self.vanmod = vanmod
+       self.intmod = vanmod **2 + 1
     self.dim = dim
     self.u = self.generate_u()
     self.x, self.tensor = self.generate_secret(self.u)
@@ -165,9 +170,9 @@ class ArithChannel(object):
       f1_pre = f1_pre + self.f0[i] * self.x[i]
     f1 = f1_pre % self.u
     if fhe:
-      return (self.f0,f1,self.intmod,self.dim,self.u,self.tensor)
+      return (self.f0,f1,self.vanmod,self.intmod,self.dim,self.u,self.tensor)
     else:
-      return (self.f0,f1,self.intmod,self.dim,self.u)
+      return (self.f0,f1,self.vanmod,self.intmod,self.dim,self.u)
 
   def generate_u(self):
     #number of non zero coefficients for u
@@ -235,31 +240,48 @@ class ArithChannel(object):
       f0.append(Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod))
     return f0
 
+
+class ACESCipher(object):
+
+  def __init__(self,dec,enc,lvl):
+    self.dec = dec
+    self.enc = enc
+    self.uplvl = lvl
+
 # Arithmetic Channel Ecnryption Scheme 
 class ACES(object):
 
-  def __init__(self,f0,f1,intmod,dim,u):
+  def __init__(self,f0,f1,vanmod,intmod,dim,u,eprob = 0.5):
     self.f0 = f0
     self.f1 = f1
+    self.vanmod = vanmod
     self.intmod = intmod
     self.dim = dim
     self.u = u
+    self.eprob = eprob
 
   def encrypt(self,m):
-    if m >= self.intmod:
-      print(f"Warning in ACES.encrypt: the input is equivalent to {m % self.intmod}")
+    if m >= self.vanmod:
+      print(f"Warning in ACES.encrypt: the input is equivalent to {m % self.vanmod}")
     r_m = self.generate_error(m)
-    e = self.generate_vanisher()
-    b = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
+    e, k = self.generate_vanisher()
+    b = self.generate_linear()
     c = []
     for i in range(self.dim):
       c.append( (b * self.f0[i] ) % self.u )
-    return (c , (r_m + b * self.f1 + e) % self.u)
+    return ACESCipher(c , (r_m + b * (self.f1 + e) ) % self.u , self.vanmod) , (k * sum(b.coefs)) %self.intmod
+
+  def generate_linear(self):
+    k = random.randint(0,self.vanmod)
+    e_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
+    shift = Polynomial([k - sum(e_res.coefs)],self.intmod)
+    return shift + e_res
 
   def generate_vanisher(self):
+    k = 0 if random.uniform(0,1) < self.eprob else 1
     e_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
-    shift = Polynomial([self.intmod - sum(e_res.coefs)],self.intmod)
-    return shift + e_res
+    shift = Polynomial([self.vanmod * k - sum(e_res.coefs)],self.intmod)
+    return shift + e_res, k
 
   def generate_error(self,m):
     r_m_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
@@ -269,8 +291,9 @@ class ACES(object):
 
 class ACESReader(object):
 
-  def __init__(self,x,intmod,dim,u):
+  def __init__(self,x,vanmod,intmod,dim,u):
     self.x = x
+    self.vanmod = vanmod
     self.intmod = intmod
     self.dim = dim
     self.u = u
@@ -278,24 +301,25 @@ class ACESReader(object):
   def decrypt(self,c):
     c0Tx = Polynomial([0],self.intmod)
     for i in range(self.dim):
-      c0Tx = c0Tx + c[0][i] * self.x[i]
+      c0Tx = c0Tx + c.dec[i] * self.x[i]
     
-    m_pre = c[1] + Polynomial([-1],self.intmod) * c0Tx
-    return sum(m_pre.coefs) % self.intmod
+    m_pre = c.enc + Polynomial([-1],self.intmod) * c0Tx
+    return ( (sum(m_pre.coefs)) % self.intmod ) % self.vanmod
 
 
 class ACESAlgebra(object):
 
-  def __init__(self,intmod,dim,u,tensor):
+  def __init__(self,vanmod,intmod,dim,u,tensor):
+    self.vanmod = vanmod
     self.intmod = intmod
     self.dim = dim
     self.u = u
     self.tensor = tensor
 
   def add(self,a,b):
-    c0 = [ (a[0][k]+b[0][k]) % self.u for k in range(self.dim) ]
-    c1 = (a[1]+b[1]) % self.u
-    return (c0, c1)
+    c0 = [ (a.dec[k]+b.dec[k]) % self.u for k in range(self.dim) ]
+    c1 = (a.enc+b.enc) % self.u
+    return ACESCipher(c0, c1, a.uplvl + b.uplvl)
   
   def mult(self,a,b):
     t = []
@@ -303,11 +327,21 @@ class ACESAlgebra(object):
       tmp = Polynomial([0],self.intmod)
       for i in range(self.dim):
         for j in range(self.dim):
-          tmp = tmp + Polynomial([self.tensor[i][j][k]],self.intmod) * a[0][i] * b[0][j]
+          tmp = tmp + Polynomial([self.tensor[i][j][k]],self.intmod) * a.dec[i] * b.dec[j]
       t.append(tmp)
 
-    c0 = [ ( b[1] * a[0][k] +a[1] * b[0][k] + Polynomial([-1],self.intmod) * t[k]) % self.u for k in range(self.dim) ]
-    c1 = ( a[1] * b[1] ) % self.u
-    return (c0, c1)
+    c0 = [ ( b.enc * a.dec[k] +a.enc * b.dec[k] + Polynomial([-1],self.intmod) * t[k]) % self.u for k in range(self.dim) ]
+    c1 = ( a.enc * b.enc ) % self.u
+    return ACESCipher(c0, c1, a.uplvl*b.uplvl*self.vanmod)
+
+  def refresh(self,c,k):
+    return ACESCipher(c.dec, c.enc + Polynomial([- k * self.vanmod],self.intmod) , c.uplvl-k)
+
+  def addlvl(self,a,b):
+    return a + b
+
+  def multlvl(self,a,b):
+    return a*b*self.vanmod
+
 
 
