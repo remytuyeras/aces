@@ -96,7 +96,11 @@ $$\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb
 
 $$\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\mathbb{P}_0}{p+1}$$
 
-However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear to us as uniformly chosen from the set $\mathbb{Z}_p$. Indeed, the two coefficients $\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)$ and $\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)$, in the expressions of $e'$ and $b$, have the potential to add extra terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
+However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear to us as uniformly chosen from the set $\mathbb{Z}_p$. Indeed, the two coefficients 
+
+$$\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\quad\quad\quad\quad\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q),$$
+
+in the expressions of $e'$ and $b$, have the potential to add extra terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
 
 $$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
 
