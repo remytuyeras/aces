@@ -27,17 +27,17 @@ The following sections address considerations to add to $p$ and $q$ if you inten
 
 ACEs is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $c_1 \in \mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $c_1 \in S_{\mathsf{C},k_1}(m_1)$ and $c_2 \in S_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
-$$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in \mathcal{S}_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
+$$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in S_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
 Similarly, for an suited parameter $\lambda$ (refer to [the paper in section 5.2](https://arxiv.org/abs/2401.13255)), the homomorphic product of the ciphertexts $\mathbf{c}_1$ and $\mathbf{c}_2$ is achievable if the inequality shown below on the left holds:
 
-$$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in \mathcal{S}_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$$
+$$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in S_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$$
 
 Considering that any encryption $\mathbf{c}$ generated through this scheme has an initial level equal to $p$, we can establish a general relationship between $p$ and $q$.
 
-$$\mathbf{c} \in \mathcal{S}_{\mathsf{C}, p}(m)$$
+$$\mathbf{c} \in S_{\mathsf{C}, p}(m)$$
 
 To elaborate further, initiating a multiplication operation results in a level of $p^3$, whereas commencing with an addition operation yields a level of $2p$. Consequently, a combination of additions and multiplications in the form:
 $x_1 \cdot y_1 + x_2 \cdot y_2 + \dots + x_h \cdot y_h$
@@ -182,7 +182,7 @@ In the preceding example, the integer ```k3``` represents the minimal encryption
 
 Given that $\mathsf{lvl}(c,c') = 25$, the encryption $(c,c')$ of $m=3$ falls within either of the two sets outlined below:
 
-$$\mathcal{S}^{x}_{\mathsf{C},25}(m) \subseteq \mathcal{S}^{x}_{\mathsf{C},32}(m)$$
+$$S^{x}_{\mathsf{C},25}(m) \subseteq S^{x}_{\mathsf{C},32}(m)$$
 
 To decrypt an encrypted message, utilize the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
 ```python
