@@ -79,7 +79,6 @@ $$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
 First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
 - the equation $\delta_0 = 0$ with probability $\mathbb{P}_0$ 
 - and the following expression:
-- 
 $$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i$$
 
 Then, the polynomial $b$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $b_0,b_1,\dots,b_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ such that we have:
