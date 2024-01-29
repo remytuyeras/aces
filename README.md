@@ -18,7 +18,7 @@ from aces import *
 
 # &#9888; Important considerations &#x26A0;
 
-ACES depends on the generation of an <em>arithmetic channel</em>, which refers to a quadruple $\mathsf{C} = (p,q,\omega,u)$ such that $p$, $q$ and $\omega$ are three positive integers and $u$ is a polynomial in $\mathbb{Z}[X]$ for which the equation $u(\omega) = q$ holds in $\mathbb{Z}$. While the integer $\omega$ is taken to be $1$ and the polynomial $u$ is generated with uniform distributions on the coefficients, you will still have to choose the values for $p$ and $q$ . 
+ACES depends on the generation of an <em>arithmetic channel</em>, which refers to a quadruple $\mathsf{C} = (p,q,\omega,u)$ such that $p$, $q$ and $\omega$ are three positive integers and $u$ is a polynomial in $\mathbb{Z}[X]$ for which the equation $u(\omega) = q$ holds in $\mathbb{Z}$. While the integer $\omega$ is taken to be $1$ and the polynomial $u$ is generated with uniform distributions on the coefficients, you will still have to choose the values for $p$ and $q$. 
 
 A quick skim through [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) can already inform you that the condition $p^2 < q$ must hold for a secure encryption.
 The following sections address considerations to add to $p$ and $q$ if you intend to use the homomorphic properties of ACES. Some sections also elucidate certain technical aspects, giving essential insights into the security considerations of ACES.
@@ -27,7 +27,7 @@ The following sections address considerations to add to $p$ and $q$ if you inten
 
 ACEs is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $c_1 \in \mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $c_1 \in S_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
 $k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c'_1) \oplus (c_2, c'_2) \in \mathcal{S}_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$
 
