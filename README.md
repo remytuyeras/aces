@@ -45,7 +45,7 @@ will produce a ciphertext with a level in $O(p^3)$. Thus, utilizing approximatel
 
 $$K_0 p^{2^{K+1}} \ll q$$
 
-A valid and recurring concern surrounds the influence of variables $p$ and $q$ on the noisy components used for the encryption, and more specifically, the impact on the terms $r(m)$ and $e$ in the composition of a ciphertext $(c, c')$ for which $c' = r(m) + c^Tx + e$. The following two sections will address this concern.
+A valid and recurring concern surrounds the influence of variables $p$ and $q$ on the noisy components used for the encryption, particularly concerning the terms $r(m)$ and $e$ in the composition of a ciphertext $(c, c')$, where $c' = r(m) + c^Tx + e$. The subsequent sections will delve into addressing this recurrent inquiry.
 
 ## Noise on messages
 The noise $r$ that acts on the message $m$ is encoded as a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ such that we have:
