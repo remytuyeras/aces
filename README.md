@@ -33,7 +33,7 @@ $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') 
 
 Similarly, for an suited parameter $\lambda$ (refer to [the paper in section 5.2](https://arxiv.org/abs/2401.13255)), the homomorphic product of the ciphertexts $\mathbf{c}_1$ and $\mathbf{c}_2$ is achievable if the inequality shown below on the left holds:
 
-$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c'_1) \otimes_{\lambda} (c_2, c'_2) \in \mathcal{S}_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$
+$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in \mathcal{S}_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$
 
 Considering that any encryption $\mathbf{c}$ generated through this scheme has an initial level equal to $p$, we can establish a general relationship between $p$ and $q$.
 
