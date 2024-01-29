@@ -31,11 +31,11 @@ For two ciphertexts $(c_1, c_1') \in S_{\mathsf{C},k_1}(m_1)$ and $(c_2, c_2') \
 
 $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in S_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
-Similarly, for an suited parameter $\lambda$ (refer to [the paper in section 5.2](https://arxiv.org/abs/2401.13255)), the homomorphic product of the ciphertexts $(c_1, c_1')$ and $(c_2, c_2')$ is achievable if the inequality shown below on the left holds:
+Similarly, for a suited parameter $\lambda$ (refer to [the paper in section 5.2](https://arxiv.org/abs/2401.13255)), the homomorphic product of the ciphertexts $(c_1, c_1')$ and $(c_2, c_2')$ is achievable if the inequality shown below on the left holds:
 
 $$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in S_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$$
 
-Considering that any encryption $(c,c')$ generated through this scheme has an initial level equal to $p$, we can establish a general relationship between $p$ and $q$.
+Considering that the level of any encryption $(c,c')$ generated through ACES is upperbounded by $p$ (see below), we can establish a general relationship between $p$ and $q$.
 
 $$(c,c') \in S_{\mathsf{C}, p}(m)$$
 
