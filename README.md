@@ -308,7 +308,7 @@ When we apply $F_1$ to the corresponding ciphertexts, the leveled homomorphism p
 >>> alice.decrypt(online1)
 14
 ```
-Subsequently, we can calculate the equivalent of $F_1$ on the corresponding levels using ```keep_fun1```. In practice, the resulting output level, denoted as ```k1``` (or any positive integer less than ```k1```), is transmitted to the server, while maintaining the secrecy of the levels in ```keep_array```. Subsequently, the server side utilizes the information from ```k1``` to refresh the ciphertext ```online1```.
+Subsequently, we can calculate the equivalent of $F_1$ on the corresponding levels using ```keep_fun1```. In practice, the resulting output level ```k1``` (or in fact any positive integer less than ```k1```) is transmitted to the server, while maintaining the secrecy of the levels in ```keep_array```. Subsequently, the server side utilizes the information from ```k1``` to refresh the ciphertext ```online1```.
 ```python
 >>> k1 = keep_fun1(keep_array[:6])
 >>> c1 = alg.refresh(online1,k1)
