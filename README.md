@@ -18,10 +18,10 @@ from aces import *
 
 # &#9888; Important considerations &#x26A0;
 
-ACES depends on the generation of an <em>arithmetic channel</em>, which refers to a quadruple $\mathsf{C} = (p,q,\omega,u)$ such that $p$, $q$ and $\omega$ are three positive integers and $u$ is a polynomial in $\mathbb{Z}[X]$ for which the equation $u(\omega) = q$ holds in $\mathbb{Z}$. While the integer $\omega$ is taken to be $1$ and the polynomial $u$ is generated with uniform distributions on the coefficients, you will still have to choose the values for $p$ and $q$. 
+ACES depends on the generation of an <em>arithmetic channel</em>, which is a quadruple $\mathsf{C} = (p,q,\omega,u)$ where $p$, $q$ and $\omega$ are three positive integers and $u$ is a polynomial in $\mathbb{Z}[X]$ for which the equation $u(\omega) = q$ holds in $\mathbb{Z}$. WWhile the integer $\omega$ remains fixed at $1$, and the ACES library automatically generates the polynomial $u$, the user is still required to manually select the values for $p$ and $q$.
 
-A quick skim through [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) can already inform you that the condition $p^2 < q$ must hold for a secure encryption.
-The following sections address considerations to add to $p$ and $q$ if you intend to use the homomorphic properties of ACES. Some sections also elucidate certain technical aspects, giving essential insights into the security considerations of ACES.
+A quick skim through [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) can already inform us that the condition $p^2 < q$ must hold for ACES to be valid.
+The following sections address considerations to add to $p$ and $q$ if one intends to use the homomorphic properties of ACES. These sections also elucidate certain technical aspects, giving essential insights into the security considerations of ACES.
 
 ## Cost of homomorphism
 
