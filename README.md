@@ -27,7 +27,7 @@ The following sections address considerations to add to $p$ and $q$ if you inten
 
 ACEs is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $c_1 \in\mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $c_1 \in \mathcal{S}_{\mathsf{C},k_1}(m_1)$ and $c_2 \in \mathcal{S}_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
 $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in \mathcal{S}_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
@@ -243,9 +243,9 @@ Notice the disparity in the distribution of values within the ```keep_array``` l
 [16, 27, 1, 8, 17, 11, 8, 25]
 ```
 To simular an FHE protocol, let us suppose that $\mathsf{Alice}$ has sent the encrypted data ```send_array``` on a remote server and consider a scenario where an algoritm of additions and multiplications as shown below runs on the encrypted data.
-$$
-F:(x_0,x_1,x_2,\dots,x_7) \mapsto (x_0 \cdot x_1 + x_2 \cdot x_3 + x_4 \cdot x_5) \cdot x_6 + x_7
-$$
+
+$$F:(x_0,x_1,x_2,\dots,x_7) \mapsto (x_0 \cdot x_1 + x_2 \cdot x_3 + x_4 \cdot x_5) \cdot x_6 + x_7$$
+
 We will define this algorithm on the non-encrypted data ```array``` (as a sanity check), on the list encrypted data ```send_array``` and on the list of levels ```keep_array``` as instructed in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255).
 ```python
 >>> def true_fun(a):
