@@ -103,9 +103,9 @@ $$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
 If we take $p$ and $q$ to be coprime, then the "randomness" of the terms $qk_0$ and $qk_0'$ are completely driven by the "randomness" of $k_0$ and $k_0'$, which are respectively determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$ and $b_0,b_1,\dots,b_{n-1}$.
 
 ## Homomorphism
-Even though ACES's decryption takes place in $\mathbb{Z}$ and the homomorphism structure in determined in $\mathbb{Z}[X]$. Here, you should try to likened this process to the way complex numbers are used to compute things that would be harder to compute with real numbers (E.g., as with the computation of solutions of polynomials or the analysis of signals).
+While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}[X]$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
 
-Specifically, ACES determins 3-tensors $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ for which the the relation holds, where $x = (x_1,\dots,x_k)$ is the private key:
+Specifically, ACES relies on 3-tensors $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ that satisfy the relation shown below for every triple $(i,j,k)$, where $x = (x_1,\dots,x_k)$ is the private key for ACES.
 
 $$x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k$$
 
