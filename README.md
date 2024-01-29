@@ -61,7 +61,11 @@ If $\mathsf{Bob}$ happens to select $a_0,a_1,\dots,a_{n-1}$ such that the inequa
 
 $$m < \sum_{i=1}^{n-1}a_i < q$$
 
-holds in $\mathbb{Z}$, then the term $m - \sum^{n-1}_{i=1} a_i$ can be outside of the interval $[0,q-1]$ and can add an extra term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. As a result, we have the equivalence: 
+holds in $\mathbb{Z}$, then the term 
+
+$$m - \sum^{n-1}_{i=1} a_i$$
+
+can be outside of the interval $[0,q-1]$ and can add an extra term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. As a result, we have the equivalence: 
 
 $$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
 
