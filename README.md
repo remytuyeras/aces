@@ -256,7 +256,7 @@ To simular an FHE protocol, let us suppose that $\mathsf{Alice}$ has sent the en
 
 $$F:(x_0,x_1,x_2,\dots,x_7) \mapsto (x_0 \cdot x_1 + x_2 \cdot x_3 + x_4 \cdot x_5) \cdot x_6 + x_7$$
 
-We will define this algorithm on the non-encrypted data ```array``` (as a sanity check), on the list encrypted data ```send_array``` and on the list of levels ```keep_array``` as instructed in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255).
+We will define this algorithm on the non-encrypted data ```array``` (as a sanity check), on the list of encrypted data ```send_array``` and on the list of levels ```keep_array``` as instructed in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255).
 ```python
 >>> def true_fun(a):
 ...  return (a[0] * a[1] + a[2] * a[3] + a[4] * a[5]) * a[6] + a[7]
