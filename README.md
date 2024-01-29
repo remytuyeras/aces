@@ -194,7 +194,7 @@ Given that $\mathsf{lvl}(c,c') = 25$, the encryption $(c,c')$ of $m=3$ falls wit
 
 $$S_{\mathsf{C},25}(m) \subseteq S_{\mathsf{C},32}(m)$$
 
-To decrypt an encrypted message, use the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
+To decrypt an encrypted message, use the ```ACESReader``` class. The following example demonstrates how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
 ```python
 >>> alice = ACESReader(ac.x,vanmod,intmod,dim,u)
 >>> alice.decrypt(enc3)
