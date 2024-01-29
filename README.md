@@ -40,8 +40,10 @@ Considering that the level of any encryption $(c,c')$ generated through ACES is 
 $$(c,c') \in S_{\mathsf{C}, p}(m)$$
 
 To elaborate further, initiating a multiplication operation results in a level of $p^3$, whereas commencing with an addition operation yields a level of $2p$. Consequently, a combination of additions and multiplications in the form:
-$x_1 \cdot y_1 + x_2 \cdot y_2 + \dots + x_h \cdot y_h$
-will produce a ciphertext with a level in $O(p^3)$. Thus, utilizing approximately $K$ layers of such combinations leads to a ciphertext with a level in $O(p^{3\cdot 2^{K-1}}p^{2^{K-1}-1})$. Considering our desire for this level to be significantly less than $q/p$, the following inequality should be satisfied for the use of around $K$ layers of additions and multiplications:
+
+$$x_1 \cdot y_1 + x_2 \cdot y_2 + \dots + x_h \cdot y_h$$
+
+will produce a ciphertext with a level in $O(p^3)$. Thus, using approximately $K$ layers of such combinations leads to a ciphertext with a level in $O(p^{3\cdot 2^{K-1}}p^{2^{K-1}-1})$. Considering our desire for this level to be significantly less than $q/p$, the following inequality should be satisfied for the use of around $K$ layers of additions and multiplications:
 
 $$K_0 p^{2^{K+1}} \ll q$$
 
@@ -146,7 +148,7 @@ To generate the public key of a scheme with fully homomorphic properties, use th
 ```python
 >>> (f0,f1,vanmod,intmod,dim,u,tensor) = ac.publish(fhe = True)
 ```
-Below, we will access the private key $x$ via the property ```ac.x```. It is important to note that the integers $p$ and $q$ utilized for initializing the arithmetic channel ```ac``` must satisfy the relationships $p^2 < q$ and $\mathsf{gcd}(p, q) = 1$. In cases where these conditions are not met, the class ```ArithChannel``` will generate a new value for $q$ as $p^2 + 1$.
+Below, we will access the private key $x$ via the property ```ac.x```. It is important to note that the integers $p$ and $q$ used for initializing the arithmetic channel ```ac``` must satisfy the relationships $p^2 < q$ and $\mathsf{gcd}(p, q) = 1$. In cases where these conditions are not met, the class ```ArithChannel``` will generate a new value for $q$ as $p^2 + 1$.
 
 As elaborated in the research paper and the preceding section, the homomorphism property imposes an upper limit on the maximum achievable level. This limit is determined by the ratio $q/p$, and it can be calculated as shown below:
 ```python
@@ -194,7 +196,7 @@ Given that $\mathsf{lvl}(c,c') = 25$, the encryption $(c,c')$ of $m=3$ falls wit
 
 $$S_{\mathsf{C},25}(m) \subseteq S_{\mathsf{C},32}(m)$$
 
-To decrypt an encrypted message, utilize the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
+To decrypt an encrypted message, use the ```ACESReader``` class. The subsequent examples demonstrate how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
 ```python
 >>> alice = ACESReader(ac.x,vanmod,intmod,dim,u)
 >>> alice.decrypt(enc3)
@@ -234,7 +236,7 @@ We now have the following data:
 >>> keep_array
 [9, 0, 8, 0, 0, 0, 15, 0]
 ```
-Note that the list ```keep_array``` contains a considerable number of zero values, potentially posing a concern if an attacker were aware of our level distribution biased towards 0. While LWE-based cryptosystems utilize a Gaussian distribution and are centered at a specific value, ACES offers the flexibility to recalibrate the distribution of levels using the formulas from [Vanishing noise](#vanishing-noise). However, this adjustment increases the likelihood of the refresh operation being needed sooner to access the full homomorphic property of ACES compared to scenarios where more zero values are present.
+Note that the list ```keep_array``` contains a considerable number of zero values, potentially posing a concern if an attacker were aware of our level distribution biased towards 0. While a non-negligeable portion of LWE-based cryptosystems utilize a Gaussian distribution and are centered at a specific value, ACES offers the flexibility to recalibrate the distribution of levels using the formulas from [Vanishing noise](#vanishing-noise). However, this adjustment increases the likelihood of the refresh operation being needed sooner to access the full homomorphic property of ACES compared to scenarios where more zero values are present.
 
 In our specific case, let us consider the scenario where $\mathsf{Bob}$ desires greater randomness in the levels of the ciphertexts. The ```ACES``` class provides the capability to incorporate the probability $\mathbb{P}_0$, as introduced in [Vanishing noise](#vanishing-noise), as an input parameter. In the forthcoming example, we set $\mathbb{P}_0 = 0.01$ to achieve an almost uniform distribution of levels within the set $\lbrace 0,1,p,2p,\dots,p^2\rbrace$.
 ```python
