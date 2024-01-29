@@ -72,7 +72,11 @@ $$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
 If we take $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is completely driven by the "randomness" of $k_0$, which is determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$.
 
 ## Vanishing noise
-The noise $e$ is computed as a product $b\cdot e'$ of two polynomials $b$ and $e'$ in $\mathbb{Z}_q[X]$. First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
+The noise $e$ is computed as a product $b\cdot e'$ of two polynomials $b$ and $e'$ in 
+
+$$\mathbb{Z}_q[X]_u$$
+
+First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
 - the equation $\delta_0 = 0$ with probability $\mathbb{P}_0$ 
 - and the following expression:
 - 
