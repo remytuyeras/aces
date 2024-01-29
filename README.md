@@ -45,8 +45,7 @@ will produce a ciphertext with a level in $O(p^3)$. Thus, utilizing approximatel
 
 $$K_0 p^{2^{K+1}} \ll q$$
 
-A recurring inquiry revolves around the influence of $p$ and $q$ on the noisy components incorporated in an encryption $(c, c')$, where $c' = r(m) + c^Tx + e$. The following two section address this concern.
-
+A recurring inquiry revolves around the influence of $p$ and $q$ on the noisy components incorporated in an encryption $(c, c')$, where $c' = r(m) + c^Tx + e$. The following sections address this concern.
 
 ## Noise on messages
 The noise $r$ that acts on the message $m$ is encoded as a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ such that we have:
