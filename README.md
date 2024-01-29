@@ -285,7 +285,7 @@ Now, let us shift our focus to the server side. To recap, we previously set $q =
 >>> alice.decrypt(online)
 21
 ```
-As elucidated in [Section 5.3 of the research paper](https://arxiv.org/abs/2401.13255), it is necessary to decompose the algorithm $F$ into smaller layers, namely $F_1$ and $F_2. For instance, the definition of $F_1$ is presented below.
+As elucidated in [Section 5.3 of the research paper](https://arxiv.org/abs/2401.13255), it is necessary to decompose the algorithm $F$ into smaller layers, namely $F_1$ and $F_2$. For instance, the definition of $F_1$ is presented below.
 ```python
 >>> def true_fun1(a):
 ...  return a[0] * a[1] + a[2] * a[3] + a[4] * a[5]
