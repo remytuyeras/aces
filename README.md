@@ -27,7 +27,7 @@ The following sections address considerations to add to $p$ and $q$ if one inten
 
 ACES is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $c_1 \in S_{\mathsf{C},k_1}(m_1)$ and $c_2 \in S_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $(c_1, c_1') \in S_{\mathsf{C},k_1}(m_1)$ and $(c_2, c_2') \in S_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
 $$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in S_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
 
@@ -37,7 +37,7 @@ $$k_1 k_2 p < \frac{q}{p} \Rightarrow (c_1, c_1') \otimes_{\lambda} (c_2, c_2') 
 
 Considering that any encryption $\mathbf{c}$ generated through this scheme has an initial level equal to $p$, we can establish a general relationship between $p$ and $q$.
 
-$$\mathbf{c} \in S_{\mathsf{C}, p}(m)$$
+$$(c,c') \in S_{\mathsf{C}, p}(m)$$
 
 To elaborate further, initiating a multiplication operation results in a level of $p^3$, whereas commencing with an addition operation yields a level of $2p$. Consequently, a combination of additions and multiplications in the form:
 $x_1 \cdot y_1 + x_2 \cdot y_2 + \dots + x_h \cdot y_h$
