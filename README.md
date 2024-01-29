@@ -105,11 +105,11 @@ If we take $p$ and $q$ to be coprime, then the "randomness" of the terms $qk_0$ 
 ## Homomorphism
 While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}[X]$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
 
-Specifically, ACES relies on 3-tensors $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ that satisfy the relation shown below for every triple $(i,j,k)$, where $x = (x_1,\dots,x_k)$ is the private key for ACES.
+Specifically, if we let $x = (x_1,\dots,x_n)$ denote the private key for ACES, then the homomorphism property relies on a 3-tensor $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ satisfyiong the following relation for every triple $(i,j,k)$ of elements in $\{0,1,2,\dots,n\}$.
 
 $$x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k$$
 
-If we tried to imagine what the previous type of equation would give with complex numbers, we would want to determine real numbers $\lambda_1$ and $\lambda_2$ such that:
+If we tried to imagine what this equation would amount to in the context of complex numbers, we would be faced with the challenge of finding real numbers $\lambda_1$ and $\lambda_2$ for which equations of the following form holds.
 
 $$(a_1+ib_1)(a_2+ib_2) = \lambda_1 \cdot (a_1+ib_1) + \lambda_2 \cdot (a_2+ib_2)$$
 
