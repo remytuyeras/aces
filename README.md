@@ -43,13 +43,6 @@ Now, let us recall how a message $m \in \mathbb{Z}_p$ is encrypted as a cypherte
     - $e$ is a scalar product in the form of $b^Te'$, where $e'$ is an $N$-vector over $\mathbb{Z}_q[X]_u$ such that the evaluations of $e$ and $e'$ in $\mathbb{Z}_q$ at the integer $\omega$ are multiples of $p$ (chosen by the sender).
 
 
-
->[!NOTE]
->The paper ["Provably Weak Instances of Ring-LWE Revisited"](https://eprint.iacr.org/2016/239.pdf) provides examples where an attack on the presented version of RLWE (PLWE) is feasible due to the condition $u(1) = 0$ in $\mathbb{Z}_q$. It is crucial to note that this vulnerability is observed in cases where $q$ is small, and the error term $e$ tends to exhibit a distribution closer to Gaussian than uniform. It is important to emphasize that this scenario is distinct from the context considered in ACES.
->
->In the context of ACES, the security is upheld by the hardness of the Learning With Errors (LWE) problem on both integers and polynomials, ensuring robustness against potential attacks.
->
-
 ### Attacking the public key
 
 Given that the public key takes the form $(f_0, f_1)$ with $f_1 = f_0^Tx + e'$, it is reasonable to assume that an attacker's objective might involve deducing the value of $x$ by eliminating $e$ and solving a problem akin to Gaussian elimination.
@@ -67,6 +60,12 @@ Applying a modulus $p$ to this equation yields the relation:
 $$f_1(\omega)\,(\mathsf{mod}\,p) = \Big(f_0(\omega)^Tx(\omega) + qk_0\Big)\,(\mathsf{mod}\,p)$$
 
 If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is entirely governed by the "randomness" of $k_0$. Consequently, the construction of $k_0$ from $e'$ implies that the randomness of $k_0$ is contingent on the randomness of the coefficients of the polynomial $e'$.
+
+>[!NOTE]
+>The paper ["Provably Weak Instances of Ring-LWE Revisited"](https://eprint.iacr.org/2016/239.pdf) provides examples where an attack on the presented version of RLWE (PLWE) is feasible due to the condition $u(1) = 0$ in $\mathbb{Z}_q$. It is crucial to note that this vulnerability is observed in cases where $q$ is small, and the error term $e'$ tends to exhibit a distribution closer to Gaussian than uniform. It is important to emphasize that this scenario is distinct from the context considered in ACES.
+>
+>In the context of ACES, the security is upheld by the hardness of the Learning With Errors (LWE) problem on both integers and polynomials, ensuring robustness against potential attacks.
+>
 
 ### Cyphertext 
 
