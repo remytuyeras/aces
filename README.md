@@ -73,7 +73,7 @@ Given that a ciphertext is structured as $(f_0^Tb, r_m + b^Tf_1)$, where $f_1 = 
 
 To eliminate $f_0$ from the expression $c' = f_0^Tb$, the attacker might exploit scenarios where $N$ is small, reducing the hyperplane's dimension (given by the equation $c' = f_0^Tb$) in which $b$ exists.
 
-<em>In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b.</em>
+<em>In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b$.</em>
 
 To thwart this, we observe that $q$ need not be prime. Consequently, $\mathbb{Z}_q$ is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors guarantees that an ideal of polynomials $e^{\prime\prime}$ satisfying the equation $c' = f_0^T(b + e^{\prime\prime})$ exists.
 
