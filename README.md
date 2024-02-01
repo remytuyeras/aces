@@ -64,7 +64,7 @@ If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$
 >[!NOTE]
 >The paper ["Provably Weak Instances of Ring-LWE Revisited"](https://eprint.iacr.org/2016/239.pdf) provides examples where an attack on the presented version of RLWE (PLWE) is feasible due to the condition $u(1) = 0$ in $\mathbb{Z}_q$. It is crucial to note that this vulnerability is observed in cases where $q$ is small, and the error term $e'$ tends to exhibit a distribution closer to Gaussian than uniform. It is important to emphasize that this scenario is distinct from the context considered in ACES.
 >
->In the context of ACES, the security is upheld by the hardness of the Learning With Errors (LWE) problem on both integers and polynomials, ensuring robustness against potential attacks.
+>In the context of ACES, the security is upheld by the hardness of the LWE problem on both integers and polynomials, ensuring robustness against potential attacks.
 >
 
 ### Cyphertext 
