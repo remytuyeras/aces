@@ -59,7 +59,7 @@ Applying a modulus $p$ to this equation yields the relation:
 
 $$f_1(\omega) ~(\mathsf{mod} ~p) = \Big(f_0(\omega)^Tx(\omega) + qk_0\Big) ~(\mathsf{mod} ~p)$$
 
-If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is entirely governed by the "randomness" of $k_0$. Consequently, the construction of $k_0$ from $e'$ implies that the randomness of $k_0$ is contingent on the randomness of the coefficients of the polynomial $e'$.
+If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is entirely governed by the "randomness" of $k_0$. Then, the construction of $k_0$ from $e'$ implies that the randomness of $k_0$ is contingent on the randomness of the coefficients of the polynomial $e'$ (whose coefficients are uniformly chosen).
 
 >[!NOTE]
 >The paper ["Provably Weak Instances of Ring-LWE Revisited"](https://eprint.iacr.org/2016/239.pdf) provides examples where an attack on the presented version of RLWE (PLWE) is feasible due to the condition $u(1) = 0$ in $\mathbb{Z}_q$. It is crucial to note that this vulnerability is observed in cases where $q$ is small, and the error term $e'$ tends to exhibit a distribution closer to Gaussian than uniform. It is important to emphasize that this scenario is distinct from the context considered in ACES.
