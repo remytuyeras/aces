@@ -57,7 +57,7 @@ $$f_1(\omega) = f_0(\omega)^Tx(\omega) + k_1p + qk_0$$
 
 Applying a modulus $p$ to this equation yields the relation:
 
-$$f_1(\omega)\,(\mathsf{mod}\,p) = \Big(f_0(\omega)^Tx(\omega) + qk_0\Big)\,(\mathsf{mod}\,p)$$
+$$f_1(\omega)~(\mathsf{mod}~p) = \Big(f_0(\omega)^Tx(\omega) + qk_0\Big)~(\mathsf{mod}~p)$$
 
 If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is entirely governed by the "randomness" of $k_0$. Consequently, the construction of $k_0$ from $e'$ implies that the randomness of $k_0$ is contingent on the randomness of the coefficients of the polynomial $e'$.
 
@@ -85,7 +85,7 @@ would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear 
 
 The discussion above suggests that, for an implementation of ACES with $\omega=1$ and $N=1$, we want to take $n = \mathsf{deg}(u) > 2$ to be even and construct $f_0$ as follows, where all elements $a_{i,j}$ can be randomly chosen from the zero divisors in $\mathbb{Z}_q$:
 
-$$f_{0,i} = \sum_{j=1}^{\lfloor (n-1)/2\rfloor} a_{i,j}X^j + \Big(\big(a_{i,0} - \sum_{j=1}^{n-1} a_{i,j}\big)\,(\mathsf{mod}\,q)\Big)X^{n/2} + \sum_{j=n/2+1}^{n-1} a_{i,j}X^j$$
+$$f_{0,i} = \sum_{j=1}^{\lfloor (n-1)/2\rfloor} a_{i,j}X^j + \Big(\big(a_{i,0} - \sum_{j=1}^{n-1} a_{i,j}\big)~(\mathsf{mod}~q)\Big)X^{n/2} + \sum_{j=n/2+1}^{n-1} a_{i,j}X^j$$
 
 In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0$ is composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
 
@@ -94,11 +94,11 @@ In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, 
 
 The noise $r$ influencing the message $m$ is encoded through the selection, made solely by the sender $\mathsf{Bob}$, of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$. This encoding follows the formula:
 
-$$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
+$$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)~(\mathsf{mod}~q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
 
 Evaluating the representative polynomial for $r(m)$ at $\omega=1$ in $\mathbb{Z}$ and sending that value to $\mathbb{Z}_q$ yields the equation $r(m)(1) = m$ in $\mathbb{Z}_q$. However, the same evaluation sent to $\mathbb{Z}_p$ results in the formula:
 
-$$r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)\,(\mathsf{mod}\,q) + \sum_{i=1}^{n-1}a_i \quad\quad (\mathsf{mod}\,p)$$
+$$r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)~(\mathsf{mod}~q) + \sum_{i=1}^{n-1}a_i \quad\quad (\mathsf{mod}~p)$$
 
 When $\mathsf{Bob}$ selects $a_0, a_1, \dots, a_{n-1}$ such that the inequality 
 
@@ -110,7 +110,7 @@ $$m - \sum^{n-1}_{i=1} a_i$$
 
 will be outside the interval $[0, q-1]$, introducing an additional term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. Consequently, we establish the equivalence:
 
-$$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
+$$r(m)(1) \equiv m + qk_0 ~(\mathsf{mod}~p)$$
 
 Selecting coprime $p$ and $q$ ensures that the "randomness" of the term $qk_0$ is entirely determined by the "randomness" of $k_0$, which, in turn, is influenced by the randomness of the elements $a_0, a_1, \dots, a_{n-1}$.
 
@@ -122,10 +122,10 @@ $$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
 To elaborate, the polynomial $e'$ is determined by the sender $\mathsf{Bob}$ through the selection of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$ and one random element $\delta_0 \in \lbrace 0,1\rbrace$ with the following conditions:
 - The equation $\delta_0 = 0$ holds with probability $\mathbb{P}_0$.
 - The expression for $e'$ is given by:
-$$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
+$$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)~(\mathsf{mod}~q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
 
 Subsequently, the polynomial $b$ is determined by $\mathsf{Bob}$ through the selection of $n$ random coefficients $b_0, b_1, \dots, b_{n-1}$ in $\mathbb{Z}_q$ and one random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ with the formula:
-$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^{n-1} b_iX^i$$
+$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)~(\mathsf{mod}~q)\Big)X^0 + \sum_{i=1}^{n-1} b_iX^i$$
 
 With these selections, evaluating the polynomial $e$ in $\mathbb{Z}_q$ at the element $\omega = 1$ yields the following relations when sent to $\mathbb{Z}_q$ (considering $p^2 < q$):
 
@@ -139,11 +139,11 @@ $$\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\m
 
 However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear uniformly distributed in $\mathbb{Z}_p$. Specifically, the coefficients 
 
-$$\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q) \quad\quad\quad\quad \big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)$$
+$$\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)~(\mathsf{mod}~q) \quad\quad\quad\quad \big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)~(\mathsf{mod}~q)$$
 
 in the expressions of $e'$ and $b$ may introduce additional terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
 
-$$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
+$$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') ~(\mathsf{mod}~p)$$
 
 Selecting coprime $p$ and $q$ ensures that the "randomness" of the terms $qk_0$ and $qk_0'$ is entirely determined by the "randomness" of $k_0$ and $k_0'$, respectively, which are influenced by the randomness of the elements $a_0, a_1, \dots, a_{n-1}$ and $b_0, b_1, \dots, b_{n-1}$.
 
