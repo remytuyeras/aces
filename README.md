@@ -91,7 +91,7 @@ The discussion above suggests that, for an implementation of ACES with $\omega=1
 
 $$f_{0,i} = \sum_{j=1}^{\lfloor (n-1)/2\rfloor} a_{i,j}X^j + \Big(\big(a_{i,0} - \sum_{j=1}^{n-1} a_{i,j}\big)~(\mathsf{mod}~q)\Big)X^{n/2} + \sum_{j=n/2+1}^{n-1} a_{i,j}X^j$$
 
-In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0$ is composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
+In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
 
 
 ### Noise on messages
