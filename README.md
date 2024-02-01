@@ -23,7 +23,150 @@ ACES depends on the generation of an <em>arithmetic channel</em>, which is a qua
 A quick skim through [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) already informs us that the condition $p^2 < q$ must hold for ACES to be valid.
 The following sections address considerations to add to $p$ and $q$ if one intends to use the homomorphic properties of ACES. These sections also elucidate certain technical aspects, giving essential insights into the security considerations of ACES.
 
-## Cost of homomorphism
+## Attacks on ACES
+
+The security of ACES relies on two consecutive modulus operations, specifically involving the positive integers $q$ and $p$. The corresponding security principles are detailed in the subsequent subsections.
+
+To begin, let us recall the notational conventions introduced in the paper:
+
+$$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
+
+Now, let us recall how a message $m \in \mathbb{Z}_p$ is encrypted as a cyphertext $(c,c')$. In general, the ciphertext is structured as follows:
+
+1. The first component $c$ is an $n$-vector over $\mathbb{Z}_q[X]_u$ given by $c = f_0^Tb$, where:
+    - $f_0$ is an $n \times N$ matrix over $\mathbb{Z}_q[X]_u$ (chosen during key generation).
+    - $b$ is an $N$-vector over $\mathbb{Z}_q[X]_u$ (selected by the sender).
+
+2. The second component $c'$ is an element of $\mathbb{Z}_q[X]$ defined as $c' = r_m + c^Tx + e$, where:
+    - $r_m$ is an element over $\mathbb{Z}_q[X]_u$ chosen such that its evaluation in $\mathbb{Z}_q$ at the integer $\omega$ equals $m$ (chosen by the sender).
+    - $x$ is an $n$-vector over $\mathbb{Z}_q[X]_u$ (considered the private key).
+    - $e$ is a scalar product in the form of $b^Te'$, where $e'$ is an $N$-vector over $\mathbb{Z}_q[X]_u$ such that the evaluations of $e$ and $e'$ in $\mathbb{Z}_q$ at the integer $\omega$ are multiples of $p$ (chosen by the sender).
+
+
+
+>[!NOTE]
+>The paper ["Provably Weak Instances of Ring-LWE Revisited"](https://eprint.iacr.org/2016/239.pdf) provides examples where an attack on the presented version of RLWE (PLWE) is feasible due to the condition $u(1) = 0$ in $\mathbb{Z}_q$. It is crucial to note that this vulnerability is observed in cases where $q$ is small, and the error term $e$ tends to exhibit a distribution closer to Gaussian than uniform. It is important to emphasize that this scenario is distinct from the context considered in ACES.
+>
+>In the context of ACES, the security is upheld by the hardness of the Learning With Errors (LWE) problem on both integers and polynomials, ensuring robustness against potential attacks.
+>
+
+### Attacking the public key
+
+Given that the public key takes the form $(f_0, f_1)$ with $f_1 = f_0^Tx + e'$, it is reasonable to assume that an attacker's objective might involve deducing the value of $x$ by eliminating $e$ and solving a problem akin to Gaussian elimination.
+
+To eliminate $e'$, the attacker is likely to exploit the existence of $k_0$ and $k_1$ satisfying the equation:
+
+$$e'(\omega) - qk_0 = k_1p$$
+
+It is noteworthy that the probability of $k_0$ being non-zero is high, given that the coefficients of the polynomial $e'$ are as likely to be small as they are to be large in $\mathbb{Z}_q$. In this context, embedding the equation $f_1(\omega) = f_0(\omega)^Tx(\omega) + e'(\omega)$ into $\mathbb{Z}_q$ is equivalent to expressing it in $\mathbb{Z}$ as:
+
+$$f_1(\omega) = f_0(\omega)^Tx(\omega) + k_1p + qk_0$$
+
+Applying a modulus $p$ to this equation yields the relation:
+
+$$f_1(\omega)\,(\mathsf{mod}\,p) = \Big(f_0(\omega)^Tx(\omega) + qk_0\Big)\,(\mathsf{mod}\,p)$$
+
+If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is entirely governed by the "randomness" of $k_0$. Consequently, the construction of $k_0$ from $e'$ implies that the randomness of $k_0$ is contingent on the randomness of the coefficients of the polynomial $e'$.
+
+### Cyphertext 
+
+Given that a ciphertext is structured as $(f_0^Tb, r_m + b^Tf_1)$, where $f_1 = f_0^Tx + e'$ is known to all parties, it is plausible to assume that an attacker may aim to derive $b$ by eliminating $f_0$ (also known to all parties) and solving what resembles a linear equation.
+
+To eliminate $f_0$ from the expression $c' = f_0^Tb$, the attacker might exploit scenarios where $N$ is small, reducing the hyperplane's dimension (given by the equation $c' = f_0^Tb$) in which $b$ exists.
+
+<em>In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b.</em>
+
+To thwart this, we observe that $q$ need not be prime. Consequently, $\mathbb{Z}_q$ is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors guarantees that an ideal of polynomials $e^{\prime\prime}$ satisfying the equation $c' = f_0^T(b + e^{\prime\prime})$ exists.
+
+The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
+
+$$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
+
+would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(\omega)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
+
+The discussion above suggests that, for an implementation of ACES with $\omega=1$ and $N=1$, we want to take $n = \mathsf{deg}(u) > 2$ to be even and construct $f_0$ as follows, where all elements $a_{i,j}$ can be randomly chosen from the zero divisors in $\mathbb{Z}_q$:
+
+$$f_{0,i} = \sum_{j=1}^{\lfloor (n-1)/2\rfloor} a_{i,j}X^j + \Big(\big(a_{i,0} - \sum_{j=1}^{n-1} a_{i,j}\big)\,(\mathsf{mod}\,q)\Big)X^{n/2} + \sum_{j=n/2+1}^{n-1} a_{i,j}X^j$$
+
+In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0$ is composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
+
+
+### Noise on messages
+
+The noise $r$ influencing the message $m$ is encoded through the selection, made solely by the sender $\mathsf{Bob}$, of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$. This encoding follows the formula:
+
+$$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
+
+Evaluating the representative polynomial for $r(m)$ at $\omega=1$ in $\mathbb{Z}$ and sending that value to $\mathbb{Z}_q$ yields the equation $r(m)(1) = m$ in $\mathbb{Z}_q$. However, the same evaluation sent to $\mathbb{Z}_p$ results in the formula:
+
+$$r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)\,(\mathsf{mod}\,q) + \sum_{i=1}^{n-1}a_i \quad\quad (\mathsf{mod}\,p)$$
+
+When $\mathsf{Bob}$ selects $a_0, a_1, \dots, a_{n-1}$ such that the inequality 
+
+$$m < \sum_{i=1}^{n-1}a_i < q$$
+
+holds in $\mathbb{Z}$, the term 
+
+$$m - \sum^{n-1}_{i=1} a_i$$
+
+will be outside the interval $[0, q-1]$, introducing an additional term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. Consequently, we establish the equivalence:
+
+$$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
+
+Selecting coprime $p$ and $q$ ensures that the "randomness" of the term $qk_0$ is entirely determined by the "randomness" of $k_0$, which, in turn, is influenced by the randomness of the elements $a_0, a_1, \dots, a_{n-1}$.
+
+### Vanishing noise
+Recall that the noise $e$ is constructed as the product $b\cdot e'$ of two polynomials $b$ and $e'$ within the polynomial ring:
+
+$$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
+
+To elaborate, the polynomial $e'$ is determined by the sender $\mathsf{Bob}$ through the selection of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$ and one random element $\delta_0 \in \lbrace 0,1\rbrace$ with the following conditions:
+- The equation $\delta_0 = 0$ holds with probability $\mathbb{P}_0$.
+- The expression for $e'$ is given by:
+$$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
+
+Subsequently, the polynomial $b$ is determined by $\mathsf{Bob}$ through the selection of $n$ random coefficients $b_0, b_1, \dots, b_{n-1}$ in $\mathbb{Z}_q$ and one random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ with the formula:
+$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^{n-1} b_iX^i$$
+
+With these selections, evaluating the polynomial $e$ in $\mathbb{Z}_q$ at the element $\omega = 1$ yields the following relations when sent to $\mathbb{Z}_q$ (considering $p^2 < q$):
+
+$$e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0, p, 2p, \dots, p^2 \rbrace$$
+
+Since $\delta_1$ is chosen uniformly and $\delta_0$ is chosen to be $\delta_0 = 0$ with probability $\mathbb{P}_0$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0, p, 2p, \dots, p^2 \rbrace$ with the following probabilities:
+
+$$\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}$$
+
+$$\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\mathbb{P}_0}{p+1}$$
+
+However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear uniformly distributed in $\mathbb{Z}_p$. Specifically, the coefficients 
+
+$$\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q) \quad\quad\quad\quad \big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)$$
+
+in the expressions of $e'$ and $b$ may introduce additional terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
+
+$$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
+
+Selecting coprime $p$ and $q$ ensures that the "randomness" of the terms $qk_0$ and $qk_0'$ is entirely determined by the "randomness" of $k_0$ and $k_0'$, respectively, which are influenced by the randomness of the elements $a_0, a_1, \dots, a_{n-1}$ and $b_0, b_1, \dots, b_{n-1}$.
+
+## Homomorphism and how it works
+
+While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}[X]$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
+
+Specifically, if we let $x = (x_1,\dots,x_n)$ denote the private key for ACES, then the homomorphism property relies on a 3-tensor $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ satisfying the following relation for every triple $(i,j,k)$ of elements in $\lbrace 0,1,2,\dots,n\rbrace$.
+
+$$x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k$$
+
+If we tried to imagine what this equation would amount to in the context of complex numbers, we would be faced with the challenge of finding real numbers $\lambda_1$ and $\lambda_2$ for which equations of the following form holds.
+
+$$(a_1+ib_1)(a_2+ib_2) = \lambda_1 \cdot (a_1+ib_1) + \lambda_2 \cdot (a_2+ib_2)$$
+
+By uniqueness of the complex and real parts, we would then obtain:
+- $\lambda_1 a_1 + \lambda_2 a_2 = a_1a_2-b_1b_2$
+- $\lambda_1 b_1 + \lambda_2 b_2 = a_1b_2+a_2b_1$
+
+Note that without the complex structure, deducing the values of $\lambda_1$ and $\lambda_2$ would be challenging. This underscores how $\mathbb{C}$ introduces a mathematical structure that cannot be recovered by $\mathbb{R}$. In a parallel manner, we leverage the polynomial ring $\mathbb{Z}[X]$ to encapsulate the homomorphic properties of ACES. After performing arithmetic operations on polynomials to compute homomorphic sums and products, we can seamlessly revert to $\mathbb{Z}$ for decrypting the encrypted data.
+
+### Cost of homomorphism
 
 ACES is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
@@ -43,97 +186,41 @@ will produce a ciphertext with a level in $O(p^3)$. Thus, using approximately $K
 
 $$K_0 p^{2^{K+1}} \ll q$$
 
-A valid and recurring concern surrounds the influence of variables $p$ and $q$ on the noisy components used for the encryption, particularly concerning the terms $r(m)$ and $e$ in the composition of a ciphertext $(c, c')$, where $c' = r(m) + c^Tx + e$. The subsequent sections will delve into addressing this recurrent inquiry.
+### Chinese Remainder Theorem
 
-## Noise on messages
-The noise $r$ that acts on the message $m$ is encoded as a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ such that we have:
+The existence of the 3-tensor $\lambda$ facilitating homomorphic multiplications in ciphertexts stems from the quotient of the ring $\mathbb{Z}_q[X]$ by the polynomial ideal generated by $u$. Consequently, the parameter $u$ plays a crucial role in our system. However, this parameter introduces a potential vulnerability, as an attacker might attempt to glean information about the private key through it.
 
-$$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i$$
+First, note that we can always choose the coefficient of $u$ from the interval $[0, q-1]$, allowing $u$ to represent itself in the polynomial rings $\mathbb{Z}_q[X]$ and $\mathbb{Z}[X]$. Let $\omega_1, \omega_2, \dots, \omega_{\rho}$ denote the distinct roots of $u$ in $\mathbb{C}$ when $u$ is treated as a polynomial in $\mathbb{Z}[X]$. Given the equation $u(\omega_i) = 0$ for all $i \in \lbrace 1,2,\dots,\rho \rbrace$, we have the following expression in $\mathbb{C}$:
 
-If we evaluate the representative polynomial obtained for $r(m)$ at $\omega=1$ in $\mathbb{Z}$ and we send that value to $\mathbb{Z}_q$, then we obtain the equation $r(m)(1) = m$ in $\mathbb{Z}_q$. However, the same evaluation sent to $\mathbb{Z}_p$ gives us the following formula:
+$$c'(\omega_k) = r(m)(\omega_k) + c(\omega_k)^Tx(\omega_k) + e(\omega_k) + qk_{0}$$
 
-$$r(m)(1) = \Big(m - \sum_{i=1}^{n-1}a_i\Big)\,(\mathsf{mod}\,q) + \sum_{i=1}^{n-1}a_i\quad\quad(\mathsf{mod}\,p)$$
+Decomposing the polynomials $r(m)$ and $e$ yields the following formula, where $a_i$ and $a_i'$ are coefficients to be determined:
 
-If $\mathsf{Bob}$ happens to select $a_0,a_1,\dots,a_{n-1}$ such that the inequality 
+$$c'(\omega_k) = m + \sum_{i=1}^{n-1} a_i\big(\omega_k^i - 1\big) + c(\omega_k)^Tx(\omega_k) + p \delta + \sum_{i=1}^{n-1} a_i'\big(\omega_k^i - 1\big) + qk_{0}$$
 
-$$m < \sum_{i=1}^{n-1}a_i < q$$
+This equation implies that we are attempting to solve a system of $\rho$ linear equations with $3n$ unknown variables:
 
-holds in $\mathbb{Z}$, then the term 
+$$(m,a_1, a_2, \dots, a_{n-1}, x_1(\omega_k), \dots, x_n(\omega_k), a_1', a_2', \dots, a_{n-1}', k_{0})$$
 
-$$m - \sum^{n-1}_{i=1} a_i$$
-
-can be outside of the interval $[0,q-1]$ and can add an extra term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. As a result, we have the equivalence: 
-
-$$r(m)(1) \equiv m + qk_0 \,(\mathsf{mod}\,p)$$
-
-If we take $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$ is completely driven by the "randomness" of $k_0$, which is determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$.
-
-## Vanishing noise
-The noise $e$ is computed as a product $b\cdot e'$ of two polynomials $b$ and $e'$ in the following polynomial ring.
-
-$$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
-
-First, the polynomial $e'$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0,a_1,\dots,a_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_0 \in \lbrace 0,1\rbrace$ such that we have 
-- the equation $\delta_0 = 0$ with probability $\mathbb{P}_0$ 
-- and the following expression:
-$$e' = \Big(\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n a_iX^i$$
-
-Then, the polynomial $b$ is determined by a selection (only chosen by the sender $\mathsf{Bob}$) of $n$ random coefficients $b_0,b_1,\dots,b_{n-1}$ in $\mathbb{Z}_q$ and 1 random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ such that we have:
-
-$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q)\Big)X^0 + \sum_{i=1}^n b_iX^i$$
-
-With these generations, the evaluation of the polynomial $e$ at $\omega = 1$ in $\mathbb{Z}_q$ gives us the following relations when sent to $\mathbb{Z}_q$ (since we have $p^2 < q$):
-
-$$e(1) = p \delta_0 \cdot \delta_1 \in \lbrace 0,p,2p,\dots,p^2\rbrace$$
-
-Since $\delta_1$ is chosen from a uniform distribution and $\delta_0$ is chosen such that $\delta_0 = 0$ with probability $\mathbb{P}_0$, the value $e(1)$ in $\mathbb{Z}_q$ can be seen as randomly chosen from $\lbrace 0,p,2p,\dots,p^2\rbrace$ with the following probabilities:
-
-$$\mathbb{P}(e(1) = 0) = \sum_{i=1}^{p+1} \mathbb{P}_0\frac{1}{p+1} + (1-\mathbb{P}_0)\frac{1}{p+1} = \frac{\mathbb{P}_0p+1}{p+1}$$
-
-$$\mathbb{P}(e(1) = kp~|~k \neq 0) = (1-\mathbb{P}_0) \frac{1}{p+1} = \frac{1-\mathbb{P}_0}{p+1}$$
-
-However, the evaluation $e(1)$ directly sent to $\mathbb{Z}_p$ will appear to us as uniformly chosen from the set $\mathbb{Z}_p$. Indeed, the two coefficients 
-
-$$\big(p \delta_0 - \sum_{i=0}^{n-1} a_i\big)\,(\mathsf{mod}\,q)\quad\quad\quad\quad\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)\,(\mathsf{mod}\,q),$$
-
-in the expressions of $e'$ and $b$, have the potential to add extra terms $qk_0$ and $qk_0'$ to the expressions of $e'(1)$ and $b(1)$, respectively. In other words, we would have
-
-$$e(1) \equiv (p \delta_0+ qk_0)(\delta_1 + qk_0') \,(\mathsf{mod}\,p)$$
-
-If we take $p$ and $q$ to be coprime, then the "randomness" of the terms $qk_0$ and $qk_0'$ are completely driven by the "randomness" of $k_0$ and $k_0'$, which are respectively determined by the randomness of the elements $a_0,a_1,\dots,a_{n-1}$ and $b_0,b_1,\dots,b_{n-1}$.
-
-## Homomorphism
-While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}[X]$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
-
-Specifically, if we let $x = (x_1,\dots,x_n)$ denote the private key for ACES, then the homomorphism property relies on a 3-tensor $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ satisfying the following relation for every triple $(i,j,k)$ of elements in $\lbrace 0,1,2,\dots,n\rbrace$.
-
-$$x_i \cdot x_j = \sum_{i,j} \lambda_{i,j}^k x_k$$
-
-If we tried to imagine what this equation would amount to in the context of complex numbers, we would be faced with the challenge of finding real numbers $\lambda_1$ and $\lambda_2$ for which equations of the following form holds.
-
-$$(a_1+ib_1)(a_2+ib_2) = \lambda_1 \cdot (a_1+ib_1) + \lambda_2 \cdot (a_2+ib_2)$$
-
-By uniqueness of the complex and real parts, we would then obtain:
-- $\lambda_1 a_1 + \lambda_2 a_2 = a_1a_2-b_1b_2$
-- $\lambda_1 b_1 + \lambda_2 b_2 = a_1b_2+a_2b_1$
-
-Note that without the complex structure, deducing the values of $\lambda_1$ and $\lambda_2$ would be challenging. This underscores how $\mathbb{C}$ introduces a mathematical structure that cannot be recovered by $\mathbb{R}$. In a parallel manner, we leverage the polynomial ring $\mathbb{Z}[X]$ to encapsulate the homomorphic properties of ACES. After performing arithmetic operations on polynomials to compute homomorphic sums and products, we can seamlessly revert to $\mathbb{Z}$ for decrypting the encrypted data.
-
-> [!NOTE]
-> Overall, ACES secureness is ensured by the LWE-problem on integers and polynomials.
->
+Considering that $\rho \leq \mathsf{degree}(u) = n < n + 2n$, inferring $a_i$ and $a_i'$ using this method may prove to be a complex task. This complexity increases further with higher values of $n$.
 
 ## Take away
 
-Throughout the preceding sections, it became evident that users must adhere to the following requirements when selecting values for $p$ and $q$:
+Throughout the preceding sections, it became evident that users must adhere to the following requirements when selecting values for $p$, $q$ and $n$:
 
-- $p^2 < q$
+- we should have $p^2 < q$
 - $p$ and $q$ should be coprime
-- To successfully process $K$ layers of operations, it is essential to ensure that $K_0 p^{2^{K+1}} \ll q$ holds true for some constant $K_0$.
+- to process at least $K$ layers of operations, we should have $K_0 p^{2^{K+1}} \ll q$ for some constant $K_0$.
+- the integer $q$ should not be prime
+- take $n = \mathsf{deg}(u) > 2$ to be even
 
-In light of these conditions, users are advised to consider using a formula as follows, where $t \geq 2$ and $K \geq 1$:
+In light of this, users are advised to consider using a formula as follows, where $t \geq 2$, $K_0 \geq 1$, $K_1 \geq 1$ and $K \geq 1$:
 
-$$q = p^{t^K} + 1$$
+$$q = K_0 \cdot (p^{t^K} + K_1)$$
+
+For example, if we take $p = 2^5 = 32$ and $q = 32^5+1$, then we have the following factorization:
+
+$$q = 3 \cdot 11 \cdot 4051 \cdot 251$$
 
 # Quickstart
 
