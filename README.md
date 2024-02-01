@@ -75,7 +75,11 @@ To eliminate $f_0$ from the expression $c' = f_0^Tb$, the attacker might exploit
 
 In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b$.
 
-To thwart this, we observe that $q$ need not be prime. Consequently, $\mathbb{Z}_q$ is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors guarantees that an ideal of polynomials $e^{\prime\prime}$ satisfying the equation $c' = f_0^T(b + e^{\prime\prime})$ exists.
+To thwart this, we observe that $q$ need not be prime. Consequently, the finite ring
+
+$$\mathbb{Z}_q$$
+
+is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors guarantees that an ideal of polynomials $e^{\prime\prime}$ satisfying the equation $c' = f_0^T(b + e^{\prime\prime})$ exists.
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
