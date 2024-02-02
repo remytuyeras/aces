@@ -242,7 +242,7 @@ Throughout the preceding sections, it became evident that users must adhere to t
 - $p$ and $q$ should be coprime
 - to process at least $K$ layers of operations, we should have $K_0 p^{2^{K+1}} \ll q$ for some constant $K_0$.
 - the integer $q$ should not be prime
-- take $n = \mathsf{deg}(u) > 2$ to be even
+- take $n = \mathsf{deg}(u) > 4$
 
 In light of this, users are advised to consider using a formula as follows, where $t \geq 2$, $K_0 \geq 1$, $K_1 \geq 1$ and $K \geq 1$:
 
