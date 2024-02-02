@@ -96,7 +96,7 @@ In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, 
 
 ### Noise on messages
 
-The noise $r$ influencing the message $m$ is encoded through the selection, made solely by the sender $\mathsf{Bob}$, of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$. This encoding follows the formula:
+The noise $r$ influencing the message $m$ is encoded through the selection (made solely by the sender $\mathsf{Bob}$) of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$. This encoding follows the formula:
 
 $$r(m) = \Big(\big(m - \sum_{i=0}^{n-1} a_i\big)~(\mathsf{mod}~q)\Big)X^0 + \sum_{i=0}^{n-1} a_iX^i$$
 
@@ -119,9 +119,7 @@ $$r(m)(1) \equiv m + qk_0 ~(\mathsf{mod}~p)$$
 Selecting coprime $p$ and $q$ ensures that the "randomness" of the term $qk_0$ is entirely determined by the "randomness" of $k_0$, which, in turn, is influenced by the randomness of the elements $a_0, a_1, \dots, a_{n-1}$.
 
 ### Vanishing noise
-Recall that the noise $e$ is constructed as the product $b\cdot e'$ of two polynomials $b$ and $e'$ within the polynomial ring:
-
-$$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
+Recall that the noise $e$ is constructed as the product $b\cdot e'$ of two polynomials $b$ and $e'$ within the polynomial ring $\mathbb{Z}_q[X]_u$.
 
 To elaborate, the polynomial $e'$ is determined by the sender $\mathsf{Bob}$ through the selection of $n$ random coefficients $a_0, a_1, \dots, a_{n-1}$ in $\mathbb{Z}_q$ and one random element $\delta_0 \in \lbrace 0,1\rbrace$ with the following conditions:
 - The equation $\delta_0 = 0$ holds with probability $\mathbb{P}_0$.
@@ -155,7 +153,7 @@ Selecting coprime $p$ and $q$ ensures that the "randomness" of the terms $qk_0$ 
 
 ## Homomorphism and why it works
 
-While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}[X]$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
+While the decryption in ACES operates within the ring $\mathbb{Z}$, it is essential to recognize that the homomorphic structure is established within the polynomial ring $\mathbb{Z}_q[X]_u$. In drawing a parallel, consider this process akin to employing complex numbers for computations that might pose greater challenges when exclusively using real numbers, such as solving polynomials or analyzing signals.
 
 Specifically, if we let $x = (x_1,\dots,x_n)$ denote the private key for ACES, then the homomorphism property relies on a 3-tensor $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ satisfying the following relation for every triple $(i,j,k)$ of elements in $\lbrace 0,1,2,\dots,n\rbrace$.
 
@@ -170,6 +168,29 @@ By uniqueness of the complex and real parts, we would then obtain:
 - $\lambda_1 b_1 + \lambda_2 b_2 = a_1b_2+a_2b_1$
 
 Note that without the complex structure, deducing the values of $\lambda_1$ and $\lambda_2$ would be challenging. This underscores how $\mathbb{C}$ introduces a mathematical structure that cannot be recovered by $\mathbb{R}$. In a parallel manner, we leverage the polynomial ring $\mathbb{Z}[X]$ to encapsulate the homomorphic properties of ACES. After performing arithmetic operations on polynomials to compute homomorphic sums and products, we can seamlessly revert to $\mathbb{Z}$ for decrypting the encrypted data.
+
+### Remark on security
+
+
+The conditions that define the coefficients of the 3-tensor $\lambda = (\lambda_{i,j}^k)_{i,j,k}$ are essentially equivalent to solving a system of quadratic polynomial equations in a finite <s>field</s> ring. In theory, the task of recovering the private key $x$ from the 3-tensor $\lambda$ is safeguarded by the Polynomial System Solving Problem. Specifically, if we express
+
+$$x_k = \sum_{i=1}^{n-1} a_{k,i} X^i \quad\quad\textrm{and}\quad\quad u = \sum_{i=1}^{n-1} \mu_i X^i,$$
+
+there exists a tuple $(a_0',a_1',\dots,a_{n-1}')$ of integers in the range $[0, q-1]$ such that, for every $r \in \lbrace 0,1,2,\dots,n-1\rbrace$, the coefficients of $\lambda$ satisfy the following equations in $\mathbb{Z}_q$:
+
+$$\sum_{s+t = r } a_{i,s} a_{j,t} - \sum_{s+t = r } \mu_{s} a_{t}' = \sum_{k=0}^{n-1}\lambda_{i,j}^{k} a_{k,r}.$$
+
+Solving this set of equations involves finding a <u>specific</u> solution $(a_{1,0},\dots,a_{n-1,n},a_0',\dots,a_{n-1}')$ for a system of $n$ quadratic polynomial equations
+
+$$f_1(w_1,\dots,w_{n(n+1)}) = 0,$$
+
+$$\vdots$$
+
+$$f_{n}(w_1,\dots,w_{n(n+1)}) = 0,$$
+
+in the finite ring $\mathbb{Z}_q$. According to research ([source](https://inria.hal.science/hal-00776070/document) and [source](https://www-polsys.lip6.fr/~jcf/Papers/JMC2.pdf)), embarking on an exhaustive search for the solution would result in a computational complexity of $O(q^{n(n+1)})$. Opting for a sufficiently large value of $q$ would force an attacker to turn to a formal calculus algorithm, such as the [F5 algorithm](https://en.wikipedia.org/wiki/Faug%C3%A8re%27s_F4_and_F5_algorithms), designed for solving polynomial equations with Gröbner basis. However, note that in our specific scenario, employing Gröbner basis techniques on our set of polynomial equations would prove ineffective since the equations characterizing $\lambda$ are already _reduced_.
+
+Indeed, observe that the monomial $a_{i,s}a_{j,t}$ can only appear in the equation $f_{s+t}(w_1,\dots,w_{n(n+1)}) = 0$, indicating that it cannot be further reduced by the other equations. Consequently, an attacker attempting to compromise the private key using the equations defining the 3-tensor $\lambda$ would likely have to resort to either an exhaustive search or a hybrid method, which could be disadvantageous, particularly if $q$ is chosen to be large.
 
 ### Cost of homomorphism
 
@@ -209,9 +230,9 @@ $$c'(\omega_k) = m + \sum_{i=1}^{n-1} a_i\big(\omega_k^i - 1\big) + c(\omega_k)^
 
 This equation implies that we are attempting to solve a system of $\rho$ linear equations with $3n$ unknown variables:
 
-$$(m,a_1, a_2, \dots, a_{n-1}, x_1(\omega_k), \dots, x_n(\omega_k), a_1', a_2', \dots, a_{n-1}', k_{0})$$
+$$(m,k_{0},\delta,a_1, a_2, \dots, a_{n-1}, x_1(\omega_k), \dots, x_n(\omega_k), a_1', a_2', \dots, a_{n-1}')$$
 
-Considering that $\rho \leq \mathsf{degree}(u) = n < n + 2n$, inferring $a_i$ and $a_i'$ using this method may prove to be a complex task. This complexity increases further with higher values of $n$.
+Given that $\rho \leq \mathsf{degree}(u) = n < n + 2n + 1$, deducing the values of $a_i$ and $a_i'$ through this approach could become particularly challenging. This difficulty becomes more pronounced when the value of $n$ exceeds 3, introducing the possibility of some roots $\omega_k$ being complex numbers and [non-expressible by radicals](https://en.wikipedia.org/wiki/Solution_in_radicals). This intricacy adds complexity to the task of [precisely determining](https://en.wikipedia.org/wiki/Wilkinson%27s_polynomial) the approximate values of the coefficients of $c^T(\omega_k)$.
 
 ## Take away on parameters
 
