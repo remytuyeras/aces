@@ -61,6 +61,7 @@ class Polynomial(object):
 
 import math
 import random
+from functools import reduce
 
 def extended_gcd(a, b):
     r = [a,b]
@@ -81,6 +82,9 @@ def randinverse(intmod):
     a = random.randrange(1,intmod)
   _, inva, k = extended_gcd(a,intmod)
   return (a,inva % intmod)
+
+def factors(n):    
+  return set(reduce(list.__add__, ([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
 
 
 import numpy as np
@@ -158,7 +162,9 @@ class ArithChannel(object):
       self.intmod = intmod
     else:
        self.vanmod = vanmod
-       self.intmod = vanmod **2 + 1
+       self.intmod = (vanmod+1)**2
+    self.factors = sorted(factors(self.intmod))
+    self.factors = self.factors[2:] if len(self.factors) > 3 else self.factors[1:]
     self.dim = dim
     self.u = self.generate_u()
     self.x, self.tensor = self.generate_secret(self.u)
@@ -175,14 +181,15 @@ class ArithChannel(object):
       return (self.f0,f1,self.vanmod,self.intmod,self.dim,self.u)
 
   def generate_u(self):
-    #number of non zero coefficients for u
-    nonzeros = max(2,min(self.dim-1,int(random.gauss(self.intmod/2,self.intmod/2))))
+    #number of non zero coefficients for u where deg(u) = self.dim
+    nonzeros = max(self.dim/2,min(self.dim-1,int(random.gauss(self.dim/2,self.dim/2))))
     
     #The dominant coefficient for u is equal to 1
     u_coefs = [1]
 
     while nonzeros-len(u_coefs) > 1:
-      a, _ = randinverse(self.intmod)
+      # a, _ = randinverse(self.intmod)
+      a = random.randrange(self.intmod)
       u_coefs.append(a)
 
     u_coefs.append(self.intmod - sum(u_coefs))
@@ -237,7 +244,10 @@ class ArithChannel(object):
   def generate_initializer(self):
     f0 = []
     for i in range(self.dim):
-      f0.append(Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod))
+      f0_res = Polynomial([random.choice(self.factors) for _ in range(self.dim)],self.intmod)
+      deg_shift = [0]*(random.randrange(self.dim))
+      shift = Polynomial(deg_shift + [random.choice(self.factors) - sum(f0_res.coefs)],self.intmod)
+      f0.append(shift+f0_res)
     return f0
 
 
@@ -269,23 +279,26 @@ class ACES(object):
     c = []
     for i in range(self.dim):
       c.append( (b * self.f0[i] ) % self.u )
-    return ACESCipher(c , (r_m + b * (self.f1 + e) ) % self.u , self.vanmod) , (k * sum(b.coefs)) %self.intmod
+    return ACESCipher(c , (r_m + b * (self.f1 + e) ) % self.u , self.vanmod) , (k * sum(b.coefs)) % self.intmod
 
   def generate_linear(self):
     k = random.randint(0,self.vanmod)
-    e_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
-    shift = Polynomial([k - sum(e_res.coefs)],self.intmod)
-    return shift + e_res
+    b_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
+    deg_shift = [0]*(random.randrange(self.dim))
+    shift = Polynomial(deg_shift + [k - sum(b_res.coefs)],self.intmod)
+    return shift + b_res
 
   def generate_vanisher(self):
     k = 0 if random.uniform(0,1) < self.eprob else 1
     e_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
-    shift = Polynomial([self.vanmod * k - sum(e_res.coefs)],self.intmod)
+    deg_shift = [0]*(random.randrange(self.dim))
+    shift = Polynomial(deg_shift + [self.vanmod * k - sum(e_res.coefs)],self.intmod)
     return shift + e_res, k
 
   def generate_error(self,m):
     r_m_res = Polynomial([random.randrange(self.intmod) for _ in range(self.dim)],self.intmod)
-    shift = Polynomial([m - sum(r_m_res.coefs)],self.intmod)
+    deg_shift = [0]*(random.randrange(self.dim))
+    shift = Polynomial(deg_shift + [m - sum(r_m_res.coefs)],self.intmod)
     return shift + r_m_res
 
 
