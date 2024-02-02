@@ -99,7 +99,7 @@ Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coe
 
 $$p_1\dots p_{h_0} \beta$$
 
-for $\beta \in \mathbb{Z}_q$ will satisfy the equation $f_{i,0}z = 0$.
+for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$.
 
 In conclusion, by choosing $q$ divisible by at least 4 prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
 
