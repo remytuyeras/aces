@@ -51,7 +51,7 @@ To eliminate $e'$, the attacker is likely to exploit the existence of $k_0$ and 
 
 $$e'(\omega) - qk_0 = k_1p$$
 
-It is noteworthy that the probability of $k_0$ being non-zero is high, given that the coefficients of the polynomial $e'$ are as likely to be small as they are to be large in $\mathbb{Z}_q$. In this context, embedding the equation $f_1(\omega) = f_0(\omega)^Tx(\omega) + e'(\omega)$ into $\mathbb{Z}_q$ is equivalent to expressing it in $\mathbb{Z}$ as:
+It is worth noting that the probability of $k_0$ being non-zero is high, given that the coefficients of the polynomial $e'$ are as likely to be small as they are to be large in $\mathbb{Z}_q$. In this context, embedding the equation $f_1(\omega) = f_0(\omega)^Tx(\omega) + e'(\omega)$ into $\mathbb{Z}_q$ is equivalent to expressing it in $\mathbb{Z}$ as:
 
 $$f_1(\omega) = f_0(\omega)^Tx(\omega) + k_1p + qk_0$$
 
