@@ -79,7 +79,7 @@ To thwart this, we observe that $q$ need not be prime. Consequently, the finite 
 
 $$\mathbb{Z}_q$$
 
-is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors can guarantee the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the equation $c' = f_0^T(b + e^{\prime\prime})$. This assurance holds particularly true when systematically avoiding the inclusion of a fixed prime factor of $q$ when constructing the zero divisors as products of the factors of $q$.
+is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors can guarantee the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the equation $c' = f_0^T(b + e^{\prime\prime})$. This assurance holds particularly true if we systematically avoid the inclusion of one of the prime factors of $q$ in the construction of these zero divisors (see the construction further below).
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
@@ -87,11 +87,21 @@ $$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
 
 would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(\omega)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
 
-The discussion above suggests that, for an implementation of ACES with $\omega=1$ and $N=1$, we want to take the coefficients of $f_0$ to be as follows, where $s$ is a random integer in the interval $[0,n-1]$ and all elements $a_{i,j}$ are randomly chosen from the zero divisors in $\mathbb{Z}_q$:
+Let $p_1p_{2} \dots p_{h}$ represent the prime factorization of the integer $q$. Assuming that $h_0 = \lfloor h/2 \rfloor$ is greater than or equal to $2$, we define the set $I_q$ of zero divisors of $\mathbb{Z}_q$ as follows:
+
+$$I_q:= \lbrace p_1^{e_1}\dots p_{h_0}^{e_{h_0}} p_{h_0+1}\dots p_{h}~|~e_i\in \lbrace 0,1 \rbrace \rbrace$$
+
+Considering the discussion above, for an ACES implementation with $\omega=1$ and $N=1$, the objective is to construct each coefficient $f_{0,i}$ in the matrix $f_0$ as shown below, where $s$ is a random integer from the interval $[0, n-1]$ and each $a_{i,j}$ is a random zero divisor from the set $I_q$:
 
 $$f_{0,i} = \Big(\big(a_{i,n} - \sum_{k=0}^{n-1} a_{i,k}\big)~(\mathsf{mod}~q)\Big)X^s + \sum_{k=0}^{n-1} a_{i,k}X^k$$
 
-In conclusion, by choosing $q$ divisible by a non-trivial set of prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
+Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coefficients in the form:
+
+$$\alpha + p_1\dots p_{h_0} \beta$$
+
+will satisfy the equation $f_{i,0}z = 0$.
+
+In conclusion, by choosing $q$ divisible by at least 4 prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
 
 
 ### Noise on messages
