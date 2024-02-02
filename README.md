@@ -232,7 +232,7 @@ This equation implies that we are attempting to solve a system of $\rho$ linear 
 
 $$(m,k_{0},\delta,a_1, a_2, \dots, a_{n-1}, x_1(\omega_k), \dots, x_n(\omega_k), a_1', a_2', \dots, a_{n-1}')$$
 
-Given that $\rho \leq \mathsf{degree}(u) = n < n + 2n + 1$, deducing the values of $a_i$ and $a_i'$ through this approach could become particularly challenging. This difficulty becomes more pronounced when the value of $n$ exceeds 4, introducing the possibility of some roots $\omega_k$ being complex numbers and [non-expressible by radicals](https://en.wikipedia.org/wiki/Solution_in_radicals). This intricacy adds complexity to the task of [precisely determining](https://en.wikipedia.org/wiki/Wilkinson%27s_polynomial) the approximate values of the coefficients of $c^T(\omega_k)$.
+Given that $\rho \leq \mathsf{degree}(u) = n < n + 2n + 1$, deducing the values of $a_i$ and $a_i'$ through this approach could become particularly challenging. This difficulty becomes more pronounced when the value of $n$ exceeds $4$, introducing the possibility of some roots $\omega_k$ being complex numbers and [non-expressible by radicals](https://en.wikipedia.org/wiki/Solution_in_radicals). This intricacy adds complexity to the task of [precisely determining](https://en.wikipedia.org/wiki/Wilkinson%27s_polynomial) the approximate values of the coefficients of $c^T(\omega_k)$.
 
 ## Take away on parameters
 
