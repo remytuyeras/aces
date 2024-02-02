@@ -79,7 +79,7 @@ To thwart this, we observe that $q$ need not be prime. Consequently, the finite 
 
 $$\mathbb{Z}_q$$
 
-is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors guarantees the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the equation $c' = f_0^T(b + e^{\prime\prime})$.
+is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors can guarantee the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the equation $c' = f_0^T(b + e^{\prime\prime})$. This assurance holds particularly true when systematically avoiding the inclusion of a fixed prime factor of $q$ when constructing the zero divisors as products of the factors of $q$.
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
