@@ -97,9 +97,9 @@ $$f_{0,i} = \Big(\big(a_{i,n} - \sum_{k=0}^{n-1} a_{i,k}\big)~(\mathsf{mod}~q)\B
 
 Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coefficients in the form:
 
-$$\alpha + p_1\dots p_{h_0} \beta$$
+$$p_1\dots p_{h_0} \beta$$
 
-will satisfy the equation $f_{i,0}z = 0$.
+for $\beta \in \mathbb{Z}_q$ will satisfy the equation $f_{i,0}z = 0$.
 
 In conclusion, by choosing $q$ divisible by at least 4 prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
 
