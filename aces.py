@@ -161,7 +161,7 @@ class ArithChannel(object):
     self.N = 1
     # Generate values for p, q, n, u, x, f0
     self.factors = factors(intmod)
-    if self.factors != (None,)*2 or (vanmod**2 < intmod and math.gcd(intmod,vanmod) == 1):
+    if self.factors != (None,)*2 and (vanmod**2 < intmod and math.gcd(intmod,vanmod) == 1):
       self.vanmod = vanmod
       self.intmod = intmod
     else:
