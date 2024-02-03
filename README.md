@@ -91,7 +91,7 @@ would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear 
 
 #### Friability of $q$
 
-Let $p_1p_{2} \dots p_{h}$ represent the prime factorization of the integer $q$. Assuming that $h_0 = \lfloor h/2 \rfloor$ is greater than or equal to $2$, we define the set $I_q$ of zero divisors of $\mathbb{Z}_q$ as follows:
+Let $p_1p_{2} \dots p_{h}$ represent the prime factorization of the integer $q$ and let $h_0 = \lfloor h/2 \rfloor$. If we assume that $h_0$ is non-zero, then we can define a subset $I_q$ of the set of zero divisors of $\mathbb{Z}_q$ as follows:
 
 $$I_q:= \lbrace p_1^{e_1}\dots p_{h_0}^{e_{h_0}} p_{h_0+1}\dots p_{h}~|~e_i\in \lbrace 0,1 \rbrace \rbrace$$
 
@@ -105,8 +105,7 @@ $$p_1\dots p_{h_0} \beta$$
 
 for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$. Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $$f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
 
-In conclusion, by choosing $q$ divisible by at least 4 prime numbers and applying the previous construction, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, the vector $f_0(\omega)$ is composed of non-invertible coefficients, which prevents the attacker from recovering $b(\omega)$.
-
+In conclusion, by choosing $q$ non-prime and applying the previous construction, we make the attacker face the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, since the vector $f_0(\omega)$ is composed of non-invertible coefficients, the attacker cannot invert the coefficients of $f_0(\omega)$ to obtain the value of $b(\omega)$.
 
 ### Noise on messages
 
