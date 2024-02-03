@@ -87,7 +87,7 @@ The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some el
 
 $$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
 
-would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(\omega)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
+would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega = 1$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(1)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
 
 #### Non-primality of $q$
 
@@ -99,9 +99,9 @@ Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coe
 
 $$f_{i,0}z = 0$$
 
-Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
+Similarly, we can verify that the equation $f_{i,0}(1) = a_{i,n}$ holds, showing that $f_{i,0}(1)$ cannot be inverted in $\mathbb{Z}_q$.
 
-In conclusion, by choosing $q$ non-prime and applying the previous construction, we make the attacker face the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, since the vector $f_0(\omega)$ is composed of non-invertible coefficients, the attacker cannot invert the coefficients of $f_0(\omega)$ to obtain the value of $b(\omega)$.
+In conclusion, by choosing $q$ non-prime and applying the previous construction, we make the attacker face the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, since the vector $f_0(1)$ is composed of non-invertible coefficients, the attacker cannot invert the coefficients of $f_0(1)$ to obtain the value of $b(1)$.
 
 ### Noise on messages
 
@@ -272,7 +272,7 @@ To generate the public key of a scheme with fully homomorphic properties, use th
 ```python
 >>> (f0,f1,vanmod,intmod,dim,u,tensor) = ac.publish(fhe = True)
 ```
-We can quickly verify that the condition $u(\omega)=q$ holds as follows.
+We can quickly verify that the condition $u(1)=q$ holds as follows.
 ```python
 >>> u
 [1]^10+[31385100]^6+[29205715]^5+[7418748]^3+[-34455131]^2 (33554433)
