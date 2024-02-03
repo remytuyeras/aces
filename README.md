@@ -69,7 +69,7 @@ If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$
 
 ### Protecting your ciphertext 
 
-Given that a ciphertext is structured as $(f_0^Tb, r_m + b^Tf_1)$, where $f_1 = f_0^Tx + e'$ is known to all parties, it is plausible to assume that an attacker may aim to derive $b$ by eliminating $f_0$ (also known to all parties) and solving what resembles a linear equation.
+Given that a ciphertext $(c',c)$ is structured as $(f_0^Tb, r_m + b^Tf_1)$, where $f_1 = f_0^Tx + e'$ is known to all parties, it is plausible to assume that an attacker may aim to derive $b$ by eliminating $f_0$ (also known to all parties) and solving what resembles a linear equation.
 
 To eliminate $f_0$ from the expression $c' = f_0^Tb$, the attacker might exploit scenarios where $N$ is small, reducing the hyperplane's dimension (given by the equation $c' = f_0^Tb$) in which $b$ exists.
 
@@ -85,9 +85,9 @@ This assurance holds particularly true if we systematically exclude a subset of 
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
-$$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
+$$c(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
 
-would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega = 1$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(1)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
+would only yield $r_m(\tau) = c(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega = 1$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(1)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
 
 #### Non-primality of $q$
 
