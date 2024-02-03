@@ -103,9 +103,9 @@ Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coe
 
 $$p_1\dots p_{h_0} \beta$$
 
-for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$.
+for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$. Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $$f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
 
-In conclusion, by choosing $q$ divisible by at least 4 prime numbers, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, if $f_0(\omega)$ is a vector composed of non-invertible coefficients, the same applies to $f_0(\omega)$.
+In conclusion, by choosing $q$ divisible by at least 4 prime numbers and applying the previous construction, the attacker faces the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, the vector $f_0(\omega)$ is composed of non-invertible coefficients, which prevents the attacker from recovering $b(\omega)$.
 
 
 ### Noise on messages
