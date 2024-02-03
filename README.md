@@ -125,7 +125,7 @@ holds in $\mathbb{Z}$, the term
 
 $$m - \sum_{i=0}^{n-1}a_i + a_s$$
 
-will be outside the interval $[0, q-1]$, introducing an additional term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. Consequently, we establish the equivalence:
+will be outside the interval $[0, q-1]$, introducing an additional term $qk_0$ to the expression $r(m)(1)$ in $\mathbb{Z}_p$. Consequently, we have an equivalence of the following form:
 
 $$r(m)(1) \equiv m + qk_0 ~(\mathsf{mod}~p)$$
 
