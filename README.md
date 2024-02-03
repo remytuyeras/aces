@@ -81,7 +81,7 @@ such that all its components $f_{0,i}$ have coefficients that are zero divisors 
 
 $$c' = f_0^T(b + e^{\prime\prime})$$
 
-This assurance holds particularly true if we systematically exclude a subset of prime factors of $q$ in the construction of these zero divisors (see the [construction further below](#friability-of-q)).
+This assurance holds particularly true if we systematically exclude a subset of prime factors of $q$ in the construction of these zero divisors (see the [construction further below](#non-primality-of-q)).
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
@@ -89,21 +89,17 @@ $$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
 
 would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(\omega)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
 
-#### Friability of $q$
+#### Non-primality of $q$
 
-Let $p_1p_{2} \dots p_{h}$ represent the prime factorization of the integer $q$ and let $h_0 = \lfloor h/2 \rfloor$. If we assume that $h_0$ is non-zero, then we can define a subset $I_q$ of the set of zero divisors of $\mathbb{Z}_q$ as follows:
-
-$$I_q:= \lbrace p_1^{e_1}\dots p_{h_0}^{e_{h_0}} p_{h_0+1}\dots p_{h}~|~e_i\in \lbrace 0,1 \rbrace \rbrace$$
-
-To achieve a secure ACES implementation with $\omega=1$ and $N=1$, the goal is to construct each coefficient $f_{0,i}$ of the matrix $f_0$ as shown in the equation below, where $s$ is a random integer in the range $[0, n-1]$, and each $a_{i,j}$ is a random zero divisor from the set $I_q$:
+Let $q_1q_2$ represent the prime factorization of the integer $q$ such that the orders of the integers $q_1$ and q_2$ are approximately  the same (e.i. $q_i \sim \sqrt{q})$. To achieve a secure ACES implementation with $\omega=1$ and $N=1$, the goal is to construct each coefficient $f_{0,i}$ of the matrix $f_0$ as shown in the equation below, where $s$ is a random integer in the range $[0, n-1]$, and each $a_{i,j}$ is a random zero divisor of $q$ from the set $q_1\mathbb{Z} = \lbrace q_1\alpha~|~\alpha \in \mathbb{Z}\rbrace$:
 
 $$f_{0,i} = \Big(\big(a_{i,n} - \sum_{k=0}^{n-1} a_{i,k}\big)~(\mathsf{mod}~q)\Big)X^s + \sum_{k=0}^{n-1} a_{i,k}X^k$$
 
-Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coefficients in the form:
+Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coefficients in $q_2\mathbb{Z} = \lbrace q_2\alpha~|~\alpha \in \mathbb{Z}\rbrace$ will satisfy the equation:
 
-$$p_1\dots p_{h_0} \beta$$
+$$f_{i,0}z = 0$$
 
-for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$. Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
+Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
 
 In conclusion, by choosing $q$ non-prime and applying the previous construction, we make the attacker face the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, since the vector $f_0(\omega)$ is composed of non-invertible coefficients, the attacker cannot invert the coefficients of $f_0(\omega)$ to obtain the value of $b(\omega)$.
 
