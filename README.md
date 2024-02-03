@@ -31,7 +31,7 @@ To begin, let us recall the notational conventions introduced in the paper:
 
 $$\mathbb{Z}_q[X]_u = \mathbb{Z}_q[X] / u\mathbb{Z}_q[X]$$
 
-Now, let us recall how a message $m \in \mathbb{Z}_p$ is encrypted as a cyphertext $(c,c')$. In general, the ciphertext is structured as follows:
+Now, let us recall how a message $m \in \mathbb{Z}_p$ is encrypted as a ciphertext $(c,c')$. In general, the ciphertext is structured as follows:
 
 1. The first component $c$ is an $n$-vector over $\mathbb{Z}_q[X]_u$ given by $c = f_0^Tb$, where:
     - $f_0$ is an $n \times N$ matrix over $\mathbb{Z}_q[X]_u$ (chosen during key generation).
@@ -67,19 +67,21 @@ If we choose $p$ and $q$ to be coprime, then the "randomness" of the term $qk_0$
 >In the context of ACES, the security is upheld by the hardness of the LWE problem on both integers and polynomials, ensuring robustness against potential attacks.
 >
 
-### Protecting your cyphertext 
+### Protecting your ciphertext 
 
 Given that a ciphertext is structured as $(f_0^Tb, r_m + b^Tf_1)$, where $f_1 = f_0^Tx + e'$ is known to all parties, it is plausible to assume that an attacker may aim to derive $b$ by eliminating $f_0$ (also known to all parties) and solving what resembles a linear equation.
 
 To eliminate $f_0$ from the expression $c' = f_0^Tb$, the attacker might exploit scenarios where $N$ is small, reducing the hyperplane's dimension (given by the equation $c' = f_0^Tb$) in which $b$ exists.
 
-In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b$.
+In our case, with $N=1$, an attacker could attempt to divide a component of $c'$ by the corresponding component of $f_0$ to recover $b$. To prevent this, first observe that $q$ does not need to be prime. Consequently, the finite ring $\mathbb{Z}_q$ is not a field and contains various divisors of zero. Choosing the public key component
 
-To thwart this, we observe that $q$ need not be prime. Consequently, the finite ring
+$$f_0 = (f_{0,1}, \dots, f_{0,n})$$
 
-$$\mathbb{Z}_q$$
+such that all its components $f_{0,i}$ have coefficients that are zero divisors can guarantee the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the following equation:
 
-is not a field and contains various divisors of zero. Choosing $f_0 = (f_{0,1}, \dots, f_{0,n})$ such that all its components $f_{0,i}$ have coefficients that are zero divisors can guarantee the existence of a non-trivial ideal whose polynomial elements $e^{\prime\prime}$ satisfy the equation $c' = f_0^T(b + e^{\prime\prime})$. This assurance holds particularly true if we systematically avoid the inclusion of a subset of the prime factors of $q$ in the construction of these zero divisors (see the construction further below).
+$$c' = f_0^T(b + e^{\prime\prime})$$
+
+This assurance holds particularly true if we systematically exclude a subset of prime factors of $q$ in the construction of these zero divisors (see the [construction further below](#friability-of-q)).
 
 The attacker may also evaluate the product $f_0^Tb$ in $\mathbb{Z}_q$ at some element $\tau$. If the attacker can invert a component of $f_0^T(\tau)$, then they can recover $b(\tau)$. However, using $b(\tau)$ to solve the equation
 
@@ -87,11 +89,13 @@ $$f_1(\tau) = r_m(\tau) + b(\tau)^Tf_1(\tau)$$
 
 would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear random to an attacker unless $\tau = \omega$. To safeguard ACES, we choose $f_0$ such that its evaluation $f_0(\omega)$ is an $n$-vector of zero divisors in $\mathbb{Z}_q$.
 
+#### Friability of $q$
+
 Let $p_1p_{2} \dots p_{h}$ represent the prime factorization of the integer $q$. Assuming that $h_0 = \lfloor h/2 \rfloor$ is greater than or equal to $2$, we define the set $I_q$ of zero divisors of $\mathbb{Z}_q$ as follows:
 
 $$I_q:= \lbrace p_1^{e_1}\dots p_{h_0}^{e_{h_0}} p_{h_0+1}\dots p_{h}~|~e_i\in \lbrace 0,1 \rbrace \rbrace$$
 
-Considering the discussion above, for an ACES implementation with $\omega=1$ and $N=1$, the objective is to construct each coefficient $f_{0,i}$ in the matrix $f_0$ as shown below, where $s$ is a random integer from the interval $[0, n-1]$ and each $a_{i,j}$ is a random zero divisor from the set $I_q$:
+To achieve a secure ACES implementation with $\omega=1$ and $N=1$, the goal is to construct each coefficient $f_{0,i}$ of the matrix $f_0$ as shown in the equation below, where $s$ is a random integer in the range $[0, n-1]$, and each $a_{i,j}$ is a random zero divisor from the set $I_q$:
 
 $$f_{0,i} = \Big(\big(a_{i,n} - \sum_{k=0}^{n-1} a_{i,k}\big)~(\mathsf{mod}~q)\Big)X^s + \sum_{k=0}^{n-1} a_{i,k}X^k$$
 
@@ -355,7 +359,7 @@ Now that we have explored the features of the leveled FHE underlying ACES, let u
 >>> array = [rd.randint(0,5) for _ in range(8)]
 >>> enc_array = [bob.encrypt(a) for a in array]
 ```
-As seen earlier, the algorithm ```bob.encrypt()``` returns the cyphertext and its associated level. Since we cannot share levels, we want to separate them as follows.
+As seen earlier, the algorithm ```bob.encrypt()``` returns the ciphertext and its associated level. Since we cannot share levels, we want to separate them as follows.
 ```python
 >>> send_array, keep_array = map(list,zip(*enc_array))
 ```
