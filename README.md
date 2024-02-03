@@ -91,7 +91,7 @@ would only yield $r_m(\tau) = f_1(\tau) - b(\tau)^Tf_1(\tau)$, likely to appear 
 
 #### Non-primality of $q$
 
-Let $q_1q_2$ represent the prime factorization of the integer $q$ such that the orders of the integers $q_1$ and q_2$ are approximately  the same (e.i. $q_i \sim \sqrt{q})$. To achieve a secure ACES implementation with $\omega=1$ and $N=1$, the goal is to construct each coefficient $f_{0,i}$ of the matrix $f_0$ as shown in the equation below, where $s$ is a random integer in the range $[0, n-1]$, and each $a_{i,j}$ is a random zero divisor of $q$ from the set $q_1\mathbb{Z} = \lbrace q_1\alpha~|~\alpha \in \mathbb{Z}\rbrace$:
+Let $q_1q_2$ represent the prime factorization of the integer $q$ such that the orders of the integers $q_1$ and $q_2$ are approximately  the same (e.i. $q_i \sim \sqrt{q})$. To achieve a secure ACES implementation with $\omega=1$ and $N=1$, the goal is to construct each coefficient $f_{0,i}$ of the matrix $f_0$ as shown in the equation below, where $s$ is a random integer in the range $[0, n-1]$, and each $a_{i,j}$ is a random zero divisor of $q$ from the set $q_1\mathbb{Z} = \lbrace q_1\alpha~|~\alpha \in \mathbb{Z}\rbrace$:
 
 $$f_{0,i} = \Big(\big(a_{i,n} - \sum_{k=0}^{n-1} a_{i,k}\big)~(\mathsf{mod}~q)\Big)X^s + \sum_{k=0}^{n-1} a_{i,k}X^k$$
 
@@ -250,7 +250,7 @@ Throughout the preceding sections, it became evident that users must adhere to t
 - we should have $p^2 < q$
 - $p$ and $q$ should be coprime
 - to process at least $K$ layers of operations, we should have $K_0 p^{2^{K+1}} \ll q$ for some constant $K_0$.
-- the integer $q$ should not be prime
+- the integer $q$ should not be prime 
 - take $n = \mathsf{deg}(u) > 4$
 
 In light of this, users are advised to consider using a formula as follows, where $t \geq 2$, $K_0 \geq 1$, $K_1 \geq 1$ and $K \geq 1$:
