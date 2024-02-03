@@ -83,8 +83,11 @@ def randinverse(intmod):
   _, inva, k = extended_gcd(a,intmod)
   return (a,inva % intmod)
 
-def factors(n):    
-  return set(reduce(list.__add__, ([i, n//i] for i in range(1, int(n**0.5) + 1) if n % i == 0)))
+def factors(n):
+  for i in range(int(n**0.5),1,-1):
+    if n % i == 0:
+      return i, n//i
+  return None, None
 
 
 import numpy as np
@@ -156,15 +159,15 @@ class ArithChannel(object):
     # Implicit values for omega and N:
     self.omega = 1
     self.N = 1
-    # Generated values for p, q, n, u, x, f0
-    if vanmod**2 < intmod and math.gcd(intmod,vanmod) == 1:
+    # Generate values for p, q, n, u, x, f0
+    self.factors = factors(intmod)
+    if self.factors != (None,)*2 or (vanmod**2 < intmod and math.gcd(intmod,vanmod) == 1):
       self.vanmod = vanmod
       self.intmod = intmod
     else:
        self.vanmod = vanmod
        self.intmod = (vanmod+1)**2
-    self.factors = sorted(factors(self.intmod))
-    self.factors = self.factors[2:] if len(self.factors) > 3 else self.factors[1:]
+       self.factors = (p+1,p+1)
     self.dim = dim
     self.u = self.generate_u()
     self.x, self.tensor = self.generate_secret(self.u)
@@ -243,10 +246,12 @@ class ArithChannel(object):
 
   def generate_initializer(self):
     f0 = []
+    # divisor of self.intmod
+    q1 = random.choice(self.factors)
     for i in range(self.dim):
-      f0_res = Polynomial([random.choice(self.factors) for _ in range(self.dim)],self.intmod)
+      f0_res = Polynomial([ (q1 * random.randrange(self.intmod)) % self.intmod for _ in range(self.dim)],self.intmod)
       deg_shift = [0]*(random.randrange(self.dim))
-      shift = Polynomial(deg_shift + [random.choice(self.factors) - sum(f0_res.coefs)],self.intmod)
+      shift = Polynomial(deg_shift + [(q1 * random.randrange(self.intmod)) % self.intmod- sum(f0_res.coefs)],self.intmod)
       f0.append(shift+f0_res)
     return f0
 
