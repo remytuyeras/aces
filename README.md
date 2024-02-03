@@ -103,7 +103,7 @@ Then, it can be verified that any polynomial $z$ in $\mathbb{Z}_q[X]_u$ with coe
 
 $$p_1\dots p_{h_0} \beta$$
 
-for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$. Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $$f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
+for any integer $\beta$ will satisfy the equation $f_{i,0}z = 0$. Similarly, we can verify that the equation $f_{i,0}(\omega) = a_{i,n}$ holds, showing that $f_{i,0}(\omega)$ cannot be inverted in $\mathbb{Z}_q$.
 
 In conclusion, by choosing $q$ non-prime and applying the previous construction, we make the attacker face the challenge of finding the representative $b$ up to an ideal of polynomials. Additionally, since the vector $f_0(\omega)$ is composed of non-invertible coefficients, the attacker cannot invert the coefficients of $f_0(\omega)$ to obtain the value of $b(\omega)$.
 
@@ -481,4 +481,4 @@ If we now combine this second layer with the output of the refresh operation, we
 >>> alice.decrypt(online2)
 10
 ```
-A limitation in our presentation was that our algorithm struggled to handle numerous layers of additions and multiplications. Although this might restrict the volume of information processed simultaneously, we could enhance the level range by setting $p=2$ and $q = 2^{2^5+5}+1 = 137438953473 =  3\cdot 1777\cdot 5331\cdot 25781083 \cdot 77343249\cdot 45812984491 \cdot 137438953473$.
+A limitation in our presentation was that our algorithm struggled to handle numerous layers of additions and multiplications. Although this might restrict the volume of information processed simultaneously, we could enhance the level range by setting $p=2$ and $q = 2^{2^5+5}+1 = 137438953473 =  3\cdot 1777\cdot 25781083$.
