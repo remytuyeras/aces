@@ -193,7 +193,7 @@ there exists a tuple $(a_0',a_1',\dots,a_{n-1}')$ of integers in the range $[0, 
 
 $$\sum_{s+t = r } a_{i,s} a_{j,t} - \sum_{s+t = r } \mu_{s} a_{t}' = \sum_{k=0}^{n-1}\lambda_{i,j}^{k} a_{k,r}.$$
 
-Solving this set of equations involves finding a <u>specific</u> solution $(a_{1,0},\dots,a_{n-1,n},a_0',\dots,a_{n-1}')$ for a system of $n$ quadratic polynomial equations
+Solving this set of equations involves finding a <u>specific</u> solution $(a_{1,0},\dots,a_{n,n-1},a_0',\dots,a_{n-1}')$ for a system of $n$ quadratic polynomial equations
 
 $$f_1(w_1,\dots,w_{n(n+1)}) = 0,$$
 
