@@ -16,7 +16,12 @@ The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_mal
 
 # Installation
 
-At this time, the only way to install the package is to download its code and use it in your own code as follows.
+Install the package using ```pip```:
+
+```shell
+pip install pyaces
+```
+Then use the folloiwng instruction to use the package in your Python code.
 
 ```python
 from pyaces import *

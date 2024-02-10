@@ -4,7 +4,7 @@
 
 [project]
 name = "pyaces"
-version = "0.0.0"
+version = "0.0.1"
 description = "A python library for the fully homomorphic encryption scheme ACES"
 license.text = "MIT"
 authors = [
@@ -33,17 +33,7 @@ classifiers=[
 dependencies = [
     "build",                   # Deploy  Build sdists
     "twine",                   #         Publish package to pypi
-    "mkdocstrings-python",     # Docs    Generate mkdocs from docstrings
-    "pydispatch",              # Events  Message passing between objects
-    "logging518",              # Logging Configure logging using Pyproject.toml
-    "ruff",                    # QA      Linting and formatting
-    "pytest",                  #         Run test package
-    "coverage",                #         Compute test coverage
-    "mypy",                    #         Static type checking
-    "autohooks",               #         Git hooks
-    "autohooks-plugin-ruff",   #         Ruff git hook
-    "autohooks-plugin-pytest", #         Pytest git hook
-    "autohooks-plugin-mypy",   #         Mypy git hook
+    "numpy",
 ]
 
 [project.urls]
