@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 setuptools.setup(
   name = 'pyaces',
   packages=setuptools.find_packages(include=['pyaces']),
-  version = 'v0.0.1',
+  version = 'v0.0.4',
   license='MIT',
   author = 'Remy Tuyeras',
   author_email = 'rtuyeras@gmail.com',
@@ -14,7 +14,7 @@ setuptools.setup(
   long_description = long_description,
   long_description_content_type = "text/markdown",
   url = 'https://github.com/remytuyeras/aces',
-  download_url = 'https://github.com/remytuyeras/aces/archive/refs/tags/aces-0.0.1.tar.gz',
+  #downlod_url = 'https://github.com/remytuyeras/aces/archive/refs/tags/aces-0.0.2.tar.gz',
   keywords = ["ACES", "PyACES"],
   install_requires=['numpy'],
   classifiers=[

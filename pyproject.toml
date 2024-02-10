@@ -4,7 +4,7 @@
 
 [project]
 name = "pyaces"
-version = "0.0.1"
+version = "0.0.4"
 description = "A python library for the fully homomorphic encryption scheme ACES"
 license.text = "MIT"
 authors = [
@@ -23,8 +23,6 @@ classifiers=[
   "Programming Language :: Python :: 3",
   "Programming Language :: Python :: 3.9",
 ]
-
-
 
 
 # Dependencies

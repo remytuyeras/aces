@@ -21,10 +21,15 @@ Install the package using ```pip```:
 ```shell
 pip install pyaces
 ```
-Then use the folloiwng instruction to use the package in your Python code.
+Then use the following import in your Python code.
 
 ```python
-from pyaces import *
+import pyaces
+```
+
+To upgrade to the [latest version](https://pypi.org/project/pyaces/):
+```shell
+pip install --upgrade pyaces==version_number
 ```
 
 # Parameterization
