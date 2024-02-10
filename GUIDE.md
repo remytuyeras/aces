@@ -8,7 +8,7 @@
 
 ## Recap
 
-ACES depends on the generation of an arithmetic channel, defined as a quadruple $\mathsf{C} = (p, q, \omega, u)$, where $p$, $q$, and $\omega$ are positive integers, and $u$ is a polynomial in $\mathbb{Z}[X]$ satisfying the equation $u(\omega) = q$ in $\mathbb{Z}$. While the integer $\omega$ remains fixed at $1$ and the ACES library automatically generates the polynomial $u$, the user is still required to manually select the values for $p$ and $q$.
+ACES depends on the generation of an arithmetic channel, defined as a quadruple $\mathrm{C} = (p, q, \omega, u)$, where $p$, $q$, and $\omega$ are positive integers, and $u$ is a polynomial in $\mathbb{Z}[X]$ satisfying the equation $u(\omega) = q$ in $\mathbb{Z}$. While the integer $\omega$ remains fixed at $1$ and the ACES library automatically generates the polynomial $u$, the user is still required to manually select the values for $p$ and $q$.
 
 Importantly, the security of ACES relies on two consecutive modulus operations, specifically involving the positive integers $q$ and $p$. We will review the corresponding security principles pertaining to these two integers in the subsequent subsections.
 
@@ -32,7 +32,7 @@ The ACES framework encrypts a message $m \in \mathbb{Z}_p$ as a ciphertext $(c,c
 
 Given that the public key takes the form $(f_0, f_1)$ with $f_1 = f_0^Tx + e'$, it is reasonable to assume that an attacker's objective might involve deducing the value of $x$ by analyzing the distribution of $f_1$.
 
-First, let us establish that the polynomial $e' = (e_1',\dots,e_N')$ is determined by the sender $\mathsf{Bob}$ through the selection of a random $N \times n$-matrix $(a_{i,j})_{i,j}$ in $\mathbb{Z}_q$, a random $N$-vector $s=(s_1,s_2,\dots,s_N)$ of non-negative integers $s_i < n$ and a random $N$-vector 
+First, let us establish that the polynomial $e' = (e_1',\dots,e_N')$ is determined by the sender $\mathrm{Bob}$ through the selection of a random $N \times n$-matrix $(a_{i,j})_{i,j}$ in $\mathbb{Z}_q$, a random $N$-vector $s=(s_1,s_2,\dots,s_N)$ of non-negative integers $s_i < n$ and a random $N$-vector 
 
 $$\epsilon=(\epsilon_1,\epsilon_2,\dots,\epsilon_N)$$
 
@@ -40,21 +40,21 @@ of elements $\epsilon_{i} \in \lbrace 0,1\rbrace$ with the following conditions:
 - The equation $\epsilon_{i} = 0$ holds with probability $\mathbb{P}_i$.
 - The expression for $e'_i$ is given by the following formula
 
-$$e'_i = \Big(\big(p \epsilon_{i} - \sum_{j=0}^{n-1} a_{i,j} \big)~(\mathsf{mod}~q)\Big)X^{s_i} + \sum_{i=0}^{n-1} a_{i,j}X^j$$
+$$e_i' = \Big(\big(p \epsilon_{i} - \sum_{j=0}^{n-1} a_{i,j} \big)~(\mathrm{mod}~q)\Big)X^{s_i} + \sum_{i=0}^{n-1} a_{i,j}X^j$$
 
 
 #### Attacks in $\mathbb{Z}_q[X]_u$
 
 Given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the polynomials 
 
-$$f_{1,i} - \mathsf{row}_i(f_0)^Tx'$$
+$$f_{1,i} - \mathrm{row}_i(f_0)^Tx'$$
 
 for every $i \in \lbrace 1,2,\dots,N\rbrace$. Note that the sample associated with this distribution is given by the following set.
 
-$$\lbrace \mathsf{row}_i(f_0)^T(x-x') + e_i' ~|~i \in \lbrace 1,2,\dots,N\rbrace \rbrace$$
+$$\lbrace \mathrm{row}_i(f_0)^T(x-x') + e_i' ~|~i \in \lbrace 1,2,\dots,N\rbrace \rbrace$$
 
 If the attacker found an element $x'$ such that $f_0^Tx = f_0^Tx'$, the previous distribution would appear random since the distribution of the coefficients $a_{i,j}$
-is uniform. More specifically, in this scenario, the polynomials are examined coefficient by coefficient, which means that the attacker would only perceive the randomness of each coefficient and not their overall relationships. We reach a similar conclusion for any other element $x'$, as the summand $\mathsf{row}_i(f_0)^T(x-x')$ would merely shift the random behavior by a constant value. As a result, ACES benefits from the hardness of the RLWE problem.
+is uniform. More specifically, in this scenario, the polynomials are examined coefficient by coefficient, which means that the attacker would only perceive the randomness of each coefficient and not their overall relationships. We reach a similar conclusion for any other element $x'$, as the summand $\mathrm{row}_i(f_0)^T(x-x')$ would merely shift the random behavior by a constant value. As a result, ACES benefits from the hardness of the RLWE problem.
 
 
 >[!NOTE]
@@ -72,17 +72,17 @@ It is worth noting that the probability of $k_i$ being non-zero is high, given t
 
 Specifically, given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the integers 
 
-$$f_{1,i}(\omega) - \mathsf{row}_i(f_0(\omega))^Tx'(\omega)\quad(\mathsf{mod}\,q),$$
+$$f_{1,i}(\omega) - \mathrm{row}_i(f_0(\omega))^Tx'(\omega)\quad(\mathrm{mod}\,q),$$
 
-The previous integer can be calculated as a difference of the form $\chi_i = f_{1,i}(\omega)- \mathsf{row}_i(f_0(\omega))^Tx'(\omega)-qk_i'$ for some positive integer $k_i'$. This means that the attacker has access to a distribution of the following form:
+The previous integer can be calculated as a difference of the form $\chi_i = f_{1,i}(\omega)- \mathrm{row}_i(f_0(\omega))^Tx'(\omega)-qk_i'$ for some positive integer $k_i'$. This means that the attacker has access to a distribution of the following form:
 
-$$\chi_i =\mathsf{row}_i(f_0(\omega))^T(x(\omega)-x'(\omega)) + p \epsilon_{i}+q(k_i-k_i')$$
+$$\chi_i =\mathrm{row}_{i}(f_0(\omega))^T(x(\omega)-x'(\omega)) + p \epsilon_{i}+q(k_i-k_i')$$
 
 The previous formula means that if $f_0^Tx = f_0^Tx'$, then the distribution of the data points is restricted to elements of the form $qk + p \epsilon$ with $\epsilon \in \lbrace 0,1 \rbrace$ and $k \in \mathbb{N}$. Without any assumption on $f_0$, this may give a way for an attacker to search for elements $x'$ capturing the values of $x$ when evaluated at the element $\omega$.
 
 However, if we sample $f_0 = (f_{0,i,j})_{i,j}$ according to the formula
 
-$$f_{0,i,j} = \Big(\big(p k_{i,j} - \sum_{k=0}^{n-1} v_{i,j,k}\big)~(\mathsf{mod}~q)\Big)X^{s_{i,j}} + \sum_{k=0}^{n-1} v_{i,j,k}X^k$$
+$$f_{0,i,j} = \Big(\big(p k_{i,j} - \sum_{k=0}^{n-1} v_{i,j,k}\big)~(\mathrm{mod}~q)\Big)X^{s_{i,j}} + \sum_{k=0}^{n-1} v_{i,j,k}X^k$$
 
 where each $s_{i,j}$ is a random integer from the interval $[0,n-1]$, each $k_{i,j}^{\prime\prime}$ is a random element from  $\mathbb{Z}_q$ and each $v_{i,j,k}$ is a random element from $\mathbb{Z}_q$, then we have the property that $f_{0,i,j}(\omega)$ is a non-trivial multiple $p k_{i,k}$ of $p$ in $\mathbb{Z}_q$. In other words, the distribution of the data points $\chi_i$ looks more like a random sample of elements from $p\mathbb{N} + q\mathbb{Z}$. If we choose $p$ and $q$ to be coprime, then the set $p\mathbb{N} + q\mathbb{Z}$ is equal to $\mathbb{N}$, which means that that the distribution of our data points $\chi_i$ would just look uniform in $\mathbb{Z}_q$. Indeed, suppose that we can find $x'$ such that there are $\eta_i \in \lbrace 0,1\rbrace$ and $\kappa_i \in \mathbb{N}$ for which the following equation holds.
 
@@ -94,7 +94,7 @@ $$q(\kappa_i + k_i'-k_i) = p\Big((k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) + 
 
 When $p$ and $q$ are coprime, the previous equation can be decomposed into two relations as follows:
 
-$$k_i \equiv \kappa_i + k_i' \,(\mathsf{mod}\,p) \quad\quad\quad (k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) \equiv \eta_i - \epsilon_{i}  \,(\mathsf{mod}\,q)$$
+$$k_i \equiv \kappa_i + k_i' \,(\mathrm{mod}\,p) \quad\quad\quad (k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) \equiv \eta_i - \epsilon_{i}  \,(\mathrm{mod}\,q)$$
 
 The equation displayed on the right says that the vector $(k_i^{\prime\prime})^Tx'(\omega)$ in $\mathbb{Z}_q$ is of the form 
 
@@ -112,25 +112,25 @@ holds and where the folloiwng conditions are satisfied:
 - $r_m$ is an element of $\mathbb{Z}_q[X]_u$ such that the value $r_m(\omega)$ is equal to the value of a message $m$ in $\mathbb{Z}_q$;
 - $e$ is an element of $\mathbb{Z}_q[X]_u$ such that the value $e(\omega)$ is a multiple of $p$ in $\mathbb{Z}_q$.
 
-Here, it is reasonable to assume that an attacker's objective might involve deducing the value of $r_m$ by analyzing the distribution of $c'$. To discuss this scenario, let us establish that the polynomial $r_m$ is determined by the sender $\mathsf{Bob}$ through the selection of $n$ random coefficients $m_0, m_1, \dots, m_{n-1}$ in $\mathbb{Z}_q$ and a random non-negative integer $s < n$. This encoding follows the formula:
+Here, it is reasonable to assume that an attacker's objective might involve deducing the value of $r_m$ by analyzing the distribution of $c'$. To discuss this scenario, let us establish that the polynomial $r_m$ is determined by the sender $\mathrm{Bob}$ through the selection of $n$ random coefficients $m_0, m_1, \dots, m_{n-1}$ in $\mathbb{Z}_q$ and a random non-negative integer $s < n$. This encoding follows the formula:
 
-$$r_m = \Big(\big(m - \sum_{i=0}^{n-1} m_i\big)~(\mathsf{mod}~q)\Big)X^s + \sum_{i=0}^{n-1} m_iX^i$$
+$$r_m = \Big(\big(m - \sum_{i=0}^{n-1} m_i\big)~(\mathrm{mod}~q)\Big)X^s + \sum_{i=0}^{n-1} m_iX^i$$
 
 #### Important considerations
 
 While the previous structure can already suggest various attack models on the ciphertext, it is important to note that the encryption of a given message $m$ by ACES is even more specific as $e = b^Te'$ and $c = b^Tf_1$. 
 
-In our implementation, the polynomial $b$ is determined by $\mathsf{Bob}$ through the selection of $n$ random coefficients $b_0, b_1, \dots, b_{n-1}$ in $\mathbb{Z}_q$, a random non-negative integer $s' < n$ and a random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ with the formula:
+In our implementation, the polynomial $b$ is determined by $\mathrm{Bob}$ through the selection of $n$ random coefficients $b_0, b_1, \dots, b_{n-1}$ in $\mathbb{Z}_q$, a random non-negative integer $s' < n$ and a random element $\delta_1 \in \lbrace 0,1,\dots,p\rbrace$ with the formula:
 
-$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)~(\mathsf{mod}~q)\Big)X^{s'} + \sum_{i=1}^{n-1} b_iX^i$$
+$$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)~(\mathrm{mod}~q)\Big)X^{s'} + \sum_{i=1}^{n-1} b_iX^i$$
 
 While $b$ is generated randomly, it still has the property that $b(\omega) \in \lbrace 0,1,\dots,p \rbrace$, which may give some advantage to an attacker as the evaluation $(be')(\omega)$ womightuld still be small in $\mathbb{Z}_q$.
 
 To prevent an attacker to take advantage of the previous properties, the encrypter is recommanded to apply a random identity operation on the encrypted data to convert it into a ciphetext $(c,c')$ with a general as defined above.
 
-For example, the ciphertext resulting from the following operations on the encrypted data $\mathsf{E}_{r_2}(m)$ can still be decoded as $m$, but it does not have the same form as if it had just been produced by ACES:
+For example, the ciphertext resulting from the following operations on the encrypted data $\mathrm{E}_{r_2}(m)$ can still be decoded as $m$, but it does not have the same form as if it had just been produced by ACES:
 
-$$\mathsf{E}_{r_1}(1) \otimes \mathsf{E}_{r_2}(m) \oplus \mathsf{E}_{r_3}(0)\oplus\mathsf{E}_{r_4}(0) \otimes \mathsf{E}_{r_5}(1)$$
+$$\mathrm{E}_{r_1}(1) \otimes \mathrm{E}_{r_2}(m) \oplus \mathrm{E}_{r_3}(0)\oplus\mathrm{E}_{r_4}(0) \otimes \mathrm{E}_{r_5}(1)$$
 
 However, since every general ciphertext should be assumed to result from a homomorphic operation on ciphertexts generated by ACES, general ciphertexts still have some structure that can be exploited if the matrix $f_0 = (f_{0,i,j})_{i,j}$ satisfies certain properties. For example, if the evaluations $f_{0,i,j}(\omega)$ are all multiples of $p$ in $\mathbb{Z}$, then so do the coefficients of the vectors $c$ associated with any ciphertext $(c,c')$. These considerations are taken into account in the following two sections.
 
@@ -138,15 +138,15 @@ However, since every general ciphertext should be assumed to result from a homom
 
 Given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the coefficients making the polynomial $c' - c^Tx'$. Specifically, the sample associated with this distribution is given by the following set.
 
-$$\lbrace \mathsf{coef}_{i}(r_{m}) + \sum_{j=0}^{i} \mathsf{coef}_{j}(c) \cdot \mathsf{coef}_{i-j}(x-x') + \mathsc{coef}_i(e) ~|~j \in \lbrace 0,2,\dots,n-1\rbrace \rbrace$$
+$$\lbrace \mathrm{coef}_{i}(r_{m}) + \sum_{j=0}^{i} \mathrm{coef}_{j}(c) \cdot \mathrm{coef}_{i-j}(x-x') + \mathsc{coef}_i(e) ~|~j \in \lbrace 0,2,\dots,n-1\rbrace \rbrace$$
 
 If the attacker found an element $x'$ such that $c^Tx = c^Tx'$, the previous distribution would appear random because the polynomial $e$ can be expressed as products and sums of polynomials whose coefficients are randomly picked in $\mathbb{Z}_q$. 
 
 Note that, in our scenario, the polynomials are examined coefficient by coefficient, which means that the attacker would only perceive the randomness of each coefficient and not their overall relationships. For example, the $s$-th coefficient of $r_m$, which is of the form 
 
-$$(m - \sum_{i=0}^{n-1} m_i + m_s \big)~(\mathsf{mod}~q)$$
+$$(m - \sum_{i=0}^{n-1} m_i + m_s \big)~(\mathrm{mod}~q)$$
 
-would still look random. Indeed, during the generation of $r_m$, $\mathsf{Bob}$ has the freedom to select $a_0, a_1, \dots, a_{n-1}$ such that the inequality 
+would still look random. Indeed, during the generation of $r_m$, $\mathrm{Bob}$ has the freedom to select $a_0, a_1, \dots, a_{n-1}$ such that the inequality 
 
 $$m < \sum_{i=1}^{s-1}m_i + \sum_{i=s+1}^{n-1}m_i < q$$
 
@@ -156,7 +156,7 @@ $$m - \sum_{i=0}^{n-1}m_i + m_s$$
 
 lands outside the interval $[0, q-1]$, which introduces an additional term $qk_0$ to the computation of the $s$-th coeffcient in $\mathbb{Z}_q$. 
 
-$$(m - \sum_{i=0}^{n-1} m_i + m_s \big)~(\mathsf{mod}~q) = m - \sum_{i=1}^{s-1}m_i - \sum_{i=s+1}^{n-1}m_i + qk_0$$
+$$(m - \sum_{i=0}^{n-1} m_i + m_s \big)~(\mathrm{mod}~q) = m - \sum_{i=1}^{s-1}m_i - \sum_{i=s+1}^{n-1}m_i + qk_0$$
 
 Furthermore, because each coefficient $m_i$ is taken randomly in the interval $[0, q-1]$, the sum $m - \sum_{i=0}^{n-1}m_i + m_s$ varies within the interval $[-(n-1)q,p]$. Consequently, the element $k_0$ should reasonably be inferred within the interval $[0,n]$. This calculation also suggests that the value of $k_0$ is mainly determined by the coeffcients $m_i$ as the value $m$ is less than $p$, which can be considered much smaller than $q$ (since $p^2 < q$).
 
@@ -174,7 +174,7 @@ It is worth noting that the probability of $k_0$ and $k_1$ being non-zero is hig
 
 Specifically, given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$ and an integer $m' \in \mathbb{Z}_p$, an attacker may want to decompose the following quantity:
 
-$$c'(\omega) - c(\omega)^Tx'(\omega) - m'\quad(\mathsf{mod}\,q),$$
+$$c'(\omega) - c(\omega)^Tx'(\omega) - m'\quad(\mathrm{mod}\,q),$$
 
 The previous integer can be calculated as a difference of the form $\chi = c'(\omega) - c(\omega)^Tx'(\omega) - m'-qk_2$ for some positive integer $k_2$. This means that the attacker has access to a quantity of the following form:
 
@@ -259,15 +259,15 @@ Indeed, observe that the monomial $a_{i,s}a_{j,t}$ can only appear in the equati
 ### Cost of homomorphism
 
 
-ACES is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathsf{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
+ACES is a fully homomorphic encryption scheme that initially relies on a leveled FHE framework. This framework is then equipped with a refresh operation $\mathrm{refr}$ designed to mitigate the level increase resulting from arithmetic operations. In this section, we explore the conditions that must be satisfied by the parameters $p$ and $q$ to leverage the homomorphism property.
 
-For two ciphertexts $(c_1, c_1') \in S_{\mathsf{C},k_1}(m_1)$ and $(c_2, c_2') \in S_{\mathsf{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
+For two ciphertexts $(c_1, c_1') \in S_{\mathrm{C},k_1}(m_1)$ and $(c_2, c_2') \in S_{\mathrm{C},k_2}(m_2)$ with respective levels $k_1$ and $k_2$, the homomorphic sum of these ciphertexts can be computed if the inequality shown below on the left holds:
 
-$$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in S_{\mathsf{C}, k_1 + k_2}(m_1 + m_2)$$
+$$k_1 + k_2 < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \oplus (c_2, c_2') \in S_{\mathrm{C}, k_1 + k_2}(m_1 + m_2)$$
 
 Similarly, for a suited parameter $\lambda$ (refer to [the paper in section 5.2](https://arxiv.org/abs/2401.13255)), the homomorphic product of the ciphertexts $(c_1, c_1')$ and $(c_2, c_2')$ is achievable if the inequality shown below on the left holds:
 
-$$k_1 k_2 p < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in S_{\mathsf{C}, k_1 k_2 p}(m_1 m_2)$$
+$$k_1 k_2 p < \frac{q}{p} \quad\quad\quad\Rightarrow\quad\quad\quad (c_1, c_1') \otimes_{\lambda} (c_2, c_2') \in S_{\mathrm{C}, k_1 k_2 p}(m_1 m_2)$$
 
 Furthermore, given that any encryption $(c, c')$ produced through ACES is constrained by an upper bound represented by the integer $Np$, we can derive an estimate for $q$ in terms of $p$ and $N$ to ensure the system's capability to be decrypted after homomorphic additions and multiplications. To elaborate further, starting with ciphertexts generated by ACES, a multiplication operation results in a level of $N^2p^3$, whereas an addition operation yields a level of $2Np$. Consequently, a combination of additions and multiplications in the form:
 
@@ -301,7 +301,7 @@ This equation implies that we are attempting to solve a system of $\rho$ linear 
 
 $$(m,k_{0},\delta,a_1, a_2, \dots, a_{n-1}, x_1(\omega_k), \dots, x_n(\omega_k), a_1', a_2', \dots, a_{n-1}')$$
 
-Given that $\rho \leq \mathsf{degree}(u) = n < n + 2n + 1$, deducing the values of $a_i$ and $a_i'$ through this approach could become particularly challenging. This difficulty becomes more pronounced when the value of $n$ exceeds $4$, introducing the possibility of some roots $\omega_k$ being complex numbers and [non-expressible by radicals](https://en.wikipedia.org/wiki/Solution_in_radicals). This intricacy adds complexity to the task of [precisely determining](https://en.wikipedia.org/wiki/Wilkinson%27s_polynomial) the approximate values of the coefficients of $c^T(\omega_k)$.
+Given that $\rho \leq \mathrm{degree}(u) = n < n + 2n + 1$, deducing the values of $a_i$ and $a_i'$ through this approach could become particularly challenging. This difficulty becomes more pronounced when the value of $n$ exceeds $4$, introducing the possibility of some roots $\omega_k$ being complex numbers and [non-expressible by radicals](https://en.wikipedia.org/wiki/Solution_in_radicals). This intricacy adds complexity to the task of [precisely determining](https://en.wikipedia.org/wiki/Wilkinson%27s_polynomial) the approximate values of the coefficients of $c^T(\omega_k)$.
 
 ## Take away on parameters
 
@@ -310,4 +310,4 @@ Throughout the preceding sections, we showed that users should adhere to the fol
 - we should have $p^2 < q$
 - $p$ and $q$ should be coprime
 - to process at least $K$ layers of operations, we should have $q \gg  (K_0Np)^{2^{K+1}}$ for some constant $K_0$.
-- we should take $n = \mathsf{deg}(u) > 4$
+- we should take $n = \mathrm{deg}(u) > 4$
