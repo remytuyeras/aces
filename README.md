@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="300px" src="img/twofish.png" style="border: 5px solid grey;"/>
+  <img width="300px" src="img/twofish.png" style="border: 3 solid grey;"/>
   <h1 align="center">PyACES</a></h1>
   <p align="center">A python library for the fully homomorphic encryption scheme ACES</p>
 </p>
