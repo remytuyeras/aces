@@ -82,7 +82,9 @@ However, if we sample $f_0 = (f_{0,i,j})_{i,j}$ according to the formula
 
 $$f_{0,i,j} = \Big(\big(p k_{i,j} - \sum_{k=0}^{n-1} v_{i,j,k}\big)~(\mathsf{mod}~q)\Big)X^{s_{i,j}} + \sum_{k=0}^{n-1} v_{i,j,k}X^k$$
 
-where each $s_{i,j}$ is a random integer from the interval $[0,n-1]$, each $k_{i,j}^{\prime\prime}$ is a random element from  $\mathbb{Z}_q$ and each $v_{i,j,k}$ is a random element from $\mathbb{Z}_q$, then we have the property that $f_{0,i,j}(\omega)$ is a non-trivial multiple $p k_{i,k}$ of $p$ in $\mathbb{Z}_q$. In other words, the distribution of the data points $\chi_i$ looks more like a random sample of elements from $p\mathbb{N} + q\mathbb{Z}$. If we choose $p$ and $q$ to be coprime, then the set $p\mathbb{N} + q\mathbb{Z}$ is equal to $\mathbb{N}$, which means that that the distribution of our data points $\chi_i$ would just look uniform in $\mathbb{Z}_q$. Indeed, suppose that we can find $x'$ such that there are $\eta_i \in \lbrace 0,1\rbrace$ and $\kappa_i \in \mathbb{N}$ for which the following equation holds.
+where $s_{i,j}$ is a random integer from the interval $[0,n-1]$, and $k_{i,j}^{\prime\prime}$ and $v_{i,j,k}$ are random integers from $[0,q-1]$, then we have the property that $f_{0,i,j}(\omega)$ is a non-trivial multiple $p k_{i,k}$ of $p$ in $\mathbb{Z}_q$. 
+
+In other words, the distribution of the data points $\chi_i$ looks more like a random sample of elements from $p\mathbb{N} + q\mathbb{Z}$. If we choose $p$ and $q$ to be coprime, then the set $p\mathbb{N} + q\mathbb{Z}$ is equal to $\mathbb{N}$, which means that that the distribution of our data points $\chi_i$ would just look uniform in $\mathbb{Z}_q$. Indeed, suppose that we can find $x'$ such that there are $\eta_i \in \lbrace 0,1\rbrace$ and $\kappa_i \in \mathbb{N}$ for which the following equation holds.
 
 $$\chi_i = p \eta_i + q \kappa_i$$
 
