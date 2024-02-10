@@ -11,7 +11,7 @@ This package proposes an implementation for the ACES cryptosystem where we take 
 The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_malleability_](https://en.wikipedia.org/wiki/Malleability_(cryptography)). In the Pisces symbol, the two fishes represent a harmonious interplay between opposite directions, reflecting the dual nature of encryption and decryption.
 
 > [!WARNING]
-> Despite the announcement made in the research paper, this implementation has been generalized to any value $N\geq 1$. See the [mathematical guide](GUIDE.md) for more details on different parameter choices while keeping ACES secure.
+> Despite the announcement made in the research paper, this implementation has been generalized to any value $N\geq 1$. See the guide attached with this repo for more details on different parameter choices while keeping ACES secure.
 >
 
 # Installation
