@@ -55,7 +55,7 @@ $$q = (K_0Np)^{t^{K+1} + K_1 } + 1$$
 
 To create an arithmetic channel $\mathsf{C} = (p,q,\omega,u)$, use the class ```ArithChannel```. The following snippet shows how to generate an arithmetic channel with
 - $p=2^5 = 32$, 
-- $q=\cdot p^{2^2+1}+1 = 33554433$, 
+- $q= p^{2^2+1}+1 = 33554433$, 
 - $\mathsf{deg}(u) = 10 = n$ 
 - and $N=2$
 ```python
@@ -106,7 +106,7 @@ The following example illustrates an encryption of the message $m=3$. The encryp
 >>> enc3.uplvl
 64
 ```
-In the preceding example, the vector ```k3``` can be used to determine the level of the ciphertext $(c,c')$ by computing its scalar product with the vector ```ac.lvl_e```. The integer ```enc3.uplvl``` is known to all parties and represents an upper bound on the level of $(c,c')$. It is crucial to emphasize that, in practical scenarios, the vector ```k3``` should remain confidential, and only its theoretical upper bound ```enc3.uplvl``` is deemed safe to share. In fact, it is strongly recommended to retain only integers $0 \leq k'_i \leq$```k3[i]``` and securely erase ```k3``` from the computer memory.
+In the previous example, the vector ```k3``` can be used to determine the level of the ciphertext $(c,c')$. Specifically, this is done by computing the scalar product of ```k3``` with the vector ```ac.lvl_e```. The integer ```enc3.uplvl``` is known to all parties and represents an upper bound on the level of $(c,c')$. It is crucial to emphasize that, in practical scenarios, the vector ```k3``` (and the vector ```ac.lvl_e```) should remain confidential, and only the theoretical upper bound ```enc3.uplvl``` is deemed safe to share. In fact, it is strongly recommended to retain only integers $0 \leq k'_i \leq$```k3[i]``` and securely erase ```k3``` from the computer memory.
 
 
 To decrypt an encrypted message, use the ```ACESReader``` class. The following example demonstrates how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
