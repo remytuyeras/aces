@@ -32,7 +32,11 @@ The ACES framework encrypts a message $m \in \mathbb{Z}_p$ as a ciphertext $(c,c
 
 Given that the public key takes the form $(f_0, f_1)$ with $f_1 = f_0^Tx + e'$, it is reasonable to assume that an attacker's objective might involve deducing the value of $x$ by analyzing the distribution of $f_1$.
 
-First, let us establish that the polynomial $e' = (e_1',\dots,e_N')$ is determined by the sender $\mathsf{Bob}$ through the selection of a random $N \times n$-matrix $(a_{i,j})_{i,j}$ in $\mathbb{Z}_q$, a random $N$-vector $s=(s_1,s_2,\dots,s_N)$ of non-negative integers $s_i < n$ and a random $N$-vector $\epsilon=(\epsilon_1,\epsilon_2,\dots,\epsilon_N)$ of elements $\epsilon_{i} \in \lbrace 0,1\rbrace$ with the following conditions:
+First, let us establish that the polynomial $e' = (e_1',\dots,e_N')$ is determined by the sender $\mathsf{Bob}$ through the selection of a random $N \times n$-matrix $(a_{i,j})_{i,j}$ in $\mathbb{Z}_q$, a random $N$-vector $s=(s_1,s_2,\dots,s_N)$ of non-negative integers $s_i < n$ and a random $N$-vector 
+
+$$\epsilon=(\epsilon_1,\epsilon_2,\dots,\epsilon_N)$$
+
+of elements $\epsilon_{i} \in \lbrace 0,1\rbrace$ with the following conditions:
 - The equation $\epsilon_{i} = 0$ holds with probability $\mathbb{P}_i$.
 - The expression for $e'_i$ is given by the following formula
 
@@ -41,7 +45,11 @@ $$e'_i = \Big(\big(p \epsilon_{i} - \sum_{j=0}^{n-1} a_{i,j} \big)~(\mathsf{mod}
 
 #### Attacks in $\mathbb{Z}_q[X]_u$
 
-Given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the polynomials $f_{1,i} - \mathsf{row}_i(f_0)^Tx'$ for every $i \in \lbrace 1,2,\dots,N\rbrace$. Note that the sample associated with this distribution is given by the following set.
+Given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the polynomials 
+
+$$f_{1,i} - \mathsf{row}_i(f_0)^Tx'$$
+
+for every $i \in \lbrace 1,2,\dots,N\rbrace$. Note that the sample associated with this distribution is given by the following set.
 
 $$\lbrace \mathsf{row}_i(f_0)^T(x-x') + e_i' ~|~i \in \lbrace 1,2,\dots,N\rbrace \rbrace$$
 
@@ -58,7 +66,7 @@ is uniform. More specifically, in this scenario, the polynomials are examined co
 
 An attacker may want to take advantage of the form of the image of $e'$ in $\mathbb{Z}_q$ when evaluated at $\omega=1$. Specifically, the attacker is likely to exploit the existence of a non-negative integer $k_i$ satisfying the equation:
 
-$$e'_{i}(\omega) - qk_i = p \epsilon_{i}$$
+$$e_{i}'(\omega) - qk_i = p \epsilon_{i}$$
 
 It is worth noting that the probability of $k_i$ being non-zero is high, given that the coefficients $a_{i,j}$ are as likely to be small as they are to be large in $\mathbb{Z}_q$. Because the attacker is not assumed to know the value of each $e'_{i}(\omega)$, they may likely to attack the public key using some search/decision algorithm.
 
@@ -130,7 +138,7 @@ However, since every general ciphertext should be assumed to result from a homom
 
 Given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the coefficients making the polynomial $c' - c^Tx'$. Specifically, the sample associated with this distribution is given by the following set.
 
-$$\lbrace \mathsf{coef}_i(r_m) + \sum_{j=0}^{i}\mathsf{coef}_j(c)\cdot\mathsf{coef}_{i-j}(x-x') + \mathsf{coef}_i(e) ~|~j \in \lbrace 0,2,\dots,n-1\rbrace \rbrace$$
+$$\lbrace \mathsf{coef}_{i}(r_{m}) + \sum_{j=0}^{i} \mathsf{coef}_{j}(c) \cdot \mathsf{coef}_{i-j}(x-x') + \mathsc{coef}_i(e) ~|~j \in \lbrace 0,2,\dots,n-1\rbrace \rbrace$$
 
 If the attacker found an element $x'$ such that $c^Tx = c^Tx'$, the previous distribution would appear random because the polynomial $e$ can be expressed as products and sums of polynomials whose coefficients are randomly picked in $\mathbb{Z}_q$. 
 
