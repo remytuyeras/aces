@@ -6,12 +6,12 @@
 name = "pyaces"
 version = "0.0.0"
 description = "A python library for the fully homomorphic encryption scheme ACES"
-license = "MIT"
+license.text = "MIT"
 authors = [
     { name = "Remy Tuyeras", email = "rtuyeras@gmail.com" },
 ]
 
-readme = ["README.md","docs/guide.md"]
+readme = "README.md"
 keywords = ["ACES", "PyACES"]
 requires-python = ">=3.9"
 
@@ -24,10 +24,7 @@ classifiers=[
   "Programming Language :: Python :: 3.9",
 ]
 
-[project.urls]
-Homepage = "https://github.com/remytuyeras/aces"
-Issues = "https://github.com/remytuyeras/aces/issues"
-repository = "https://github.com/remytuyeras/aces"
+
 
 
 # Dependencies
@@ -49,6 +46,10 @@ dependencies = [
     "autohooks-plugin-mypy",   #         Mypy git hook
 ]
 
+[project.urls]
+Homepage = "https://github.com/remytuyeras/aces"
+Issues = "https://github.com/remytuyeras/aces/issues"
+repository = "https://github.com/remytuyeras/aces"
 
 [build-system]
 requires = ["setuptools", "wheel"]

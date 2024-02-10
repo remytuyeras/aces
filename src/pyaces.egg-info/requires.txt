@@ -1,0 +1,13 @@
+build
+twine
+mkdocstrings-python
+pydispatch
+logging518
+ruff
+pytest
+coverage
+mypy
+autohooks
+autohooks-plugin-ruff
+autohooks-plugin-pytest
+autohooks-plugin-mypy
