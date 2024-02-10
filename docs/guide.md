@@ -124,7 +124,7 @@ In our implementation, the polynomial $b$ is determined by $\mathsf{Bob}$ throug
 
 $$b = \Big(\big(\delta_1 - \sum_{i=0}^{n-1} b_i\big)~(\mathsf{mod}~q)\Big)X^{s'} + \sum_{i=1}^{n-1} b_iX^i$$
 
-While $b$ is generated randomly, it still has the property that $b(\omega) \in \lbrace 0,1,\dots,p \rbrace$, which may give some advantage to an attacker as the evaluation $(be')(\omega)$ womightuld still be small in $\mathbb{Z}_q$.
+While $b$ is generated randomly, it still has the property that $b(\omega) \in \lbrace 0,1,\dots,p \rbrace$, which may give some advantage to an attacker as the evaluation $(be')(\omega)$ would still be small in $\mathbb{Z}_q$.
 
 To prevent an attacker to take advantage of the previous properties, the encrypter is recommanded to apply a random identity operation on the encrypted data to convert it into a ciphetext $(c,c')$ with a general as defined above.
 
@@ -162,7 +162,11 @@ lands outside the interval $[0, q-1]$, which introduces an additional term $qk_0
 
 $$(m - \sum_{i=0}^{n-1} m_i + m_s \big)~(\mathsf{mod}~q) = m - \sum_{i=1}^{s-1}m_i - \sum_{i=s+1}^{n-1}m_i + qk_0$$
 
-Furthermore, because each coefficient $m_i$ is taken randomly in the interval $[0, q-1]$, the sum $m - \sum_{i=0}^{n-1}m_i + m_s$ varies within the interval $[-(n-1)q,p]$. Consequently, the element $k_0$ should reasonably be inferred within the interval $[0,n]$. This calculation also suggests that the value of $k_0$ is mainly determined by the coeffcients $m_i$ as the value $m$ is less than $p$, which can be considered much smaller than $q$ (since $p^2 < q$).
+Furthermore, because each coefficient $m_i$ is taken randomly in the interval $[0, q-1]$, the sum 
+
+$$m - \sum_{i=0}^{n-1}m_i + m_s$$
+
+varies within the interval $[-(n-1)q,p]$. Consequently, the element $k_0$ should reasonably be inferred within the interval $[0,n]$. This calculation also suggests that the value of $k_0$ is mainly determined by the coeffcients $m_i$ as the value $m$ is less than $p$, which can be considered much smaller than $q$ (since $p^2 < q$).
 
 Selecting coprime $p$ and $q$ would then ensure that the "randomness" of the term $qk_0$ is entirely determined by the randomness of the elements $m_0, m_1, \dots, m_{n-1}$.
 
