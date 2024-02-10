@@ -1,0 +1,54 @@
+ # PyACES
+# -----------------------------------------------------------------------------
+# https://packaging.python.org/en/latest/specifications/pyproject-toml/
+
+[project]
+name = "PyACES"
+version = "0.0.0"
+description = "A python library for the fully homomorphic encryption scheme ACES"
+license = "MIT"
+authors = [
+    { name = "Remy Tuyeras", email = "rtuyeras@gmail.com" },
+]
+
+readme = "README.md"
+keywords = ["ACES", "PyACES"]
+requires-python = ">=3.9"
+
+classifiers=[
+  "Development Status :: 4 - Beta",  #"3 - Alpha", "4 - Beta" or "5 - Production/Stable"
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "Topic :: Software Development :: Build Tools",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+]
+
+[project.urls]
+Homepage = "https://github.com/remytuyeras/aces"
+Issues = "https://github.com/remytuyeras/aces/issues"
+repository = "https://github.com/remytuyeras/aces"
+
+
+# Dependencies
+# -----------------------------------------------------------------------------
+
+dependencies = [
+    "build",                   # Deploy  Build sdists
+    "twine",                   #         Publish package to pypi
+    "mkdocstrings-python",     # Docs    Generate mkdocs from docstrings
+    "pydispatch",              # Events  Message passing between objects
+    "logging518",              # Logging Configure logging using Pyproject.toml
+    "ruff",                    # QA      Linting and formatting
+    "pytest",                  #         Run test package
+    "coverage",                #         Compute test coverage
+    "mypy",                    #         Static type checking
+    "autohooks",               #         Git hooks
+    "autohooks-plugin-ruff",   #         Ruff git hook
+    "autohooks-plugin-pytest", #         Pytest git hook
+    "autohooks-plugin-mypy",   #         Mypy git hook
+]
+
+
+[build-system]
+requires = ["setuptools", "wheel"]
