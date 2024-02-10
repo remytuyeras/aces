@@ -11,7 +11,7 @@ This package proposes an implementation for the ACES cryptosystem where we take 
 The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_malleability_](https://en.wikipedia.org/wiki/Malleability_(cryptography)). In the Pisces symbol, the two fishes represent a harmonious interplay between opposite directions, reflecting the dual nature of encryption and decryption.
 
 > [!WARNING]
-> Despite the announcement made in the research paper, this implementation has been generalized to any value $N\geq 1$. See the [mathematical guide](GUIDE.md) for more details on different parameter choices while keeping ACES secure.
+> Despite the announcement made in the research paper, this implementation has been generalized to any value $N\geq 1$. See the [mathematical guide](docs/guide.md) for more details on different parameter choices while keeping ACES secure.
 >
 
 # Installation
@@ -26,7 +26,7 @@ from pyaces import *
 
 ACES depends on the generation of an <em>arithmetic channel</em>, which is a quadruple $\mathsf{C} = (p,q,\omega,u)$ where $p$, $q$ and $\omega$ are three positive integers and $u$ is a polynomial in $\mathbb{Z}[X]$ for which the equation $u(\omega) = q$ holds in $\mathbb{Z}$. While the integer $\omega$ remains fixed at $1$, and the ACES library automatically generates the polynomial $u$, the user is still required to manually select the values for $p$ $q$, $n = \mathsf{deg}(u)$ and $N$.
 
-A brief review of [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) already informs us that the condition $p^2 < q$ must hold for ACES to be valid. In conjunction with this prerequisite, the accompanying guide, accessible [here](GUIDE.md) in this repository, provides further insights into considerations for adjusting the values of $p$, $q$ $n$ and $N$. Specficially, users should take
+A brief review of [section 5.1 of the research paper](https://arxiv.org/abs/2401.13255) already informs us that the condition $p^2 < q$ must hold for ACES to be valid. In conjunction with this prerequisite, the accompanying guide, accessible [here](docs/guide.md) in this repository, provides further insights into considerations for adjusting the values of $p$, $q$ $n$ and $N$. Specficially, users should take
 
 - $p^2 < q$
 - $p$ and $q$ coprime
@@ -38,7 +38,7 @@ For simplicity, we recommend that users use the formula below, where $s \geq 2$,
 $$q = (K_0Np)^{t^{K+1} + K_1 } + 1$$
 
 > [!NOTE]
-> Iddition to exploring the parameterization space of ACES, the [guide](GUIDE.md) also elucidates specific technical aspects pertaining to the security of ACES. In particular, it gives useful recommendations on how to use ciphertexts in a secure way (for example see [guide](GUIDE.md#important-considerations)).
+> Iddition to exploring the parameterization space of ACES, the [guide](docs/guide.md) also elucidates specific technical aspects pertaining to the security of ACES. In particular, it gives useful recommendations on how to use ciphertexts in a secure way (for example see [guide](docs/guide.md#important-considerations)).
 >
 
 # Quickstart

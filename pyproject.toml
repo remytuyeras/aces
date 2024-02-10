@@ -3,7 +3,7 @@
 # https://packaging.python.org/en/latest/specifications/pyproject-toml/
 
 [project]
-name = "PyACES"
+name = "pyaces"
 version = "0.0.0"
 description = "A python library for the fully homomorphic encryption scheme ACES"
 license = "MIT"
@@ -11,7 +11,7 @@ authors = [
     { name = "Remy Tuyeras", email = "rtuyeras@gmail.com" },
 ]
 
-readme = "README.md"
+readme = ["README.md","docs/guide.md"]
 keywords = ["ACES", "PyACES"]
 requires-python = ">=3.9"
 
