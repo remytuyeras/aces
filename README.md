@@ -164,9 +164,9 @@ $$F:(x_0,x_1,x_2,\dots,x_7) \mapsto (x_0 \cdot x_1 + x_2 \cdot x_3 + x_4 \cdot x
 
 We define this algorithm on the non-encrypted data ```array``` (as a sanity check), on the list of encrypted data ```send_array``` and on the list of levels ```keep_array``` as instructed in [section 5.3 of the research paper](https://arxiv.org/abs/2401.13255).
 ```python
->>> true_fun = Algebra().compute("(0*1+2*3+4*5)*6+7")
->>> send_fun = alg.compute("(0*1+2*3+4*5)*6+7")
->>> keep_fun = rfr.compute("(0*1+2*3+4*5)*6+7")
+>>> true_fun = Algebra().compile("(0*1+2*3+4*5)*6+7")
+>>> send_fun = alg.compile("(0*1+2*3+4*5)*6+7")
+>>> keep_fun = rfr.compile("(0*1+2*3+4*5)*6+7")
 ...
 ```
 First, let us see what the algorithm is meant to output for the values in ```array```:
