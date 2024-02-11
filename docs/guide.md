@@ -70,7 +70,7 @@ $$e_{i}'(\omega) - qk_i = p \epsilon_{i}$$
 
 It is worth noting that the probability of $k_i$ being non-zero is high, given that the coefficients $a_{i,j}$ are as likely to be small as they are to be large in the interval $\mathbb{Z}_q$. Because the attacker is not assumed to know the value of each $e_i'(\omega)$ they may likely to attack the public key using some search/decision algorithm. Specifically, given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$, an attacker may want to analyze the distribution of the integers 
 
-$$f_{1,i}(\omega) - \mathsf{row}_i(f_0(\omega))^Tx'(\omega)\quad(\mathsf{mod}\,q),$$
+$$f_{1,i}(\omega) - \mathsf{row}_i(f_0(\omega))^Tx'(\omega)\quad(\mathsf{mod}~q),$$
 
 The previous integer can be calculated as a difference of the form $\chi_i = f_{1,i}(\omega)- \mathsf{row}_i(f_0(\omega))^Tx'(\omega)-qk_i'$ for some positive integer $k_i'$. This means that the attacker has access to a distribution of the following form:
 
@@ -94,7 +94,7 @@ $$q(\kappa_i + k_i'-k_i) = p\Big((k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) + 
 
 When $p$ and $q$ are coprime, the previous equation can be decomposed into two relations as follows:
 
-$$k_i \equiv \kappa_i + k_i' \,(\mathsf{mod}\,p) \quad\quad\quad (k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) \equiv \eta_i - \epsilon_{i}  \,(\mathsf{mod}\,q)$$
+$$k_i \equiv \kappa_i + k_i' ~(\mathsf{mod}~p) \quad\quad\quad (k_i^{\prime\prime})^T(x(\omega)-x'(\omega)) \equiv \eta_i - \epsilon_{i}  ~(\mathsf{mod}~q)$$
 
 The equation displayed on the right says that the vector $(k_i^{\prime\prime})^Tx'(\omega)$ in $\mathbb{Z}_q$ is of the form 
 
@@ -182,7 +182,7 @@ It is worth noting that the probability of $k_0$ and $k_1$ being non-zero is hig
 
 Specifically, given a $n$-vector $x'$ over $\mathbb{Z}_q[X]_u$ and an integer $m' \in \mathbb{Z}_p$, an attacker may want to decompose the following quantity:
 
-$$c'(\omega) - c(\omega)^Tx'(\omega) - m'\quad(\mathsf{mod}\,q),$$
+$$c'(\omega) - c(\omega)^Tx'(\omega) - m'\quad(\mathsf{mod}~q),$$
 
 The previous integer can be calculated as a difference of the form $\chi = c'(\omega) - c(\omega)^Tx'(\omega) - m'-qk_2$ for some positive integer $k_2$. This means that the attacker has access to a quantity of the following form:
 
