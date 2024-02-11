@@ -48,7 +48,7 @@ For simplicity, we recommend that users use the formula below, where $s \geq 2$,
 $$q = (K_0Np)^{t^{K+1} + K_1 } + 1$$
 
 > [!NOTE]
-> Iddition to exploring the parameterization space of ACES, the [guide](https://github.com/remytuyeras/aces/blob/main/docs/guide.md) also elucidates specific technical aspects pertaining to the security of ACES. In particular, it gives useful recommendations on how to use ciphertexts in a secure way (for example see [important considerations](https://github.com/remytuyeras/aces/blob/main/docs/guide.md#important-considerations)).
+> In addition to exploring the parameterization space of ACES, the [guide](https://github.com/remytuyeras/aces/blob/main/docs/guide.md) elucidates specific technical aspects pertaining to the security of ACES. In particular, it gives useful recommendations on how to use ciphertexts in a secure way (for example see [important considerations](https://github.com/remytuyeras/aces/blob/main/docs/guide.md#important-considerations)).
 >
 
 # Quickstart
