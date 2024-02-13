@@ -252,17 +252,17 @@ there exists a tuple $(a_0',a_1',\dots,a_{n-1}')$ of integers in the range $[0, 
 
 $$\sum_{s+t = r } a_{i,s} a_{j,t} - \sum_{s+t = r } \mu_{s} a_{t}' = \sum_{k=0}^{n-1}\lambda_{i,j}^{k} a_{k,r}.$$
 
-Solving this set of equations involves finding a <u>specific</u> solution $(a_{1,0},\dots,a_{n,n-1},a_0',\dots,a_{n-1}')$ for a system of $n$ quadratic polynomial equations
+Solving this set of equations involves finding a <u>specific</u> solution $(a_{1,0},\dots,a_{n,n-1},a_0',\dots,a_{n-1}')$ for a system of $n^3$ quadratic polynomial equations
 
-$$f_1(w_1,\dots,w_{n(n+1)}) = 0,$$
+$$f_{i,j,1}(w_1,\dots,w_{n(n+1)}) = 0,$$
 
 $$\vdots$$
 
-$$f_{n}(w_1,\dots,w_{n(n+1)}) = 0,$$
+$$f_{i,j,n}(w_1,\dots,w_{n(n+1)}) = 0,$$
 
 in the finite ring $\mathbb{Z}_q$. According to research ([source](https://inria.hal.science/hal-00776070/document) and [source](https://www-polsys.lip6.fr/~jcf/Papers/JMC2.pdf)), embarking on an exhaustive search for the solution would result in a computational complexity of $O(q^{n(n+1)})$. Opting for a sufficiently large value of $q$ would force an attacker to turn to a formal calculus algorithm, such as the [F5 algorithm](https://en.wikipedia.org/wiki/Faug%C3%A8re%27s_F4_and_F5_algorithms), designed for solving polynomial equations with Gröbner basis. However, note that in our specific scenario, employing Gröbner basis techniques on our set of polynomial equations would prove ineffective since the equations characterizing $\lambda$ are already _reduced_.
 
-Indeed, observe that the monomial $a_{i,s}a_{j,t}$ can only appear in the equation $f_{s+t}(w_1,\dots,w_{n(n+1)}) = 0$, indicating that it cannot be further reduced by the other equations. Consequently, an attacker attempting to compromise the private key using the equations defining the 3-tensor $\lambda$ would likely have to resort to either an exhaustive search or a hybrid method, which could be disadvantageous, particularly if $q$ is chosen to be large.
+Indeed, observe that the monomial $a_{i,s}a_{j,t}$ can only appear in the equation $f_{i,j,s+t}(w_1,\dots,w_{n(n+1)}) = 0$, indicating that it cannot be further reduced by the other equations. Consequently, an attacker attempting to compromise the private key using the equations defining the 3-tensor $\lambda$ would likely have to resort to either an exhaustive search or a hybrid method, which would still be computationally expensive, especially if $q$ is chosen to be large.
 
 ### Cost of homomorphism
 
