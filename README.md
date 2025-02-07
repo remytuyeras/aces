@@ -31,9 +31,9 @@ pip install --upgrade pyaces==version_number
 # Facts about PyACES
 
 PyACES is ...
-  - most closely related to the BGV FHE scheme.
-  - designed primarily for binary circuits, similar to TFHE.
-  - the only known FHE scheme in which both addition and multiplication are commutative and weakly associative (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
+  - ... most closely related to the BGV FHE scheme.
+  - ... designed primarily for binary circuits, similar to TFHE.
+  - ... the only known FHE scheme in which both addition and multiplication are commutative and weakly associative (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
 
 
 # Progress and upcoming features
