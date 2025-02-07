@@ -1,6 +1,6 @@
 # added by Remy
 *.aces.cache_primes.json
-
+*.aces.classifier.*.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

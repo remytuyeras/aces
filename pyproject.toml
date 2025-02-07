@@ -4,7 +4,7 @@
 
 [project]
 name = "pyaces"
-version = "0.0.4"
+version = "0.1.0"
 description = "A python library for the fully homomorphic encryption scheme ACES"
 license.text = "MIT"
 authors = [
@@ -13,7 +13,7 @@ authors = [
 
 readme = "README.md"
 keywords = ["ACES", "PyACES"]
-requires-python = ">=3.9"
+requires-python = ">=3.12"
 
 classifiers=[
   "Development Status :: 4 - Beta",  #"3 - Alpha", "4 - Beta" or "5 - Production/Stable"
@@ -21,7 +21,7 @@ classifiers=[
   "Intended Audience :: Science/Research",
   "Topic :: Software Development :: Build Tools",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.12",
 ]
 
 
