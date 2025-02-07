@@ -105,7 +105,7 @@ plain_add = alice.decrypt()
 print(f"{m1} * {m2} (mod {ac.p}) =", plain_add)
 ```
 
-You should see the following display in your terminal
+After running the previous script, you should see the following display in your terminal.
 
 ```text
 getting primes...
