@@ -1,11 +1,11 @@
- # PyACES
+# PyACES
 # -----------------------------------------------------------------------------
 # https://packaging.python.org/en/latest/specifications/pyproject-toml/
 
 [project]
 name = "pyaces"
 version = "0.1.0"
-description = "A python library for the fully homomorphic encryption scheme ACES"
+description = "A python library for the fully homomorphic encryption scheme ACES."
 license.text = "MIT"
 authors = [
     { name = "Remy Tuyeras", email = "rtuyeras@gmail.com" },

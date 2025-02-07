@@ -6,11 +6,11 @@ with open("README.md", "r") as fh:
 setuptools.setup(
   name = 'pyaces',
   packages=setuptools.find_packages(include=['pyaces']),
-  version = 'v0.0.4',
+  version = 'v0.1.0',
   license='MIT',
   author = 'Remy Tuyeras',
   author_email = 'rtuyeras@gmail.com',
-  description = 'A python library for the fully homomorphic encryption scheme ACES',
+  description = 'A python library for the fully homomorphic encryption scheme ACES.',
   long_description = long_description,
   long_description_content_type = "text/markdown",
   url = 'https://github.com/remytuyeras/aces',
@@ -23,6 +23,6 @@ setuptools.setup(
     'Intended Audience :: Science/Research',
     'Topic :: Software Development :: Build Tools',
     'Programming Language :: Python :: 3',
-    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.12',
   ],
 )
