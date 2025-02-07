@@ -29,8 +29,6 @@ classifiers=[
 # -----------------------------------------------------------------------------
 
 dependencies = [
-    "build",                   # Deploy  Build sdists
-    "twine",                   #         Publish package to pypi
     "numpy",
 ]
 

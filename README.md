@@ -103,10 +103,10 @@ The following example illustrates an encryption of the message $m=3$. The encryp
 [17806160]^9+[19626456]^8+[29126106]^7+[24033050]^6+[23506780]^5+[28391799]^4+[4000439]^3+[10046721]^2+[19523779]^1+[17246181]^0 (33554433)
 [15096919]^9+[15509580]^8+[14202625]^7+[28337590]^6+[9646278]^5+[31062288]^4+[26781822]^3+[8778106]^2+[20152751]^1+[5062739]^0 (33554433)
 [2363338]^9+[16535237]^8+[30285612]^7+[4934198]^6+[21283726]^5+[5267871]^4+[26811682]^3+[5040335]^2+[7297640]^1+[24881255]^0 (33554433)
->>> enc3.uplvl
+>>> enc3.lvl
 64
 ```
-In the previous example, the vector ```k3``` can be used to determine the level of the ciphertext $(c,c')$. Specifically, this is done by computing the scalar product of ```k3``` with the vector ```ac.lvl_e```. The integer ```enc3.uplvl``` is known to all parties and represents an upper bound on the level of $(c,c')$. It is crucial to emphasize that, in practical scenarios, the vector ```k3``` (and the vector ```ac.lvl_e```) should remain confidential, and only the theoretical upper bound ```enc3.uplvl``` is deemed safe to share. In fact, it is strongly recommended to retain only integers $0 \leq k'_i \leq$```k3[i]``` and securely erase ```k3``` from the computer memory.
+In the previous example, the vector ```k3``` can be used to determine the level of the ciphertext $(c,c')$. Specifically, this is done by computing the scalar product of ```k3``` with the vector ```ac.lvl_e```. The integer ```enc3.lvl``` is known to all parties and represents an upper bound on the level of $(c,c')$. It is crucial to emphasize that, in practical scenarios, the vector ```k3``` (and the vector ```ac.lvl_e```) should remain confidential, and only the theoretical upper bound ```enc3.lvl``` is deemed safe to share. In fact, it is strongly recommended to retain only integers $0 \leq k'_i \leq$```k3[i]``` and securely erase ```k3``` from the computer memory.
 
 
 To decrypt an encrypted message, use the ```ACESReader``` class. The following example demonstrates how to decrypt the ciphertext ```enc3```. As expected, we retrieve the message $m=3$.
@@ -188,9 +188,9 @@ First, let us see what the algorithm is meant to output for the values in ```arr
 Now, let us shift our focus to the server side. To recap, we previously set $q = 10\cdot p^{2^2+1}+1$, implying that ```ACESAlgebra``` can likely accommodate only a single layer of a sum of multiplications. However, the ```send_fun``` function incorporates two such layers. As a result, this configuration is sufficient to surpass the levels beyond $q/p$, resulting in a failure of the leveled FHE procedure, as demonstrated below.
 ```python
 >>> online = send_fun(send_array)
->>> online.uplvl
+>>> online.lvl
 12582912160
->>> q_p - online.uplvl
+>>> q_p - online.lvl
 -12572426399.96875
 >>> alice.decrypt(online)
 25
@@ -207,9 +207,9 @@ When we apply $F_1$ to the corresponding ciphertexts, the leveled homomorphism p
 >>> truth1 % 32
 29
 >>> online1 = send_fun1(send_array)
->>> online1.uplvl
+>>> online1.lvl
 2457600
->>> q_p - online1.uplvl
+>>> q_p - online1.lvl
 8028160.03125
 >>> alice.decrypt(online1)
 29
@@ -218,12 +218,12 @@ Subsequently, we can calculate the equivalent of $F_1$ on the corresponding leve
 ```python
 >>> k1 = keep_fun1(rfr.process(keep_array))
 >>> c1 = alg.refresh(online1,k1)
->>> c1.uplvl
+>>> c1.lvl
 2380640
 >>> alice.decrypt(c1)
 29
 ```
-As can be seen above, the refresh operation does not impact the message associated with the ciphertext; rather, it diminishes the upper bound level ```c1.uplvl```. While this reduction may appear trivial when compared to the earlier value of ```online1.uplvl```, the refresh operation nevertheless remains efficient in revitalizing the ciphertext.
+As can be seen above, the refresh operation does not impact the message associated with the ciphertext; rather, it diminishes the upper bound level ```c1.lvl```. While this reduction may appear trivial when compared to the earlier value of ```online1.lvl```, the refresh operation nevertheless remains efficient in revitalizing the ciphertext.
 
 To confirm the success of this refresh operation, we can now proceed to compute the second layer of the algorithm $F$. First, let us define the function $F_2$ associated with this the second layer.
 ```python
@@ -237,9 +237,9 @@ If we now combine this second layer with the output of the refresh operation, we
 >>> truth2 % 32
 30
 >>> online2 = send_fun2(send_array + [c1])
->>> online2.uplvl
+>>> online2.lvl
 12188876960
->>> q_p - online2.uplvl
+>>> q_p - online2.lvl
 -12178391199.96875
 >>> alice.decrypt(online2)
 30
