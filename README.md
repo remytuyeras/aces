@@ -30,7 +30,7 @@ pip install --upgrade pyaces==version_number
 
 # Facts about PyACES
 
-- PyACES is the only known FHE cryptosystem whose additiona dn multiplication are commutative and weakly-associative
+- PyACES is the only known FHE cryptosystem whose addition and multiplication are commutative and weakly-associative (see page 5 [in this review](https://ems.press/content/book-chapter-files/33149))
 
 # Progress and upcoming features
 - [ ] Uploading version 0.1.0 to PyPI:
