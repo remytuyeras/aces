@@ -1,0 +1,7 @@
+build==1.2.2.post1
+twine==6.1.0
+pytest==8.3.4
+numpy==2.2.2
+matplotlib==3.10.0
+ruff==0.9.5
+black==25.1.0

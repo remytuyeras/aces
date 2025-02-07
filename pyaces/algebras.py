@@ -277,13 +277,13 @@ class ACESAlgebra(Algebra):
     def refresh(self, refresher: list[ACESCipher], corefresher: Tuple[list[ACESCipher], ACESCipher]) -> ACESCipher:
         a, b = corefresher
         if self.debug and len(refresher) != len(a):
-            print(f"\033[93mWarning in ACESAlgebra.refresh: the refresher's length is not equal to the corefresher's length\033[0m")
+            print("\033[93mWarning in ACESAlgebra.refresh: the refresher's length is not equal to the corefresher's length\033[0m")
         return self.add(b,reduce(self.add, [self.mult(a[i],r_i) for i, r_i in enumerate(refresher)]))
     
     def assess_refresh_level(self, refresher: list[ACESCipher], corefresher: Tuple[list[ACESCipher], ACESCipher]) -> int:
         a, b = corefresher
         if self.debug and len(refresher) != len(a):
-            print(f"\033[93mWarning in ACESAlgebra.refresh: the refresher's length is not equal to the corefresher's length\033[0m")
+            print("\033[93mWarning in ACESAlgebra.refresh: the refresher's length is not equal to the corefresher's length\033[0m")
         xi = ((self.p-1) + self.n * ((self.p-1)**2)) // self.p
         return xi + b.lvl + reduce(int.__add__, [self.p * (a[i].lvl + r_i.lvl + a[i].lvl * r_i.lvl) for i, r_i in enumerate(refresher)])
         
@@ -391,7 +391,7 @@ class ACESRefreshClassifier(object):
 
             if i > 10 * training_epochs:
                 if len(directors) == 0 or len(locators) == 0:
-                    print(f"ACESRefreshClassifier.construct: Failed to find affine structure.")
+                    print("ACESRefreshClassifier.construct: Failed to find affine structure.")
                 break
 
         update = {

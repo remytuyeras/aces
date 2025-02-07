@@ -45,13 +45,18 @@ pip install --upgrade pyaces==version_number
 - [ ] Uploading version 0.1.0 to PyPI:
   - ![50%](https://progress-bar.xyz/50)
 
-- [ ] Resolve Issues:
-  - #1 [![80%](https://progress-bar.xyz/80)](https://github.com/remytuyeras/aces/issues/1)
+- [x] Resolve Issue #1:
+  - PyPI Publication: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
+  - GitHub Actions for Automation: [![0%](https://progress-bar.xyz/0)](https://github.com/remytuyeras/aces/issues/1)
+  - Project Structure and Dependency Management: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
+  - Testing with Pytest: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
+  - Code Quality with Ruff: [![90%](https://progress-bar.xyz/90)](https://github.com/remytuyeras/aces/issues/1)
+  - Documentation Updates: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
 
-- [ ] Add guide [ePrint](https://eprint.iacr.org):
+- [ ] Add guide to [ePrint](https://eprint.iacr.org):
   - Tutorial: ![80%](https://progress-bar.xyz/80)
-  - Performance analysis: ![5%](https://progress-bar.xyz/5)
-  - Security analysis: ![10%](https://progress-bar.xyz/10)
+  - Performance analysis: ![10%](https://progress-bar.xyz/5)
+  - Security analysis: ![30%](https://progress-bar.xyz/10)
   
 - [ ] Complete documentation:
   - [ ] `algebras.py`

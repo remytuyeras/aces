@@ -64,7 +64,7 @@ def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
     s = [1, 0]
     t = [0, 1]
     # Extended Euclidean algorithm
-    while not(0 in r):
+    while 0 not in r:
         r1 = r[-1]
         r0 = r[-2]
         # Compute the quotient `q` and the remainder `r2` of the division r0/r1.
@@ -155,8 +155,8 @@ class Primes(object):
         previous = []  
 
         # Check if a cached primes file exists, and load it if available.
-        if self.cache and os.path.exists(f".aces.cache_primes.json"):
-            with open(f".aces.cache_primes.json", "r") as f:
+        if self.cache and os.path.exists(".aces.cache_primes.json"):
+            with open(".aces.cache_primes.json", "r") as f:
                 # Load the cached JSON object.
                 json_object = json.load(f)
                 # Extract previously cached primes from the file.
@@ -173,7 +173,7 @@ class Primes(object):
             need_update = True  
             
             # If the cache file exists, check if it covers the range up to the current upperbound.
-            if os.path.exists(f".aces.cache_primes.json"):
+            if os.path.exists(".aces.cache_primes.json"):
                 # Retrieve the cached upper bound.
                 cached_ub = json_object["upperbound"]
                 # If the cache is already valid, no need to update.
@@ -182,7 +182,7 @@ class Primes(object):
             
             # If an update is needed, write the new primes to the cache file.
             if need_update:
-                with open(f".aces.cache_primes.json", "w") as f:
+                with open(".aces.cache_primes.json", "w") as f:
                     json_update = {"upperbound": self.upperbound, "primes": self.primes}
                     # Save the updated primes to the cache.
                     json.dump(json_update, f)  

@@ -1,9 +1,10 @@
 import sys
 sys.path.insert(1, "./")
 import pyaces as pyc
+import random
 
 s = \
-f"""\033[94m>>>\033[0m \033[92m# === SETTING UP PyACES === \033[0m
+"""\033[94m>>>\033[0m \033[92m# === SETTING UP PyACES === \033[0m
 \033[94m>>>\033[0m import pyaces as pyc
 \033[94m>>>\033[0m repartition = pyc.Repartition(n=5, p=2, upperbound=47601551)
 """
@@ -11,7 +12,7 @@ print(s,end="")
 repartition = pyc.Repartition(n=5, p=2, upperbound=47601551)
 
 s = \
-f"""\033[94m>>>\033[0m repartition.construct()
+"""\033[94m>>>\033[0m repartition.construct()
 """
 print(s,end="")
 repartition.construct()
@@ -34,7 +35,7 @@ print(s,end="")
 
 
 s = \
-f"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=32, N=10, deg_u=3, repartition=repartition)
+"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=32, N=10, deg_u=3, repartition=repartition)
 \033[94m>>>\033[0m import numpy as np
 """
 print(s,end="")
@@ -91,7 +92,7 @@ f"""\033[94m>>>\033[0m public["levels"]
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m \033[92m# === ENCRYPTION & DECRYPTION === \033[0m
+"""\033[94m>>>\033[0m \033[92m# === ENCRYPTION & DECRYPTION === \033[0m
 \033[94m>>>\033[0m alice = pyc.ACESReader(ac, debug=True)
 \033[94m>>>\033[0m bob = pyc.ACES(**public, debug=True)
 """
@@ -100,7 +101,7 @@ alice = pyc.ACESReader(ac, debug=True)
 bob = pyc.ACES(**public, debug=True)
 
 s = \
-f"""\033[94m>>>\033[0m cip3 = bob.encrypt(3)
+"""\033[94m>>>\033[0m cip3 = bob.encrypt(3)
 """
 print(s,end="")
 cip3 = bob.encrypt(3)
@@ -117,9 +118,9 @@ f"""\033[94m>>>\033[0m cip3.enc
 """
 print(s,end="")
 
-import random
+
 s = \
-f"""\033[94m>>>\033[0m import random
+"""\033[94m>>>\033[0m import random
 \033[94m>>>\033[0m cip3 = bob.encrypt(3, anchor = lambda _, w: random.randint(0, 2*w))
 """
 print(s,end="")
@@ -133,10 +134,8 @@ f"""\033[94m>>>\033[0m cip3.lvl
 """
 print(s,end="")
 
-
-
 s = \
-f"""\033[94m>>>\033[0m cip5 = bob.encrypt(37)
+"""\033[94m>>>\033[0m cip5 = bob.encrypt(37)
 """
 print(s,end="")
 cip5 = bob.encrypt(37)
@@ -154,7 +153,7 @@ f"""\033[94m>>>\033[0m cip5.enc
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip3 = alice.encrypt(3, max_noise=10)
+"""\033[94m>>>\033[0m cip3 = alice.encrypt(3, max_noise=10)
 """
 print(s,end="")
 cip3 = alice.encrypt(3, max_noise=10)
@@ -172,7 +171,7 @@ f"""\033[94m>>>\033[0m cip3.enc
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip5 = alice.encrypt(37, max_noise=10)
+"""\033[94m>>>\033[0m cip5 = alice.encrypt(37, max_noise=10)
 """
 print(s,end="")
 cip5 = alice.encrypt(37, max_noise=10)
@@ -201,10 +200,10 @@ print(s,end="")
 
 
 s = \
-f"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
+"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
 """
 print(s,end="")
-cip1 = bob.encrypt(m1); cip1.enc
+cip1 = bob.encrypt(m1)
 
 s = \
 f"""\033[94m>>>\033[0m 
@@ -213,10 +212,10 @@ f"""\033[94m>>>\033[0m
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
+"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
 """
 print(s,end="")
-cip2 = bob.encrypt(m2); cip2.enc
+cip2 = bob.encrypt(m2)
 
 s = \
 f"""\033[94m>>>\033[0m 
@@ -228,7 +227,7 @@ print(s,end="")
 
 alg = pyc.ACESAlgebra(**public, debug=True)
 s = \
-f"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=True)
+"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=True)
 \033[94m>>>\033[0m add = alice.decrypt(alg.add(cip1, cip2))
 """
 print(s,end="")
@@ -241,7 +240,7 @@ f"""\033[94m>>>\033[0m add
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m mult = alice.decrypt(alg.mult(cip1, cip2))
+"""\033[94m>>>\033[0m mult = alice.decrypt(alg.mult(cip1, cip2))
 """
 print(s,end="")
 
@@ -263,19 +262,19 @@ print(s,end="")
 
 
 s = \
-f"""\033[94m>>>\033[0m \033[94m>>>\033[0m repartition = pyc.Repartition(n=5, p=2, upperbound=476015501)
+"""\033[94m>>>\033[0m \033[94m>>>\033[0m repartition = pyc.Repartition(n=5, p=2, upperbound=476015501)
 """
 print(s,end="")
 repartition = pyc.Repartition(n=5, p=2, upperbound=476015501)
 
 s = \
-f"""\033[94m>>>\033[0m repartition.construct()
+"""\033[94m>>>\033[0m repartition.construct()
 """
 print(s,end="")
 repartition.construct()
 
 s = \
-f"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=32, N=10, deg_u=3, repartition=repartition)
+"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=32, N=10, deg_u=3, repartition=repartition)
 \033[94m>>>\033[0m public = ac.publish()
 """
 print(s,end="")
@@ -283,7 +282,7 @@ ac = pyc.ArithChannel(p=32, N=10, deg_u=3, repartition=repartition)
 public = ac.publish()
 
 s = \
-f"""\033[94m>>>\033[0m alice = pyc.ACESReader(ac, debug=False)
+"""\033[94m>>>\033[0m alice = pyc.ACESReader(ac, debug=False)
 \033[94m>>>\033[0m bob = pyc.ACES(**public, debug=False)
 """
 print(s,end="")
@@ -300,22 +299,22 @@ f"""\033[94m>>>\033[0m m1 = random.randrange(ac.p); m1
 """
 print(s,end="")
 s = \
-f"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
+"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
 """
 print(s,end="")
 
-cip1 = bob.encrypt(m1); cip1.enc
+cip1 = bob.encrypt(m1)
 s = \
 f"""{repr(cip1.enc)}
 """
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
+"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
 """
 print(s,end="")
 
-cip2 = bob.encrypt(m2); cip2.enc
+cip2 = bob.encrypt(m2)
 s = \
 f"""{repr(cip2.enc)}
 """
@@ -324,7 +323,7 @@ print(s,end="")
 
 alg = pyc.ACESAlgebra(**public, debug=False)
 s = \
-f"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=False)
+"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=False)
 \033[94m>>>\033[0m add = alice.decrypt(alg.add(cip1, cip2))
 """
 print(s,end="")
@@ -337,7 +336,7 @@ f"""\033[94m>>>\033[0m add
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m mult = alice.decrypt(alg.mult(cip1, cip2))
+"""\033[94m>>>\033[0m mult = alice.decrypt(alg.mult(cip1, cip2))
 """
 print(s,end="")
 
@@ -349,6 +348,7 @@ f"""\033[94m>>>\033[0m mult
 print(s,end="")
 
 
+
 plain_input = [random.randrange(ac.p) for _ in range(8)]
 s = \
 f"""\033[94m>>>\033[0m plain_input = [random.randrange(ac.p) for _ in range(8)]
@@ -358,7 +358,7 @@ f"""\033[94m>>>\033[0m plain_input = [random.randrange(ac.p) for _ in range(8)]
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cipher_input = [bob.encrypt(m) for m in plain_input]
+"""\033[94m>>>\033[0m cipher_input = [bob.encrypt(m) for m in plain_input]
 """
 print(s,end="")
 cipher_input = [bob.encrypt(m) for m in plain_input]
@@ -378,7 +378,7 @@ print(s,end="")
 
 cipher_comp = alg.compile(equation_schema)
 s = \
-f"""\033[94m>>>\033[0m cipher_comp = alg.compile(equation_schema)
+"""\033[94m>>>\033[0m cipher_comp = alg.compile(equation_schema)
 \033[94m>>>\033[0m cipher_output = cipher_comp(cipher_input)
 """
 print(s,end="")
@@ -404,7 +404,7 @@ print(s,end="")
 
 
 s = \
-f"""\033[94m>>>\033[0m refresher = alice.generate_refresher(max_noise=10)
+"""\033[94m>>>\033[0m refresher = alice.generate_refresher(max_noise=10)
 """
 print(s,end="")
 refresher = alice.generate_refresher(max_noise=10)
@@ -413,7 +413,7 @@ refresher = alice.generate_refresher(max_noise=10)
 classifier = pyc.ACESRefreshClassifier(ac, debug=False)
 alg = pyc.ACESAlgebra(**public, debug=False, refresh_classifier=classifier.refresh_classifier, encrypter=bob, refresher=refresher)
 s = \
-f"""\033[94m>>>\033[0m classifier = pyc.ACESRefreshClassifier(ac, debug=False)
+"""\033[94m>>>\033[0m classifier = pyc.ACESRefreshClassifier(ac, debug=False)
 \033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=False,
 \033[94m...\033[0m refresh_classifier=classifier.refresh_classifier,
 \033[94m...\033[0m encrypter=bob, 
@@ -424,7 +424,7 @@ print(s,end="")
 
 cipher_comp = alg.compile(equation_schema)
 s = \
-f"""\033[94m>>>\033[0m cipher_comp = alg.compile(equation_schema)
+"""\033[94m>>>\033[0m cipher_comp = alg.compile(equation_schema)
 \033[94m>>>\033[0m cipher_output = cipher_comp(cipher_input)
 """
 print(s,end="")
@@ -440,20 +440,20 @@ print(s,end="")
 
 
 s = \
-f"""\033[94m>>>\033[0m \033[92m# === PROPERTIES === \033[0m
+"""\033[94m>>>\033[0m \033[92m# === PROPERTIES === \033[0m
 \033[94m>>>\033[0m repartition = pyc.Repartition(n=5, p=2, upperbound=476015501)
 """
 print(s,end="")
 repartition = pyc.Repartition(n=5, p=2, upperbound=476015501)
 
 s = \
-f"""\033[94m>>>\033[0m repartition.construct()
+"""\033[94m>>>\033[0m repartition.construct()
 """
 print(s,end="")
 repartition.construct()
 
 s = \
-f"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=4, N=10, deg_u=3, repartition=repartition)
+"""\033[94m>>>\033[0m ac = pyc.ArithChannel(p=4, N=10, deg_u=3, repartition=repartition)
 \033[94m>>>\033[0m public = ac.publish()
 """
 print(s,end="")
@@ -461,7 +461,7 @@ ac = pyc.ArithChannel(p=4, N=10, deg_u=3, repartition=repartition)
 public = ac.publish()
 
 s = \
-f"""\033[94m>>>\033[0m alice = pyc.ACESReader(ac, debug=False)
+"""\033[94m>>>\033[0m alice = pyc.ACESReader(ac, debug=False)
 \033[94m>>>\033[0m bob = pyc.ACES(**public, debug=False)
 """
 print(s,end="")
@@ -481,33 +481,33 @@ f"""\033[94m>>>\033[0m m1 = random.randrange(ac.p); m1
 """
 print(s,end="")
 s = \
-f"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
+"""\033[94m>>>\033[0m cip1 = bob.encrypt(m1); cip1.enc
 """
 print(s,end="")
 
-cip1 = bob.encrypt(m1); cip1.enc
+cip1 = bob.encrypt(m1)
 s = \
 f"""{repr(cip1.enc)}
 """
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
+"""\033[94m>>>\033[0m cip2 = bob.encrypt(m2); cip2.enc
 """
 print(s,end="")
 
-cip2 = bob.encrypt(m2); cip2.enc
+cip2 = bob.encrypt(m2)
 s = \
 f"""{repr(cip2.enc)}
 """
 print(s,end="")
 
 s = \
-f"""\033[94m>>>\033[0m cip3 = bob.encrypt(m3); cip3.enc
+"""\033[94m>>>\033[0m cip3 = bob.encrypt(m3); cip3.enc
 """
 print(s,end="")
 
-cip3 = bob.encrypt(m3); cip3.enc
+cip3 = bob.encrypt(m3)
 s = \
 f"""{repr(cip3.enc)}
 """
@@ -515,7 +515,7 @@ print(s,end="")
 
 alg = pyc.ACESAlgebra(**public, debug=False)
 s = \
-f"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=False)
+"""\033[94m>>>\033[0m alg = pyc.ACESAlgebra(**public, debug=False)
 \033[94m>>>\033[0m add = alice.decrypt(alg.add(cip1, cip2))
 """
 print(s,end="")
