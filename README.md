@@ -65,14 +65,14 @@ pip install --upgrade pyaces==version_number
   - [ ] `test_refresh.py`
   - [ ] `test_classifier.py`
 
-### Technical optimizations  and improvements
-  - [ ] Create function to generate cryptographic with efficient locator-director database (RAM); 
-  - [ ] Permit to save cryptopgrahic data locally (ROM), implement secure key management;
-  - [ ] Implement encryption of files (ROM);
-  - [ ] Implement complex types (`Int8`, `Int16`, `Int32`, `String`, `Bool`) and their arithmetic;
-  - [ ] CPU & GPU optimizations:
-    - [ ] Use `C`, `C++` or `ctypes` for elementary operations on polynomials and ciphertexts;
-    - [ ] Use `CUDA`;
+### Technical Optimizations and Improvements
+- [ ] Create a function to generate cryptographic data with an efficient locator-director database (RAM).  
+- [ ] Enable local storage of cryptographic data (ROM) and implement secure key management.  
+- [ ] Implement file encryption (ROM).  
+- [ ] Support complex data types (`Int8`, `Int16`, `Int32`, `String`, `Bool`) and their arithmetic operations.  
+- [ ] Optimize for CPU & GPU performance:  
+  - [ ] Use `C`, `C++`, or `ctypes` for elementary operations on polynomials and ciphertexts.  
+  - [ ] Implement GPU acceleration with `CUDA`.  
 
 # Quickstart
 
