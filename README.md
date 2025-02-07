@@ -10,6 +10,13 @@ This package proposes an implementation for the ACES cryptosystem where we take 
 
 The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_malleability_](https://en.wikipedia.org/wiki/Malleability_(cryptography)). In the Pisces symbol, the two fishes represent a harmonious interplay between opposite directions, reflecting the dual nature of encryption and decryption.
 
+# Useful facts
+
+**PyACES** is ...
+  - ... most closely related to the **BGV** FHE scheme.
+  - ... designed primarily for **binary circuits**, similar to TFHE.
+  - ... the only known FHE scheme in which both addition and multiplication are **commutative** and **associative** (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
+
 # Installation
 
 Install the package using ```pip```:
@@ -28,25 +35,17 @@ To upgrade to the [latest version](https://pypi.org/project/pyaces/):
 pip install --upgrade pyaces==version_number
 ```
 
-# Facts about PyACES
-
-PyACES is ...
-  - ... most closely related to the BGV FHE scheme.
-  - ... designed primarily for binary circuits, similar to TFHE.
-  - ... the only known FHE scheme in which both addition and multiplication are commutative and weakly associative (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
-
-
 # Progress and upcoming features
 - [ ] Uploading version 0.1.0 to PyPI:
   - ![50%](https://progress-bar.xyz/50)
 
 - [ ] Resolve Issues:
-  - [Issue #1](https://github.com/remytuyeras/aces/issues/1) ![80%](https://progress-bar.xyz/80)
+  - #1 [![80%](https://progress-bar.xyz/80)](https://github.com/remytuyeras/aces/issues/1)
 
 - [ ] Add guide [ePrint](https://eprint.iacr.org):
-  - ![80%](https://progress-bar.xyz/80?title=Tutorial)
-  - ![5%](https://progress-bar.xyz/5?title=Performance)
-  - ![10%](https://progress-bar.xyz/10?title=Security)
+  - Tutorial: ![80%](https://progress-bar.xyz/80)
+  - Performance analysis: ![5%](https://progress-bar.xyz/5)
+  - Security analysis: ![10%](https://progress-bar.xyz/10)
   
 - [ ] Complete documentation:
   - [ ] `algebras.py`
