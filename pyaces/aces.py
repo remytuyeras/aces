@@ -54,9 +54,9 @@ Methods:
    - A class for encrypting messages using the ACES cryptosystem without knowledge of the secret key. This class provides encryption functionality using a public key consisting of polynomials (f0, f1). It enables message encryption while incorporating structured noise for security.
 
 Methods:
-- ACES.__init__(self, f0: list[list[Polynomial]], f1: list[Polynomial], 
-                p: int, q: int, n: int, N: int, u: Polynomial, 
-                levels: list[Optional[int]] = [], debug: bool = False, 
+- ACES.__init__(self, f0: list[list[Polynomial]], f1: list[Polynomial],
+                p: int, q: int, n: int, N: int, u: Polynomial,
+                levels: list[Optional[int]] = [], debug: bool = False,
                 **args):
    - Initializes the ACES encryption system using the public key.
 
@@ -105,6 +105,7 @@ from typing import Callable, Tuple, Optional, Union, Any
 
 # =======================================
 
+
 class ArithChannel(object):
     """
     A class for handling arithmetic channels in the context of the homomorphic encryption scheme ACES. This class provides methods for generating and manipulating polynomials used in noise generation and key establishment, with a focus on secure polynomial operations for the construction of cryptographic parameters and noisy keys in the ACES framework.
@@ -134,7 +135,14 @@ class ArithChannel(object):
         - publish(...): Publishes the generated polynomials and other relevant data for use in the encryption scheme.
     """
 
-    def __init__(self, p: int, N: int, deg_u: int, repartition: Repartition, anchor: Callable[[Any], list[int]] = lambda i: [0, 1]):
+    def __init__(
+        self,
+        p: int,
+        N: int,
+        deg_u: int,
+        repartition: Repartition,
+        anchor: Callable[[Any], list[int]] = lambda i: [0, 1],
+    ):
         """
         Initializes the `ArithChannel` class, generating the necessary polynomials for encryption, including the secret, initializer, and noisy key polynomials.
 
@@ -165,37 +173,37 @@ class ArithChannel(object):
         self._omega = 1
 
         # The ciphertext dimension
-        self.N = N 
-        # The modulus defining the plaintext space 
-        self.p = p  
+        self.N = N
+        # The modulus defining the plaintext space
+        self.p = p
         # The encryption modulus from the repartition
-        self.q = repartition.q  
+        self.q = repartition.q
         # List of integers used to infer the secret key `x`
-        self.x_images = repartition.x_images  
+        self.x_images = repartition.x_images
         # The images defining the repartition structure `sigma`
-        self.sigma_img = repartition.sigma_img  
+        self.sigma_img = repartition.sigma_img
         # The prime factors of `q`, used in noise generation
-        self.factors = repartition.factors 
-        # A 3-tensor used in polynomial transformations for encryption 
-        self.tensor = repartition.lambdas  
+        self.factors = repartition.factors
+        # A 3-tensor used in polynomial transformations for encryption
+        self.tensor = repartition.lambdas
         # The dimension of the secret key `x`
-        self.n = repartition.n  
+        self.n = repartition.n
         # The degree of the polynomial `u`, defining the polynomial space size
-        self.deg_u = deg_u  
+        self.deg_u = deg_u
         # Function mapping dimensions to noise levels for noise generation
-        self.anchor = anchor  
+        self.anchor = anchor
 
         # Generate the polynomial `u`, whose evaluation at `arg=1` is zero modulo `q`
-        self.u = self.generate_u()  
+        self.u = self.generate_u()
 
         # Generate the secret key `x`
-        self.x = self.generate_secret()  
+        self.x = self.generate_secret()
 
         # Generate the initializer matrix `f0` for the noisy part of the public key
-        self.f0 = self.generate_initializer()  
+        self.f0 = self.generate_initializer()
 
         # Generate the noisy part of the public key
-        self.f1 = self.generate_noisy_key()  
+        self.f1 = self.generate_noisy_key()
 
     def generate_u(self) -> Polynomial:
         """
@@ -207,16 +215,16 @@ class ArithChannel(object):
             - Polynomial: The generated polynomial `u` with the required properties.
         """
         # Generate a random polynomial
-        randpoly = Polynomial.random(self.q, self.deg_u)  
+        randpoly = Polynomial.random(self.q, self.deg_u)
 
         # Append the leading coefficient as 1
-        randpoly.coefs.append(1)  
+        randpoly.coefs.append(1)
 
         # Adjust to ensure evaluation at 1 is zero modulo q
-        shift = Polynomial.randshift(self.q - randpoly(arg=1), self.q, self.deg_u) 
+        shift = Polynomial.randshift(self.q - randpoly(arg=1), self.q, self.deg_u)
 
-        # Return the polynomial with the desired properties 
-        return shift + randpoly  
+        # Return the polynomial with the desired properties
+        return shift + randpoly
 
     def generate_secret(self) -> list[Polynomial]:
         """
@@ -229,17 +237,18 @@ class ArithChannel(object):
         """
         x = []
         for i in range(self.n):
-
             # Generate a random polynomial
-            randpoly = Polynomial.random(self.q, self.deg_u)  
+            randpoly = Polynomial.random(self.q, self.deg_u)
 
             # Adjust to match x_image[i]
-            shift = Polynomial.randshift(self.x_images[i] - randpoly(arg=1), self.q, self.deg_u)  
+            shift = Polynomial.randshift(
+                self.x_images[i] - randpoly(arg=1), self.q, self.deg_u
+            )
 
             # Append the adjusted polynomial
-            x.append(shift + randpoly)  
-            
-        return x  
+            x.append(shift + randpoly)
+
+        return x
 
     def generate_vanishers(self) -> list[Polynomial]:
         """
@@ -252,18 +261,19 @@ class ArithChannel(object):
         """
         e = []
         for i in range(self.N):
-
             # Choose a level from the anchor function
-            k = random.choice(self.anchor(i)) 
+            k = random.choice(self.anchor(i))
 
             # Generate a random polynomial
-            randpoly = Polynomial.random(self.q, self.deg_u)  
+            randpoly = Polynomial.random(self.q, self.deg_u)
 
             # Adjust to match p * k
-            shift = Polynomial.randshift(self.p * k - randpoly(arg=1), self.q, self.deg_u)  
+            shift = Polynomial.randshift(
+                self.p * k - randpoly(arg=1), self.q, self.deg_u
+            )
 
             # Append the adjusted polynomial
-            e.append(shift + randpoly)  
+            e.append(shift + randpoly)
 
         return e
 
@@ -279,23 +289,26 @@ class ArithChannel(object):
         f0 = []
         for _ in range(self.N):
             # Initialize the row for the matrix
-            row = []  
+            row = []
             for k in range(self.n):
-
                 # Random coefficient
-                r = random.randrange(self.q)  
+                r = random.randrange(self.q)
 
                 # Generate a random polynomial
-                randpoly = Polynomial.random(self.q, self.deg_u)  
+                randpoly = Polynomial.random(self.q, self.deg_u)
 
                 # Adjust to match factor
-                shift = Polynomial.randshift(self.factors[self.sigma_img[k]] * r - randpoly(arg=1), self.q, self.deg_u)  
+                shift = Polynomial.randshift(
+                    self.factors[self.sigma_img[k]] * r - randpoly(arg=1),
+                    self.q,
+                    self.deg_u,
+                )
 
                 # Append the adjusted polynomial to the row
-                row.append(shift + randpoly)  
+                row.append(shift + randpoly)
 
             # Append the row to the matrix
-            f0.append(row)  
+            f0.append(row)
 
         return f0
 
@@ -309,21 +322,20 @@ class ArithChannel(object):
             - list[Polynomial]: A vector of polynomials constituting the value of the attribute `self.f1`.
         """
         # Initialize the noisy key with zero polynomials
-        f1 = [Polynomial([0], self.q) for _ in range(self.N)]  
+        f1 = [Polynomial([0], self.q) for _ in range(self.N)]
 
         # Generate the vanishing polynomials (noise)
-        e = self.generate_vanishers()  
+        e = self.generate_vanishers()
 
         for i in range(self.N):
             for j in range(self.n):
-
                 # Multiply f0 by the secret polynomials x
-                f1[i] = f1[i] + self.f0[i][j] * self.x[j]  
+                f1[i] = f1[i] + self.f0[i][j] * self.x[j]
 
             # Add the noise component
-            f1[i] = (f1[i] + e[i]) % self.u  
+            f1[i] = (f1[i] + e[i]) % self.u
 
-        return f1  
+        return f1
 
     def publish(self, publish_levels: bool = True) -> dict:
         """
@@ -341,7 +353,10 @@ class ArithChannel(object):
         max_level = (self.q + 1) // self.p - 1
 
         # Compute levels for each dimension
-        levels = [min(max_level, max(self.anchor(i))) if publish_levels else 0 for i in range(self.N)]  
+        levels = [
+            min(max_level, max(self.anchor(i))) if publish_levels else 0
+            for i in range(self.N)
+        ]
 
         # Return the dictionary with all relevant data
         return {
@@ -354,10 +369,14 @@ class ArithChannel(object):
             "u": self.u,
             "tensor": self.tensor,
             "levels": levels,
-            "max_saturation": round(100 * max(levels) / max_level, 4)  # Percentage of max saturation
-        }  
+            "max_saturation": round(
+                100 * max(levels) / max_level, 4
+            ),  # Percentage of max saturation
+        }
+
 
 # =======================================
+
 
 class ACESPseudoCipher(object):
     """
@@ -368,7 +387,7 @@ class ACESPseudoCipher(object):
     Attributes:
         - dec (list[int]): The first component of a pseudo-ciphertext.
         - enc (int): The second component of a pseudo-ciphertext.
-    
+
     Methods:
         - corefresher(...) -> Tuple[list[ACESCipher], ACESCipher]: Generates ciphertexts required for the refresh operation.
     """
@@ -384,7 +403,9 @@ class ACESPseudoCipher(object):
         self.dec = dec
         self.enc = enc
 
-    def corefresher(self, aces: Union[ACES, ACESReader]) -> Tuple[list[ACESCipher], ACESCipher]:
+    def corefresher(
+        self, aces: Union[ACES, ACESReader]
+    ) -> Tuple[list[ACESCipher], ACESCipher]:
         """
         Generates the ciphertexts needed for a refresh operation.
 
@@ -396,9 +417,13 @@ class ACESPseudoCipher(object):
         Outputs:
             - Tuple[list[ACESCipher], ACESCipher]: A collection of ciphertexts encrypting the components of the pseudo-ciphertext.
         """
-        return [aces.encrypt(dec_i % aces.p) for dec_i in self.dec], aces.encrypt(self.enc % aces.p)
+        return [aces.encrypt(dec_i % aces.p) for dec_i in self.dec], aces.encrypt(
+            self.enc % aces.p
+        )
+
 
 # =======================================
+
 
 class ACESCipher(object):
     """
@@ -414,7 +439,7 @@ class ACESCipher(object):
         - dec (list[Polynomial]): The component of the ciphertext used for decryption.
         - enc (Polynomial): The component of the ciphertext containing the message.
         - lvl (int): The noise level associated with the ciphertext.
-    
+
     Methods:
         - pseudo(...): Converts the ciphertext into a pseudo-ciphertext.
         - corefresher(...): Generates ciphertexts required for the refresh operation.
@@ -445,8 +470,10 @@ class ACESCipher(object):
         enc = self.enc(arg=1)
         dec = [(dec_i.intmod - dec_i(arg=1)) % dec_i.intmod for dec_i in self.dec]
         return ACESPseudoCipher(dec, enc)
-    
-    def corefresher(self, aces: Union[ACES, ACESReader]) -> Tuple[list[ACESCipher], ACESCipher]:
+
+    def corefresher(
+        self, aces: Union[ACES, ACESReader]
+    ) -> Tuple[list[ACESCipher], ACESCipher]:
         """
         Generates the ciphertexts needed for a refresh operation.
 
@@ -463,12 +490,14 @@ class ACESCipher(object):
         pseudo_cipher = self.pseudo()
         return pseudo_cipher.corefresher(aces)
 
+
 # =======================================
+
 
 class ACES(object):
     """
     A class for encrypting messages using the ACES cryptosystem without knowledge of the secret key.
-    
+
     This class provides encryption functionality using a public key consisting of polynomials (`f0`, `f1`). It enables message encryption while incorporating structured noise components for enhanced security, providing a fully homomorphic encryption system without requiring access to the secret key. Typically, this class is initialized with the output of the method `ArithChannel.publish`.
 
     Attributes:
@@ -487,12 +516,20 @@ class ACES(object):
         - generate_b(...): Generates the noise components used in encryption, which are added to the ciphertext to maintain security.
         - generate_r_m(...): Generates a polynomial representation of the plaintext message, mapping the message to a form that can be encrypted.
     """
-    
-    def __init__(self, 
-                 f0: list[list[Polynomial]], f1: list[Polynomial], 
-                 p: int, q: int, n: int, N: int, u: Polynomial, 
-                 levels: list[Optional[int]] = [], debug: bool = False, 
-                 **args):
+
+    def __init__(
+        self,
+        f0: list[list[Polynomial]],
+        f1: list[Polynomial],
+        p: int,
+        q: int,
+        n: int,
+        N: int,
+        u: Polynomial,
+        levels: list[Optional[int]] = [],
+        debug: bool = False,
+        **args,
+    ):
         """
         Initializes the ACES encryption system using the public key `f0` and `f1`, as well as other encryption parameters.
 
@@ -518,7 +555,9 @@ class ACES(object):
         self.levels = levels
         self.debug = debug
 
-    def encrypt(self, m: int, anchor: Callable[[Any], int] = lambda v, w: random.randint(0, w)) -> ACESCipher:
+    def encrypt(
+        self, m: int, anchor: Callable[[Any], int] = lambda v, w: random.randint(0, w)
+    ) -> ACESCipher:
         """
         Encrypts a message using the ACES encryption scheme.
 
@@ -532,19 +571,21 @@ class ACES(object):
             - ACESCipher: The ciphertext resulting from the encryption of the message `m`.
         """
         if self.debug and m >= self.p:
-            print(f"\033[93mWarning in ACES.encrypt: The input message is encrypted as {m % self.p} and adds {m // self.p} points to the noise level.\033[0m")
-        
+            print(
+                f"\033[93mWarning in ACES.encrypt: The input message is encrypted as {m % self.p} and adds {m // self.p} points to the noise level.\033[0m"
+            )
+
         # Generate the multiplicative noise components, stored in the list `b`, used for encryption
         b = self.generate_b(anchor=anchor)
 
         # Generate the message encoding polynomial `r_m`, which represents the message
         enc = self.generate_r_m(m)
-        
+
         # Compute the part of the ciphertext that hides the message, using `f1`
         for i in range(self.N):
             enc = enc + b[i] * self.f1[i]
         enc = enc % self.u
-        
+
         # Compute the part of the ciphertext usually used for decryption, using `f0`
         dec = []
         for j in range(self.n):
@@ -552,19 +593,29 @@ class ACES(object):
             for i in range(self.N):
                 dec_j = dec_j + b[i] * self.f0[i][j]
             dec.append(dec_j % self.u)
-        
+
         # Compute the noise contribution associated with `f1`
-        f1_noise = sum([max(1, math.ceil(b[i](arg=1) / self.p)) * level * self.p if isinstance(level, int) else 0 for i, level in enumerate(self.levels)])
+        f1_noise = sum(
+            [
+                max(1, math.ceil(b[i](arg=1) / self.p)) * level * self.p
+                if isinstance(level, int)
+                else 0
+                for i, level in enumerate(self.levels)
+            ]
+        )
         noise = f1_noise + m // self.p
 
         if self.debug:
             total_noise = (self.q + 1) // self.p - 1
-            print(f"\033[93mWarning in ACES.encrypt: encryption starting at {round(100 * noise / total_noise, 4)}% of max. noise level.\033[0m")
-        
+            print(
+                f"\033[93mWarning in ACES.encrypt: encryption starting at {round(100 * noise / total_noise, 4)}% of max. noise level.\033[0m"
+            )
+
         return ACESCipher(dec, enc, noise)
 
-
-    def generate_b(self, anchor: Callable[[Any, Any], int] = lambda v, w: random.randint(0, w)) -> list[Polynomial]:
+    def generate_b(
+        self, anchor: Callable[[Any, Any], int] = lambda v, w: random.randint(0, w)
+    ) -> list[Polynomial]:
         """
         Generates the multiplicative noise components used in the encryption process.
 
@@ -579,18 +630,17 @@ class ACES(object):
         b = []
         deg_u = self.u.degree()
         for i in range(self.N):
-
             # Generate a random value using the anchor function
             b_i = anchor(i, self.p)
 
             # Generate a random polynomial
             randpoly = Polynomial.random(self.q, deg_u)
 
-            # Adjust the polynomial to match the random value at arg=1  
+            # Adjust the polynomial to match the random value at arg=1
             shift = Polynomial.randshift(b_i - randpoly(arg=1), self.q, deg_u)
 
-            # Append the final polynomial to the list  
-            b.append(shift + randpoly)  
+            # Append the final polynomial to the list
+            b.append(shift + randpoly)
 
         return b
 
@@ -607,23 +657,25 @@ class ACES(object):
             - Polynomial: A polynomial whose evaluation at `arg=1` equals `m`.
         """
         # Degree of the polynomial
-        deg_u = self.u.degree()  
+        deg_u = self.u.degree()
 
         # Generate a random polynomial
-        randpoly = Polynomial.random(self.q, deg_u)  
+        randpoly = Polynomial.random(self.q, deg_u)
 
         # Adjust to match the message at arg=1
-        shift = Polynomial.randshift(m - randpoly(arg=1), self.q, deg_u)  
+        shift = Polynomial.randshift(m - randpoly(arg=1), self.q, deg_u)
 
         # Return the adjusted polynomial representing `m`
-        return shift + randpoly  
+        return shift + randpoly
+
 
 # =======================================
+
 
 class ACESReader(object):
     """
     A class for handling decryption and encryption in the ACES cryptosystem.
-    
+
     This class enables the owner of the secret key to decrypt ciphertexts and encrypt messages into ciphertexts that conform to the ACES structure. It provides methods for generating encryption parameters, handling noise, and constructing ciphertexts in accordance with the ACES cryptographic framework.
 
     Attributes:
@@ -636,7 +688,7 @@ class ACESReader(object):
         - sigma_img (list[int]): The images defining a partition structure `sigma`.
         - factors (list[int]): The prime factors of the modulus `q` used in the noise generation process.
         - debug (bool): A flag indicating whether debug messages should be printed during encryption.
-    
+
     Methods:
         - decrypt(...): Decrypts a ciphertext using the ACES decryption formula.
         - encrypt(...): Encrypts a message using the ACES encryption scheme.
@@ -677,18 +729,24 @@ class ACESReader(object):
             - int: The recovered plaintext message.
         """
         cTx = Polynomial([0], self.q)
-        
+
         # Compute the scalar product between c.dec and the secret key `x`
         for i in range(self.n):
             cTx = cTx + c.dec[i] * self.x[i]
-        
+
         # Compute the intermediate decrypted value before modular reduction
         m_pre = c.enc - cTx
-        
+
         # Apply modular reduction to recover the plaintext message
         return (m_pre(arg=1) % self.q) % self.p
 
-    def encrypt(self, m: int, min_noise: int = 0, max_noise: int = 1, anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w)) -> ACESCipher:
+    def encrypt(
+        self,
+        m: int,
+        min_noise: int = 0,
+        max_noise: int = 1,
+        anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w),
+    ) -> ACESCipher:
         """
         Encrypts a message using the ACES encryption scheme.
 
@@ -704,17 +762,19 @@ class ACESReader(object):
             - ACESCipher: A ciphertext consisting of a decomposition vector and an encrypted polynomial.
         """
         if self.debug and m >= self.p:
-            print(f"\033[93mWarning in ACESReader.encrypt: the input is encrypted as {m % self.p} and adds {m // self.p} point to noise level.\033[0m")
-        
+            print(
+                f"\033[93mWarning in ACESReader.encrypt: the input is encrypted as {m % self.p} and adds {m // self.p} point to noise level.\033[0m"
+            )
+
         # Generate the vector component of the ciphertext that interacts with the secret key `x` via a scalar product
         dec = self.generate_dec(anchor=anchor)
 
         # Generate the message encoding polynomial r_m
         r_m = self.generate_r_m(m)
-        
+
         # Generate the noise polynomial e
         e = self.generate_vanisher(min_noise=min_noise, max_noise=max_noise)
-        
+
         # Compute the ciphertext component containing the polynomial r_m and contributions from the secret key interaction
         enc = r_m + e
         for i in range(self.n):
@@ -726,11 +786,15 @@ class ACESReader(object):
 
         if self.debug:
             total_noise = (self.q + 1) // self.p - 1
-            print(f"\033[93mWarning in ACESReader.encrypt: encryption starting at {round(100 * noise / total_noise, 4)}% of max. noise level.\033[0m")
+            print(
+                f"\033[93mWarning in ACESReader.encrypt: encryption starting at {round(100 * noise / total_noise, 4)}% of max. noise level.\033[0m"
+            )
 
         return ACESCipher(dec, enc, noise)
-    
-    def generate_dec(self, anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w)) -> list[Polynomial]:
+
+    def generate_dec(
+        self, anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w)
+    ) -> list[Polynomial]:
         """
         Generates the vector component of the ciphertext that interacts with the secret key `x` via a scalar product.
 
@@ -746,16 +810,20 @@ class ACESReader(object):
         for k in range(self.n):
             # Generate a random scaling factor r_k using the anchor function
             r_k = anchor(k, self.q)
-            
+
             # Generate a random polynomial
             randpoly = Polynomial.random(self.q, self.deg_u)
-            
+
             # Adjust the polynomial to satisfy the required scaling relation at arg=1
-            shift = Polynomial.randshift(self.factors[self.sigma_img[k]] * r_k - randpoly(arg=1), self.q, self.deg_u)
-            
+            shift = Polynomial.randshift(
+                self.factors[self.sigma_img[k]] * r_k - randpoly(arg=1),
+                self.q,
+                self.deg_u,
+            )
+
             # Append the adjusted polynomial to the ciphertext component
             dec.append(shift + randpoly)
-        
+
         return dec
 
     def generate_r_m(self, m: int) -> Polynomial:
@@ -771,14 +839,14 @@ class ACESReader(object):
             - Polynomial: A polynomial whose evaluation at `arg=1` equals `m`.
         """
         # Generate a random polynomial
-        randpoly = Polynomial.random(self.q, self.deg_u)  
+        randpoly = Polynomial.random(self.q, self.deg_u)
 
         # Adjust the polynomial to match `m` at `arg=1`
-        shift = Polynomial.randshift(m - randpoly(arg=1), self.q, self.deg_u)  
+        shift = Polynomial.randshift(m - randpoly(arg=1), self.q, self.deg_u)
 
         # Return the adjusted polynomial
-        return shift + randpoly  
-    
+        return shift + randpoly
+
     def generate_vanisher(self, min_noise: int = 0, max_noise: int = 1) -> Polynomial:
         """
         Generates a noise polynomial for encryption.
@@ -793,19 +861,25 @@ class ACESReader(object):
             - Polynomial: A polynomial contributing to encryption noise.
         """
         # Generate a noise value within bounds
-        noise = random.randint(max(0, min_noise), min(self.q // self.p, max_noise))  
+        noise = random.randint(max(0, min_noise), min(self.q // self.p, max_noise))
 
         # Generate a random polynomial
-        randpoly = Polynomial.random(self.q, self.deg_u)  
+        randpoly = Polynomial.random(self.q, self.deg_u)
 
         # Adjust to ensure evaluation at `arg=1` is a multiple of `p`
-        shift = Polynomial.randshift(self.p * noise - randpoly(arg=1), self.q, self.deg_u)  
+        shift = Polynomial.randshift(
+            self.p * noise - randpoly(arg=1), self.q, self.deg_u
+        )
 
         # Return the adjusted polynomial
-        return shift + randpoly  
+        return shift + randpoly
 
-    
-    def generate_refresher(self, min_noise: int = 0, max_noise: int = 1, anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w)) -> list[ACESCipher]:
+    def generate_refresher(
+        self,
+        min_noise: int = 0,
+        max_noise: int = 1,
+        anchor: Callable[[Any, Any], int] = lambda v, w: random.randrange(w),
+    ) -> list[ACESCipher]:
         """
         Generates a refresher structure, consisting of ciphertexts that encrypt information derived from the secret key components.
 
@@ -818,4 +892,12 @@ class ACESReader(object):
             - list[ACESCipher]: A list of ciphertexts that encrypt information derived from the secret key components.
 
         """
-        return [self.encrypt(m=(x_i(arg=1) % self.p), min_noise=min_noise, max_noise=max_noise, anchor=anchor) for x_i in self.x]
+        return [
+            self.encrypt(
+                m=(x_i(arg=1) % self.p),
+                min_noise=min_noise,
+                max_noise=max_noise,
+                anchor=anchor,
+            )
+            for x_i in self.x
+        ]

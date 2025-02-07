@@ -1,7 +1,9 @@
-import sys 
-sys.path.insert(1,"./")
+import sys
+
+sys.path.insert(1, "./")
 import pyaces as pyc
 import random
+
 
 def test_algebras():
     debug = True
@@ -14,16 +16,20 @@ def test_algebras():
     alice = pyc.ACESReader(ac, debug=debug)
     bob = pyc.ACES(**public, debug=debug)
 
-    m1 = random.randrange(ac.p) 
-    m2 = random.randrange(ac.p) 
+    m1 = random.randrange(ac.p)
+    m2 = random.randrange(ac.p)
 
     print(f"\nbob encrypts {m1} (mod {ac.p}):")
     cip1 = bob.encrypt(m1)
-    assert isinstance(cip1, pyc.ACESCipher) and alice.decrypt(cip1) == m1, "Error in ACES.encrypt()"
+    assert isinstance(cip1, pyc.ACESCipher) and alice.decrypt(cip1) == m1, (
+        "Error in ACES.encrypt()"
+    )
 
     print(f"\nbob encrypts {m2} (mod {ac.p}):")
     cip2 = bob.encrypt(m2)
-    assert isinstance(cip2, pyc.ACESCipher) and alice.decrypt(cip2) == m2, "Error in ACES.encrypt()"
+    assert isinstance(cip2, pyc.ACESCipher) and alice.decrypt(cip2) == m2, (
+        "Error in ACES.encrypt()"
+    )
 
     alg = pyc.ACESAlgebra(**public, debug=debug)
 
@@ -72,10 +78,10 @@ def test_algebras():
     print(f"- is cipher_output refreshable ? ..... {is_refreshable}")
     print(f"- has cipher_output a locator ? ...... {is_locator}")
 
-    max_co_margin = ((cipher_output.lvl + 1)* ac.p - 1) / ac.q
+    max_co_margin = ((cipher_output.lvl + 1) * ac.p - 1) / ac.q
     margin_satisfied = max_co_margin % ac.p < 1 - margin
     print(f"- is margin condition satisfied ? .... {margin_satisfied}")
-    test_implication = not(margin_satisfied and is_locator) or is_refreshable
+    test_implication = not (margin_satisfied and is_locator) or is_refreshable
     assert test_implication
 
     print("\nCreate refresher ...")
@@ -89,8 +95,14 @@ def test_algebras():
 
     print("\nrefreshed_cipher_output.lvl =", refreshed_cipher_output.lvl)
     decrypted_refreshed_cipher_output = alice.decrypt(refreshed_cipher_output)
-    print("decrypt(refreshed_cipher_output) =", decrypted_refreshed_cipher_output, f"   (Compare to plaintext output: {plain_output % ac.p})")
-    assert not(is_refreshable) or decrypted_refreshed_cipher_output == plain_output % ac.p
+    print(
+        "decrypt(refreshed_cipher_output) =",
+        decrypted_refreshed_cipher_output,
+        f"   (Compare to plaintext output: {plain_output % ac.p})",
+    )
+    assert (
+        not (is_refreshable) or decrypted_refreshed_cipher_output == plain_output % ac.p
+    )
 
 
 if __name__ == "__main__":

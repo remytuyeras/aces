@@ -1,8 +1,10 @@
 import sys
+
 sys.path.insert(1, "./")
 import pyaces as pyc
-import random 
+import random
 from typing import Any, Callable
+
 
 def test_compile():
     """
@@ -34,7 +36,6 @@ def test_compile():
     - Test 4: Validate a composite expression by chaining the result of a previous computation with new operations.
     """
 
-
     # Generate a random array of integers between 0 and 5, with a length of 8
     array = [random.randint(0, 5) for _ in range(8)]
     print("input array = ", array)
@@ -43,15 +44,13 @@ def test_compile():
     function1 = lambda x0, x1, x2, x3, x4, x5: x0 * x1 + x2 * x3 + x4 * x5
     function2 = lambda y, x6, x7: y * x6 + x7
 
-
     # Custom StringAlgebra class for symbolic representation of operations
     class StringAlgebra(pyc.Algebra):
-
         @staticmethod
         def add(a: Any, b: Any) -> Any:
             """Returns the symbolic addition of two elements."""
             return f"({a} + {b})"
-        
+
         @staticmethod
         def mult(a: Any, b: Any) -> Any:
             """Returns the symbolic multiplication of two elements."""
@@ -60,7 +59,6 @@ def test_compile():
         def compile(self, instruction: str) -> Callable[[list[Any]], Any]:
             """Compiles a string representation of operations into a callable function."""
             return lambda a: pyc.read_operations(self, instruction, a)
-
 
     # Test 1: Verify StringAlgebra with a symbolic expression
     print("\n==== Test (0*1+2*3+4*5)*6+7 with StringAlgebra() ====")
@@ -71,21 +69,30 @@ def test_compile():
     output = compiled_function(array)
     print("[StringAlgebra] output =", output)
     # Validate that the output matches the expected symbolic expression
-    assert isinstance(output, str) and output == expected_output, "Error in read_operations()"
-
+    assert isinstance(output, str) and output == expected_output, (
+        "Error in read_operations()"
+    )
 
     # Test 2: Verify Algebra with the same expression using numerical computations
     print("\n==== Test (0*1+2*3+4*5)*6+7 with Algebra() ====")
     compiled_function = pyc.Algebra().compile("(0*1+2*3+4*5)*6+7")
     # Compute the expected numerical output
-    expected_output = (array[0] * array[1] + array[2] * array[3] + array[4] * array[5]) * array[6] + array[7]
+    expected_output = (
+        array[0] * array[1] + array[2] * array[3] + array[4] * array[5]
+    ) * array[6] + array[7]
     expected_output_bis = function2(function1(*array[:6]), *array[6:])
-    print("[Algebra] expected output =", expected_output, "which is also: ", expected_output_bis)
+    print(
+        "[Algebra] expected output =",
+        expected_output,
+        "which is also: ",
+        expected_output_bis,
+    )
     output = compiled_function(array)
     print("[Algebra] output =", output)
     # Validate that the output matches the expected numerical result
-    assert output == expected_output_bis == expected_output, "Error in read_operations()"
-
+    assert output == expected_output_bis == expected_output, (
+        "Error in read_operations()"
+    )
 
     # Test 3: Verify Algebra with a simpler expression
     print("\n==== Test 0*1+2*3+4*5 with Algebra() ====")
@@ -93,12 +100,18 @@ def test_compile():
     # Compute the expected numerical output
     expected_output1 = array[0] * array[1] + array[2] * array[3] + array[4] * array[5]
     expected_output1_bis = function1(*array[:6])
-    print("[Algebra] expected output1 =", expected_output1, "which is also: ", expected_output1_bis)
+    print(
+        "[Algebra] expected output1 =",
+        expected_output1,
+        "which is also: ",
+        expected_output1_bis,
+    )
     output1 = compiled_function1(array)
     print("[Algebra] output1 =", output1)
     # Validate that the output matches the expected result
-    assert output1 == expected_output1_bis == expected_output1, "Error in read_operations()"
-
+    assert output1 == expected_output1_bis == expected_output1, (
+        "Error in read_operations()"
+    )
 
     # Test 4: Verify continuation of a previous result with new indices
     print("\n==== Test previous*6+7 with Algebra() ====")
@@ -106,12 +119,20 @@ def test_compile():
     # Compute the expected output by combining the previous result with additional operations
     expected_output2 = expected_output1 * array[6] + array[7]
     expected_output2_bis = function2(expected_output1_bis, *array[6:])
-    print("[Algebra] expected output2 =", expected_output2, "which is also: ", expected_output2_bis)
+    print(
+        "[Algebra] expected output2 =",
+        expected_output2,
+        "which is also: ",
+        expected_output2_bis,
+    )
     # Append the previous output1 to the input array at index 8
     output2 = compiled_function2(array + [output1])
     print("[Algebra] output2 =", output2)
     # Validate that the output matches the expected continuation result
-    assert output2 == expected_output2_bis == expected_output2, "Error in read_operations()"
+    assert output2 == expected_output2_bis == expected_output2, (
+        "Error in read_operations()"
+    )
+
 
 if __name__ == "__main__":
     test_compile()

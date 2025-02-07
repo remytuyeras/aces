@@ -1,4 +1,5 @@
 import sys
+
 sys.path.insert(1, "./")
 import pyaces as pyc
 import random
@@ -13,8 +14,8 @@ public = ac.publish(publish_levels=True)
 alice = pyc.ACESReader(ac, debug=debug)
 bob = pyc.ACES(**public, debug=debug)
 
-m1 = random.randrange(ac.p) 
-m2 = random.randrange(ac.p) 
+m1 = random.randrange(ac.p)
+m2 = random.randrange(ac.p)
 
 print(f"\nbob encrypts {m1} (mod {ac.p}):")
 cip1 = bob.encrypt(m1)

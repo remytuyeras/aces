@@ -15,7 +15,7 @@ Class:
 Methods:
 - Primes.__init__(self, upperbound: int, cache: bool = True):
    - Initializes the class, generates primes for numbers up to the given `upperbound`, and optionally caches the results.
-   
+
 - Primes.get_primes(upperbound: int, cache: list[int] = []) -> list[int]:
    - Generates a list of primes for numbers up to the given `upperbound`, leveraging any primes from the provided cache.
 
@@ -39,10 +39,11 @@ from typing import Optional, Tuple, Any
 
 # =======================================
 
+
 def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
     """
     Computes the extended greatest common divisor (GCD) of two integers `a` and `b`.
-    
+
     This function uses the extended Euclidean algorithm to find integers `s` and `t` such that `a * s + b * t = gcd(a, b)`. The output includes the GCD of `a` and `b`, along with the coefficients `s` and `t`.
 
     Inputs:
@@ -56,7 +57,7 @@ def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
             - t: Coefficient such that `a * s + b * t = gcd(a, b)`.
 
     Example:
-        extended_gcd(30, 20) returns (10, 1, -1), where 10 is gcd(30, 20), 
+        extended_gcd(30, 20) returns (10, 1, -1), where 10 is gcd(30, 20),
         and 1, -1 are coefficients satisfying 30*1 + 20*(-1) = 10.
     """
     # Initialize variables for the extended Euclidean algorithm
@@ -72,11 +73,13 @@ def extended_gcd(a: int, b: int) -> Tuple[int, int, int]:
         r.append(r2)
         s.append(s[-2] - q * s[-1])
         t.append(t[-2] - q * t[-1])
-    
+
     # Return the GCD (second-to-last remainder) and the coefficients `s` and `t`.
     return (r[-2], s[-2], t[-2])
 
+
 # =======================================
+
 
 def randinverse(intmod: int) -> Tuple[int, int]:
     """
@@ -109,7 +112,9 @@ def randinverse(intmod: int) -> Tuple[int, int]:
     # Return the random integer `a` and its modular inverse modulo `intmod`.
     return (a, inva % intmod)
 
+
 # =======================================
+
 
 class Primes(object):
     """
@@ -149,10 +154,10 @@ class Primes(object):
         # Flag for caching primes to a file (enabled by default).
         self.cache = cache
         # Notify that primes are being generated.
-        print("getting primes...")  
+        print("getting primes...")
 
         # Initialize a list to hold previously cached primes.
-        previous = []  
+        previous = []
 
         # Check if a cached primes file exists, and load it if available.
         if self.cache and os.path.exists(".aces.cache_primes.json"):
@@ -160,32 +165,32 @@ class Primes(object):
                 # Load the cached JSON object.
                 json_object = json.load(f)
                 # Extract previously cached primes from the file.
-                previous = json_object["primes"]  
+                previous = json_object["primes"]
 
         # Generate primes for numbers up to `upperbound`, using the previously cached primes (if available).
         self.primes = Primes.get_primes(upperbound, previous)
         # Notify that prime generation is complete.
-        print("primes obtained")  
+        print("primes obtained")
 
         # If caching is enabled, check if the cache needs to be updated.
         if self.cache:
             # Assume the cache needs an update.
-            need_update = True  
-            
+            need_update = True
+
             # If the cache file exists, check if it covers the range up to the current upperbound.
             if os.path.exists(".aces.cache_primes.json"):
                 # Retrieve the cached upper bound.
                 cached_ub = json_object["upperbound"]
                 # If the cache is already valid, no need to update.
                 if self.upperbound <= cached_ub:
-                    need_update = False  
-            
+                    need_update = False
+
             # If an update is needed, write the new primes to the cache file.
             if need_update:
                 with open(".aces.cache_primes.json", "w") as f:
                     json_update = {"upperbound": self.upperbound, "primes": self.primes}
                     # Save the updated primes to the cache.
-                    json.dump(json_update, f)  
+                    json.dump(json_update, f)
 
         # Factorize the value `upperbound`, storing the result in `self.factorization`.
         self.factorization = self.factorize(upperbound)
@@ -193,13 +198,12 @@ class Primes(object):
         # Initialize the `self.units` dictionary to store factors to be avoided in the generation of `q` parameters.
         self.units = {}
 
-
     @staticmethod
-    def get_primes(upperbound: int, cache: list[int] =[]) -> list[int]:
+    def get_primes(upperbound: int, cache: list[int] = []) -> list[int]:
         """
         Generates a list of prime factors for numbers up to a given upper bound using trial division.
 
-        This method builds on any previously provided list of primes (via `cache`) to optimize prime generation by skipping known non-prime numbers. 
+        This method builds on any previously provided list of primes (via `cache`) to optimize prime generation by skipping known non-prime numbers.
 
         Inputs:
             - upperbound (int): The maximum integer (inclusive) for which prime factors are generated.
@@ -209,36 +213,38 @@ class Primes(object):
             - list: A list of prime numbers for numbers up to `upperbound`.
         """
         # Initialize the list of primes with the previously cached primes, if provided.
-        previous = cache  
+        previous = cache
 
         # Determine the starting point for prime generation:
         #   - If `cache` is provided, start from the next integer after the last cached prime.
         #   - Otherwise, start from 2, the smallest prime number.
-        i = max(2, previous[-1]) if previous else 2  
+        i = max(2, previous[-1]) if previous else 2
 
         # Iterate over integers from the starting point (`i`) up to the square root of the upper bound.
         # The range limit is chosen because any composite number `n` must have at least one divisor smaller than or equal to `sqrt(n)`.
         for k in range(i, int(math.sqrt(upperbound)) + 1):
             # Assume `k` is prime until proven otherwise.
-            is_prime = True  
+            is_prime = True
 
             # Check if `k` is divisible by any of the previously identified primes. If divisible, `k` is not a prime, and we exit the loop early.
             for p in previous:
                 # `k` is divisible by a smaller prime `p`.
-                if k % p == 0:  
+                if k % p == 0:
                     is_prime = False
                     # Stop further checks; `k` is confirmed non-prime.
-                    break  
+                    break
 
             # If no divisors were found, `k` is a prime number.
             if is_prime:
                 # Add `k` to the list of primes.
-                previous.append(k)  
+                previous.append(k)
 
         # Return the updated list of primes, including both cached and newly identified primes.
         return previous
 
-    def factorize(self, n: int, limit: Optional[int] = None) -> Optional[dict[int, int]]:
+    def factorize(
+        self, n: int, limit: Optional[int] = None
+    ) -> Optional[dict[int, int]]:
         """
         Factorizes a given number into its prime components.
 
@@ -267,17 +273,17 @@ class Primes(object):
                 - If `limit = 3`, the result is `{2: 2, 3: 1}`.
         """
         # Initialize the factorization dictionary to None.
-        expression = None  
-        
+        expression = None
+
         # Define the upper bound for factorization:
         #   - Use the provided `limit` if specified.
         #   - Otherwise, default to `(sqrt(self.upperbound) + 1)^2`.
-        bound = limit if limit is not None else int(math.sqrt(self.upperbound) + 1) ** 2  
+        bound = limit if limit is not None else int(math.sqrt(self.upperbound) + 1) ** 2
 
         # Only proceed if `n` is within the valid range (0 < n < bound).
         if 0 < n < bound:
             # Initialize the dictionary to store prime factors and their multiplicities.
-            expression = {}  
+            expression = {}
 
             # Handle factorization for 2 (the smallest prime) separately.
             while n % 2 == 0:
@@ -285,7 +291,7 @@ class Primes(object):
                 expression.setdefault(2, 0)
                 expression[2] += 1
                 # Reduce `n` by dividing it by 2.
-                n //= 2  
+                n //= 2
 
             # Factorize using the list of primes up to the specified limit or sqrt(n).
             for p in self.primes:
@@ -302,12 +308,12 @@ class Primes(object):
                     expression.setdefault(p, 0)
                     expression[p] += 1
                     # Reduce `n` by dividing it by `p`.
-                    n //= p  
+                    n //= p
 
             # If the remaining `n` after processing all smaller primes is greater than 2, then it is itself a prime and should be added to the factorization.
             if n > 2:
                 expression.setdefault(n, 0)
-                expression[n] += 1  
+                expression[n] += 1
 
         # Return the dictionary containing the prime factorization of `n`.
         return expression
@@ -325,17 +331,16 @@ class Primes(object):
             - None: Updates the `units` dictionary in place.
         """
         # Factorize the number `n`.
-        expression = self.factorize(n)  
+        expression = self.factorize(n)
         if expression is not None:
             # Iterate over the prime factors of `n`.
             for k in expression.keys():
                 # If the factor `k` is not already in `units`, initialize it as an empty list.
                 self.units.setdefault(k, [])
                 # Add the number `n` to the list of numbers for factor `k`.
-                self.units[k].append(n)  
+                self.units[k].append(n)
 
-
-    def find_candidates(self, zero_divisors: list = []) -> list[dict[str,Any]]:
+    def find_candidates(self, zero_divisors: list = []) -> list[dict[str, Any]]:
         """
         Identifies candidate `q` parameters that meet specific factorization criteria.
 
@@ -360,36 +365,36 @@ class Primes(object):
         # Calculate the upper bound limit for `q` parameters such that the integer parts of their square roots are less than or equal to sqrt(self.upperbound).
         limit = (int(math.sqrt(self.upperbound)) + 1) ** 2
         # Initialize the list of candidates.
-        output = []  
+        output = []
 
         # Iterate through numbers from upperbound to the limit.
         for k in range(self.upperbound, limit):
             # Factorize the number `k`.
             expression = self.factorize(k, limit)
-            # Assume the number is a valid candidate initially. 
-            possible = True  
+            # Assume the number is a valid candidate initially.
+            possible = True
 
             # Check if zero_divisors is provided.
-            if zero_divisors != []:  
+            if zero_divisors != []:
                 for zd in zero_divisors:
                     # Ensure divisibility by zero_divisors.
                     if zd not in expression.keys():
                         # Mark as invalid if the candidate is not divisible by one of the zero_divisors.
                         possible = False
                         break
-            
+
             # Iterate over the prime factors of the candidate number.
             for f in expression.keys():
                 # Ensure that the candidate's factors are not in `units`.
                 if f in self.units.keys():
                     # Mark as invalid if the candidate has a factor in `units`.
-                    possible = False  
+                    possible = False
                     break
-            
+
             # If the number is still valid, add it as a candidate.
             if possible:
                 # Get the full factorization for the candidate `q` parameter.
-                g = self.factorize(k, limit)  
+                g = self.factorize(k, limit)
                 json_object = {
                     "candidate_q": k,  # The candidate `q` parameter.
                     "factor_count": len(g.keys()),  # The number of prime factors.
@@ -398,13 +403,15 @@ class Primes(object):
                     "factorization": g,  # The full factorization of the candidate number.
                 }
                 # Add the candidate to the output list.
-                output.append(json_object)  
+                output.append(json_object)
 
         # Sort the list of candidates based on multiple criteria: number of factors, number itself, min/max factors.
-        return sorted(output, key=lambda x: [
-            x["factor_count"],
-            x["candidate_q"],
-            x["min_factor"],
-            x["max_factor"],
-        ])
-
+        return sorted(
+            output,
+            key=lambda x: [
+                x["factor_count"],
+                x["candidate_q"],
+                x["min_factor"],
+                x["max_factor"],
+            ],
+        )

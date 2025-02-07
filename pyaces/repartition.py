@@ -41,6 +41,7 @@ import random
 
 # =======================================
 
+
 class Repartition(object):
     """
     A class for constructing and managing the repartition-related elements necessary for homomorphic operations in ACES-based schemes. This class focuses on computing key parameters such as `sigma`, `lambda`, `mus`, and `\ell`, which are integral to constructing secure homomorphic ACES-based schemes. It also facilitates the creation and handling of images corresponding to the secret key, ensuring compatibility with the repartition structure.
@@ -104,36 +105,36 @@ class Repartition(object):
         """
         # Store the input parameter `n`.
         self.n = n
-        
+
         # Initialize the Primes instance with the specified upperbound.
         self.primes = Primes(upperbound)
-        
+
         # Add the prime factors of `p` to the units dictionary to exclude them from `q` candidates.
         self.primes.add_units(p)
-        
+
         # Find candidates for the `q` parameter.
         candidates = self.primes.find_candidates()
-        
+
         # Select the last candidate (assumed to be the most suitable in the context).
         self.candidate = candidates[-1]
-        
+
         # Extract the `candidate_q` value from the selected candidate.
         self.q = self.candidate["candidate_q"]
-        
+
         # Extract the prime factors of `q`, including the trivial choice 1 (as described in the paper).
         self.factors = [1] + list(self.candidate["factorization"].keys())
-        
+
         # Extract the number of prime factors for the selected `q`.
         self.n0 = self.candidate["factor_count"]
-        
+
         # Initialize flags and placeholders for `sigma` construction.
         self.sigma_done = False
         self.sigma_img = None
         self.sigma_fibers = None
-        
+
         # Initialize noise parameter for the 3-tensor as `None`.
         self.ell = None
-        
+
         # Initialize empty lists for repartition-related parameters.
         self.mus = []
         self.lambdas = []
@@ -155,7 +156,9 @@ class Repartition(object):
         # Construct the `lambdas` and `x_images` based on the flags for `sigma` and `mus`.
         self.construct_lambdas(new_sigma=new_sigma, new_mus=new_mus)
 
-    def reconstruct_sigma(self, trivial_factor: bool = False, trivial_sigma: bool = False) -> None:
+    def reconstruct_sigma(
+        self, trivial_factor: bool = False, trivial_sigma: bool = False
+    ) -> None:
         """
         Reconstructs the `sigma` parameter with optional constraints on triviality.
 
@@ -176,7 +179,6 @@ class Repartition(object):
         # Reconstruct `sigma` with the specified options.
         self.construct_sigma(trivial_factor=trivial_factor, trivial_sigma=trivial_sigma)
 
-
     def construct_mus(self) -> bool:
         """
         Constructs the list `mus` and the corresponding `x_images` to satisfy a Bézout identity condition.
@@ -187,7 +189,7 @@ class Repartition(object):
             - None.
 
         Outputs:
-            - bool: Returns `True` if the Bézout identity condition is satisfied 
+            - bool: Returns `True` if the Bézout identity condition is satisfied
                     (i.e., the greatest common divisor (gcd) equals 1); `False` otherwise.
 
         Process:
@@ -206,8 +208,8 @@ class Repartition(object):
         bezout_sum = 0
         # Initialize the list of `mus`.
         self.mus = []
-        # Initialize the list of `x_images`. 
-        self.x_images = []  
+        # Initialize the list of `x_images`.
+        self.x_images = []
 
         # Randomly select an index to exclude from the initial summation.
         k0 = random.randrange(0, self.n)
@@ -232,7 +234,9 @@ class Repartition(object):
 
         # Compute the Bézout identity for the excluded component (`k0`).
         x_omega = random.randint(0, self.q)
-        gcd, modif, mu = extended_gcd(bezout_sum, self.factors[self.sigma_img[k0]] * x_omega)
+        gcd, modif, mu = extended_gcd(
+            bezout_sum, self.factors[self.sigma_img[k0]] * x_omega
+        )
 
         # Update `mus` and `x_images` to complete the identity.
         for k in range(len(self.mus)):
@@ -246,7 +250,6 @@ class Repartition(object):
 
         # Return True if the Bézout identity holds (gcd == 1).
         return gcd == 1
-
 
     def construct_lambdas(self, new_sigma: bool = True, new_mus: bool = True) -> None:
         """
@@ -295,8 +298,10 @@ class Repartition(object):
                 for j in range(self.n):
                     # Each lambda coefficient is the product of a term dependent on k and a term dependent on (i, j).
                     tmp_k = self.factors[self.sigma_img[k]] * self.mus[k]
-                    tmp_i_j = self.x_images[i] * self.x_images[j] - self.ell[i][j] * self.sigma_q(i, j)
-                    
+                    tmp_i_j = self.x_images[i] * self.x_images[j] - self.ell[i][
+                        j
+                    ] * self.sigma_q(i, j)
+
                     # Append the modular result to the innermost list.
                     lambda_k_i.append((tmp_k * tmp_i_j) % self.q)
                 # Append the row to the current layer.
@@ -304,8 +309,9 @@ class Repartition(object):
             # Append the layer to `lambdas`.
             self.lambdas.append(lambda_k)
 
-
-    def construct_sigma(self, trivial_factor: bool = False, trivial_sigma: bool = False) -> None:
+    def construct_sigma(
+        self, trivial_factor: bool = False, trivial_sigma: bool = False
+    ) -> None:
         """
         Constructs the `n_0`-repartition `sigma` and its associated data.
 
@@ -332,7 +338,7 @@ class Repartition(object):
             - The corresponding `sigma_fibers` would be `{0: [], 1: [2], 2: [0, 3], 3: [1, 4]}`.
         """
         # Proceed only if `sigma` has not been constructed yet.
-        if not self.sigma_done:  
+        if not self.sigma_done:
             # Generate a shuffled list of indices in the range [0, self.n).
             tmp_indices = list(range(self.n))
             random.shuffle(tmp_indices)
@@ -359,7 +365,9 @@ class Repartition(object):
             indices = lambda k, img: [i for i, v in enumerate(img) if v == k]
 
             # Construct `sigma_fibers`: Map each value in the range [0, self.n0 + 1) to the list of indices in `sigma_img` where the value appears.
-            self.sigma_fibers = {k: indices(k, self.sigma_img) for k in range(self.n0 + 1)}
+            self.sigma_fibers = {
+                k: indices(k, self.sigma_img) for k in range(self.n0 + 1)
+            }
 
             # Mark `sigma` as completed.
             self.sigma_done = True
@@ -375,8 +383,8 @@ class Repartition(object):
             - j (int): The column index, representing the second component in the calculation.
 
         Outputs:
-            - int: The value of `sigma_q_divisor(i, j)`: 
-                - If `sigma_img[i] == sigma_img[j]`, return the factor corresponding to the shared value of `sigma_img[i]`. 
+            - int: The value of `sigma_q_divisor(i, j)`:
+                - If `sigma_img[i] == sigma_img[j]`, return the factor corresponding to the shared value of `sigma_img[i]`.
                 - Otherwise, return the product of the factors corresponding to `sigma_img[i]` and `sigma_img[j]`.
 
         Notes:
@@ -403,7 +411,6 @@ class Repartition(object):
             # Otherwise, return the product of the factors for `sigma_img[i]` and `sigma_img[j]`.
             return self.factors[self.sigma_img[i_]] * self.factors[self.sigma_img[j_]]
 
-
     def sigma_q(self, i: int, j: int) -> int:
         """
         Computes the value of the ratio `\sigma[q]` for given indices `i` and `j`.
@@ -428,7 +435,6 @@ class Repartition(object):
         """
         # Compute and return the value of `\sigma[q]` evaluated at (i, j) using `sigma_q_divisor`.
         return int(self.q / self.sigma_q_divisor(i, j))
-
 
     def construct_ell(self) -> None:
         """

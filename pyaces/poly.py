@@ -43,22 +43,22 @@ Methods:
 - Polynomial.__sub__(self, other: Polynomial) -> Polynomial:
    - Subtracts one polynomial from another and returns the result, considering modular arithmetic if applicable.
 
-- Polynomial.__lshift__(self, other: Polynomial) -> Tuple[Polynomial, Polynomial, bool]: 
+- Polynomial.__lshift__(self, other: Polynomial) -> Tuple[Polynomial, Polynomial, bool]:
    - Performs Gröbner basis reduction using the leading coefficients. Returns the reduced polynomial, the quotient monomial, and a boolean flag indicating whether the division was successful.
 
-- Polynomial.__mod__(self, other: Polynomial) -> Polynomial:  
+- Polynomial.__mod__(self, other: Polynomial) -> Polynomial:
    - Computes the remainder of the Euclidean division of two polynomials, ensuring the result is reduced to its minimal degree.
 
-- Polynomial.divmod(self, other: Polynomial) -> Tuple[Polynomial, Polynomial]:  
+- Polynomial.divmod(self, other: Polynomial) -> Tuple[Polynomial, Polynomial]:
    - Performs polynomial Euclidean division, returning both the quotient and the remainder.
 
-- Polynomial.extended_gcd(self, other: Polynomial) -> Tuple[Polynomial, Polynomial, Polynomial]:  
+- Polynomial.extended_gcd(self, other: Polynomial) -> Tuple[Polynomial, Polynomial, Polynomial]:
    - Computes the extended greatest common divisor (GCD) of two polynomials. Returns the GCD along with coefficients `s` and `t` such that `s * self + t * other = GCD`.
 
-- Polynomial.random(intmod: int, dim: int, anchor: Callable[[int, int], int] = lambda v, w: random.randrange(w)) -> Polynomial:  
+- Polynomial.random(intmod: int, dim: int, anchor: Callable[[int, int], int] = lambda v, w: random.randrange(w)) -> Polynomial:
    - Generates a random polynomial of degree `dim` with coefficients reduced modulo `intmod`. The optional `anchor` function defines the randomness source for coefficient generation.
 
-- Polynomial.randshift(coef: int, intmod: int, dim: int) -> Polynomial:  
+- Polynomial.randshift(coef: int, intmod: int, dim: int) -> Polynomial:
    - Generates a monomial of degree up to `dim` with a leading coefficient equal to `coef % intmod`.
 
 - Polynomial.__call__(self, arg: int = 1) -> Optional[int]:
@@ -72,6 +72,7 @@ import random
 from typing import Optional, Tuple
 
 # =======================================
+
 
 def reduction(a: int, b: int, mod: Optional[int] = None) -> Tuple[bool, int]:
     """
@@ -116,7 +117,7 @@ def reduction(a: int, b: int, mod: Optional[int] = None) -> Tuple[bool, int]:
         mod_ = mod % b
 
         # Iteratively add multiples of `mod` to `a % b` to find a valid quotient `a // b` modulo `mod`.
-        for k in range(1,b):
+        for k in range(1, b):
             reducible = reducer(a_ + k * mod_, b)
             if reducible:
                 quotient = (a + k * mod) // b
@@ -124,45 +125,47 @@ def reduction(a: int, b: int, mod: Optional[int] = None) -> Tuple[bool, int]:
 
     return reducible, quotient
 
+
 # =======================================
+
 
 class Polynomial(object):
     """
-    A class representing polynomials with coefficients over integers, optionally reduced modulo a given integer.
+     A class representing polynomials with coefficients over integers, optionally reduced modulo a given integer.
 
-    This class provides methods for common polynomial operations, including arithmetic, modular reduction, and extended GCD computation. It is designed for use in both theoretical and applied mathematics, supporting modular arithmetic and advanced functionality like Gröbner basis reduction.
+     This class provides methods for common polynomial operations, including arithmetic, modular reduction, and extended GCD computation. It is designed for use in both theoretical and applied mathematics, supporting modular arithmetic and advanced functionality like Gröbner basis reduction.
 
-    Attributes:
-        - coefs (list[int]): A list of integers representing the coefficients of the polynomial. The `i`-th element corresponds to the coefficient of the `x^i` term.
-        - intmod (Optional[int]): An optional modulus. If specified, all coefficients are reduced modulo this value.
+     Attributes:
+         - coefs (list[int]): A list of integers representing the coefficients of the polynomial. The `i`-th element corresponds to the coefficient of the `x^i` term.
+         - intmod (Optional[int]): An optional modulus. If specified, all coefficients are reduced modulo this value.
 
-    Core Methods:
-        - degree(...): Returns the degree of the polynomial, defined as the highest power of `x` with a non-zero coefficient.
-        - lead_coef(...): Returns the leading coefficient of the polynomial (coefficient of the highest degree term).
-        - is_null(...): Checks if the polynomial is the null polynomial (all coefficients are zero).
-        - __repr__(...): Returns a string representation of the polynomial in human-readable form.
+     Core Methods:
+         - degree(...): Returns the degree of the polynomial, defined as the highest power of `x` with a non-zero coefficient.
+         - lead_coef(...): Returns the leading coefficient of the polynomial (coefficient of the highest degree term).
+         - is_null(...): Checks if the polynomial is the null polynomial (all coefficients are zero).
+         - __repr__(...): Returns a string representation of the polynomial in human-readable form.
 
-    Arithmetic Methods:
-        - __add__(...): Adds two polynomials.
-        - __sub__(...): Subtracts one polynomial from another.
-        - __mul__(...): Multiplies two polynomials.
-        - __mod__(...): Computes the remainder of division by another polynomial.
-        - divmod(...): Performs polynomial division, returning the quotient and remainder.
+     Arithmetic Methods:
+         - __add__(...): Adds two polynomials.
+         - __sub__(...): Subtracts one polynomial from another.
+         - __mul__(...): Multiplies two polynomials.
+         - __mod__(...): Computes the remainder of division by another polynomial.
+         - divmod(...): Performs polynomial division, returning the quotient and remainder.
 
-    Advanced Methods:
-        - extended_gcd(...): Computes the extended GCD of two polynomials, returning the GCD and Bézout coefficients.
-        - __lshift__(...): Performs Gröbner basis reduction using leading coefficients.
+     Advanced Methods:
+         - extended_gcd(...): Computes the extended GCD of two polynomials, returning the GCD and Bézout coefficients.
+         - __lshift__(...): Performs Gröbner basis reduction using leading coefficients.
 
-    Utility Methods:
-        - mod(...): Returns a new polynomial with coefficients reduced modulo the specified integer.
-        - random(...): Generates a random polynomial of specified degree with coefficients modulo `intmod`.
-        - randshift(...): Generates a monomial of specified degree with a given leading coefficient.
+     Utility Methods:
+         - mod(...): Returns a new polynomial with coefficients reduced modulo the specified integer.
+         - random(...): Generates a random polynomial of specified degree with coefficients modulo `intmod`.
+         - randshift(...): Generates a monomial of specified degree with a given leading coefficient.
 
-   Example:
-        A polynomial can be created and manipulated as follows:
-        - `p1 = Polynomial([1, 0, 3], 5)` creates a polynomial `1 + 0x + 3x^2` modulo 5.
-        - `p1.degree()` returns `2`, the degree of the polynomial.
-        - `p1 * Polynomial([1, 1])` multiplies the polynomials `p1` and `Polynomial([1, 1])`.
+    Example:
+         A polynomial can be created and manipulated as follows:
+         - `p1 = Polynomial([1, 0, 3], 5)` creates a polynomial `1 + 0x + 3x^2` modulo 5.
+         - `p1.degree()` returns `2`, the degree of the polynomial.
+         - `p1 * Polynomial([1, 1])` multiplies the polynomials `p1` and `Polynomial([1, 1])`.
     """
 
     def __init__(self, coefs: list[int], intmod: Optional[int] = None):
@@ -175,7 +178,9 @@ class Polynomial(object):
         """
         self.intmod = intmod
         # Reduce coefficients modulo intmod if provided, otherwise leave them unchanged.
-        self.coefs = [(c % self.intmod if self.intmod is not None else c) for c in coefs]
+        self.coefs = [
+            (c % self.intmod if self.intmod is not None else c) for c in coefs
+        ]
 
     def degree(self) -> int:
         """
@@ -233,8 +238,10 @@ class Polynomial(object):
         d_self = self.degree()
         d_other = other.degree()
         truth = [
-            mod_coef(self.coefs[k] if 0 <= k < len(self.coefs) else 0,
-                     other.coefs[k] if 0 <= k < len(other.coefs) else 0)
+            mod_coef(
+                self.coefs[k] if 0 <= k < len(self.coefs) else 0,
+                other.coefs[k] if 0 <= k < len(other.coefs) else 0,
+            )
             for k in range(max(d_self, d_other) + 1)
         ]
         return all(truth)
@@ -263,7 +270,7 @@ class Polynomial(object):
         Example Outputs:
             - For a polynomial with no modulo:
             [36]^4+[1500]^3+[20859]^2+[97935]^1+[15750]^0 (None)
-            
+
             - For a polynomial with a modulo of 10:
             [6]^4+[0]^3+[9]^2+[5]^1+[0]^0 (10)
 
@@ -277,11 +284,16 @@ class Polynomial(object):
             - str: The string representation of the polynomial.
         """
         # Join the non-zero coefficients and their corresponding degrees into terms. The format of each term is "[coefficient]^degree".
-        s = "+".join([f"[{c}]^{k}" for k, c in enumerate(self.coefs) if k <= self.degree() and c != 0][::-1])
-        
+        s = "+".join(
+            [
+                f"[{c}]^{k}"
+                for k, c in enumerate(self.coefs)
+                if k <= self.degree() and c != 0
+            ][::-1]
+        )
+
         # Return the formatted string. If no terms exist, return "Null". Append the modulo (if any) in parentheses at the end.
         return (s if s != "" else "Null") + f" ({self.intmod})"
-
 
     def mod(self, intmod: Optional[int] = None) -> Polynomial:
         """
@@ -317,7 +329,16 @@ class Polynomial(object):
         d_self = self.degree()
         d_other = other.degree()
         coefs = [
-            sum([(mod_coef(c, other.coefs[n - k]) if 0 <= n - k < len(other.coefs) else 0) for k, c in enumerate(self.coefs)])
+            sum(
+                [
+                    (
+                        mod_coef(c, other.coefs[n - k])
+                        if 0 <= n - k < len(other.coefs)
+                        else 0
+                    )
+                    for k, c in enumerate(self.coefs)
+                ]
+            )
             for n in range(d_self + d_other + 1)
         ]
         return Polynomial(coefs, mod)
@@ -339,8 +360,10 @@ class Polynomial(object):
         d_self = self.degree()
         d_other = other.degree()
         coefs = [
-            mod_coef(self.coefs[k] if 0 <= k < len(self.coefs) else 0,
-                     other.coefs[k] if 0 <= k < len(other.coefs) else 0)
+            mod_coef(
+                self.coefs[k] if 0 <= k < len(self.coefs) else 0,
+                other.coefs[k] if 0 <= k < len(other.coefs) else 0,
+            )
             for k in range(max(d_self, d_other) + 1)
         ]
         return Polynomial(coefs, mod)
@@ -362,8 +385,10 @@ class Polynomial(object):
         d_self = self.degree()
         d_other = other.degree()
         coefs = [
-            mod_coef(self.coefs[k] if 0 <= k < len(self.coefs) else 0,
-                     other.coefs[k] if 0 <= k < len(other.coefs) else 0)
+            mod_coef(
+                self.coefs[k] if 0 <= k < len(self.coefs) else 0,
+                other.coefs[k] if 0 <= k < len(other.coefs) else 0,
+            )
             for k in range(max(d_self, d_other) + 1)
         ]
         return Polynomial(coefs, mod)
@@ -421,7 +446,11 @@ class Polynomial(object):
 
         # Adjust the coefficients of the current polynomial based on the reduction step.
         coefs = [
-            (mod_coef(c, other.coefs[k - deg_diff]) if 0 <= k - deg_diff < len(other.coefs) else c)
+            (
+                mod_coef(c, other.coefs[k - deg_diff])
+                if 0 <= k - deg_diff < len(other.coefs)
+                else c
+            )
             for k, c in enumerate(self.coefs)
         ]
 
@@ -482,7 +511,9 @@ class Polynomial(object):
         # Return the quotient and the final remainder.
         return quotient, remainder
 
-    def extended_gcd(self, other: Polynomial) -> Tuple[Polynomial, Polynomial, Polynomial]:
+    def extended_gcd(
+        self, other: Polynomial
+    ) -> Tuple[Polynomial, Polynomial, Polynomial]:
         """
         Computes a multiple of the greatest common divisor (GCD) of two polynomials.
 
@@ -505,21 +536,21 @@ class Polynomial(object):
             For polynomials `A(x)` and `B(x)`, the method will return a multiple of the GCD of `A(x)` and `B(x)`, along with the coefficients that express this multiple as a linear combination of `A(x)` and `B(x)`.
         """
         mod = None if self.intmod != other.intmod else self.intmod
-        
+
         # Initialize the polynomials representing the trivial scalars 0 and 1, respectively.
         poly_0 = Polynomial([0], mod)
         poly_1 = Polynomial([1], mod)
 
         # Initialize lists to store the polynomials and coefficients during the extended Euclidean algorithm.
         r = [self, other]
-        s = [poly_1, poly_0]  
+        s = [poly_1, poly_0]
         t = [poly_0, poly_1]
 
         reducible = True
         while reducible:
             r1: Polynomial = r[-1]
             r0: Polynomial = r[-2]
-            
+
             # Perform division and get quotient and remainder.
             q, r2 = r0.divmod(r1)
 
@@ -528,31 +559,33 @@ class Polynomial(object):
                 r.append(r2)
                 # Update the coefficients for the first polynomial.
                 s.append(s[-2] - q * s[-1])
-                # Update the coefficients for the second polynomial.  
+                # Update the coefficients for the second polynomial.
                 t.append(t[-2] - q * t[-1])
                 # Continue if the remainder is not zero.
-                reducible = not(r2.is_null())  
+                reducible = not (r2.is_null())
             else:
                 # Special case when the division leads to no valid reduction. In this case, the leading coefficients of r1 and r0 could not reduce further, so we multiply r0 with the leading coefficient of r1 to force progress in the algorithm.
                 lead_r1 = Polynomial([r1.lead_coef()], mod)
                 r0 = lead_r1 * r[-2]
-                
+
                 # The line below effectively repeats the reduction chain, but this time the reduction is forced by the multiplication with the leading coefficient of r1, ensuring the algorithm progresses.
                 q, r2 = r0.divmod(r1)
-                
+
                 r.append(r2)
                 # Update the coefficients for the first polynomial.
                 s.append(lead_r1 * s[-2] - q * s[-1])
                 # Update the coefficients for the second polynomial.
-                t.append(lead_r1 * t[-2] - q * t[-1])  
+                t.append(lead_r1 * t[-2] - q * t[-1])
                 # Continue if division reduces the remainder.
-                reducible = r2 != r0 and not(r2.is_null())
+                reducible = r2 != r0 and not (r2.is_null())
 
         # Return the GCD and the coefficients for the linear combination.
         return (r[-2], s[-2], t[-2])
 
     @staticmethod
-    def random(intmod: int, dim: int, anchor = lambda v,w : random.randrange(w)) -> Polynomial:
+    def random(
+        intmod: int, dim: int, anchor=lambda v, w: random.randrange(w)
+    ) -> Polynomial:
         """
         Generates a random polynomial with coefficients modulo `intmod`.
 
@@ -590,11 +623,10 @@ class Polynomial(object):
             - Calling `randshift(4, 5, 4)` might generate a polynomial like `Polynomial([0, 0, 0, 4], 5)`, where the highest degree term is `4 % 5 = 4`, and the polynomial has a degree between `0` and `3` (i.e., four coefficients, including zeros for lower degrees).
         """
         # Randomly determine the number of zero coefficients before the leading term.
-        degree_shift = [0] * (random.randrange(dim))  
-        
+        degree_shift = [0] * (random.randrange(dim))
+
         # Create and return the polynomial with the shifted degree and specified leading coefficient.
         return Polynomial(degree_shift + [coef % intmod], intmod)
-
 
     def __call__(self, arg: int = 1) -> Optional[int]:
         """
@@ -611,14 +643,18 @@ class Polynomial(object):
         Notes:
             - Horner's method minimizes the number of multiplications and additions needed to evaluate the polynomial.
             - If `intmod` is specified, the result is taken modulo `intmod` at each step to prevent overflow and maintain consistency with the specified modulus.
-            
+
         Example:
             - For the polynomial `Polynomial([1, 2, 3], 7)` and `arg = 2`, the result would be `3*2^2 + 2*2^1 + 1*2^0 = 17 % 7 = 3`, computed efficiently using Horner's method.
         """
         output = 0
         # Iterate over the coefficients in descending order, from the polynomial's degree to 0.
-        for i, c in enumerate(self.coefs[:self.degree()+1][::-1]):
+        for i, c in enumerate(self.coefs[: self.degree() + 1][::-1]):
             # Apply Horner's method: evaluate the polynomial in nested form.
-            output = (output * arg + c) % self.intmod if self.intmod is not None else output * arg + c
+            output = (
+                (output * arg + c) % self.intmod
+                if self.intmod is not None
+                else output * arg + c
+            )
         # Return the value of the polynomial evaluated at `arg`.
         return output

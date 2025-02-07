@@ -1,6 +1,8 @@
 import sys
+
 sys.path.insert(1, "./")
 import pyaces as pyc
+
 
 def test_polynomials():
     """
@@ -78,6 +80,7 @@ def test_polynomials():
     # Verify modular condition
     print(f"a * v + w * b (mod f) = {(a * v + w * b) % f}")
     assert (a * v + w * b) % f == pyc.Polynomial([]), "Error in __sub__() or __mod__()"
+
 
 if __name__ == "__main__":
     test_polynomials()

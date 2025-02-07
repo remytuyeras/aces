@@ -50,7 +50,7 @@ pip install --upgrade pyaces==version_number
   - GitHub Actions for Automation: [![0%](https://progress-bar.xyz/0)](https://github.com/remytuyeras/aces/issues/1)
   - Project Structure and Dependency Management: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
   - Testing with Pytest: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
-  - Code Quality with Ruff: [![90%](https://progress-bar.xyz/90)](https://github.com/remytuyeras/aces/issues/1)
+  - Code Quality with Ruff: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
   - Documentation Updates: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
 
 - [ ] Add guide to [ePrint](https://eprint.iacr.org):

@@ -26,6 +26,7 @@ from typing import Callable, Any
 
 # =======================================
 
+
 class Algebra(object):
     """
     A utility class for performing basic algebraic operations and compiling instructions into callable functions.
@@ -84,9 +85,13 @@ class Algebra(object):
         """
         return lambda a: read_operations(self, instruction, a)
 
+
 # =======================================
 
-def read_operations(alg: Algebra, instruction: str, array: list[Any], level: int = 0) -> Any:
+
+def read_operations(
+    alg: Algebra, instruction: str, array: list[Any], level: int = 0
+) -> Any:
     """
     Recursively parses an algebraic instruction string and applies operations on the input array.
 

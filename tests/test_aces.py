@@ -1,6 +1,8 @@
 import sys
+
 sys.path.insert(1, "./")
 import pyaces as pyc
+
 
 def test_aces():
     """
@@ -34,7 +36,9 @@ def test_aces():
     # Step 3: Generate and publish cryptographic parameters
     public = ac.publish(publish_levels=True)
     print("Levels used in public key =", public["levels"])
-    assert len(public["levels"]) == 10, f"Error in ArithChannel.publish(): Number of levels is not equal to N={10}"
+    assert len(public["levels"]) == 10, (
+        f"Error in ArithChannel.publish(): Number of levels is not equal to N={10}"
+    )
 
     # Step 4: Check polynomial u for particular conditions
     u: pyc.Polynomial = public["u"]
@@ -51,28 +55,38 @@ def test_aces():
     print("\nbob encrypts 3:")
     cip3 = bob.encrypt(3)
     print("Associated level:", cip3.lvl)
-    assert isinstance(cip3, pyc.ACESCipher) and alice.decrypt(cip3) == 3, "Error in ACES.encrypt()"
+    assert isinstance(cip3, pyc.ACESCipher) and alice.decrypt(cip3) == 3, (
+        "Error in ACES.encrypt()"
+    )
 
     print("\nbob encrypts 5:")
     cip5 = bob.encrypt(37)
     print("Associated level:", cip5.lvl)
-    assert isinstance(cip5, pyc.ACESCipher) and alice.decrypt(cip5) == 5, "Error in ACES.encrypt()"
+    assert isinstance(cip5, pyc.ACESCipher) and alice.decrypt(cip5) == 5, (
+        "Error in ACES.encrypt()"
+    )
 
     # Step 8: Encrypt and decrypt using Alice's system
     print("\nalice encrypts 3:")
     cip3 = alice.encrypt(3, max_noise=10)
     print("Associated level:", cip3.lvl)
-    assert isinstance(cip3, pyc.ACESCipher) and alice.decrypt(cip3) == 3, "Error in ACESReader.encrypt()"
+    assert isinstance(cip3, pyc.ACESCipher) and alice.decrypt(cip3) == 3, (
+        "Error in ACESReader.encrypt()"
+    )
 
     print("\nalice encrypts 5:")
     cip5 = alice.encrypt(37, max_noise=10)
     print("Associated level:", cip5.lvl)
-    assert isinstance(cip5, pyc.ACESCipher) and alice.decrypt(cip5) == 5, "Error in ACESReader.encrypt()"
+    assert isinstance(cip5, pyc.ACESCipher) and alice.decrypt(cip5) == 5, (
+        "Error in ACESReader.encrypt()"
+    )
 
     # Step 9: Test Alice's refresher generation
     print("\n~~~~ alice refresher ~~~~")
     refresher = alice.generate_refresher(max_noise=10)
-    assert len(refresher) == 5, f"Error in ACESReader.generate_refresher(): refresher dimension is not equal to n={5}"
+    assert len(refresher) == 5, (
+        f"Error in ACESReader.generate_refresher(): refresher dimension is not equal to n={5}"
+    )
 
     for r in refresher:
         print(f"Level: {r.lvl}, with encryption:", r.enc)
@@ -82,7 +96,9 @@ def test_aces():
     print("\n~~~~ bob corefresher ~~~~")
     cip10 = bob.encrypt(10)
     a, b = cip10.corefresher(bob)
-    assert len(a) == 5, f"Error in ACESReader.corefresher(): corefresher dimension is not equal to n={5}"
+    assert len(a) == 5, (
+        f"Error in ACESReader.corefresher(): corefresher dimension is not equal to n={5}"
+    )
 
     for a_ in a:
         print(f"Level: {a_.lvl}, with encryption:", a_.enc)
@@ -90,6 +106,7 @@ def test_aces():
 
     print(f"Level: {b.lvl}, with encryption:", b.enc)
     assert isinstance(b, pyc.ACESCipher), "Error in ACESReader.corefresher()"
+
 
 if __name__ == "__main__":
     test_aces()

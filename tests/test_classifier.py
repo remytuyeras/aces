@@ -1,6 +1,8 @@
-import sys 
-sys.path.insert(1,"./")
+import sys
+
+sys.path.insert(1, "./")
 import pyaces as pyc
+
 
 def test_classifier():
     debug = True
@@ -14,10 +16,8 @@ def test_classifier():
         public = ac.publish(publish_levels=True)
 
         classifier = pyc.ACESRefreshClassifier(ac, debug=debug)
-        data = classifier.find_affine(search_min=0, 
-                                    search_max=2,
-                                    training_epochs=2000)
-        
+        data = classifier.find_affine(search_min=0, search_max=2, training_epochs=2000)
+
         if data["locators"] == [] or data["directors"] == []:
             continue
 
@@ -35,12 +35,13 @@ def test_classifier():
                 result = answer_without_secret_key
                 break
             count += 1
-        
+
         if result is not None:
             break
 
     answer_with_secret_key = classifier.refresh_classifier(c)
     assert answer_with_secret_key == answer_without_secret_key
-    
+
+
 if __name__ == "__main__":
     test_classifier

@@ -1,7 +1,9 @@
-import sys 
-sys.path.insert(1,"./")
+import sys
+
+sys.path.insert(1, "./")
 import pyaces as pyc
 import random
+
 
 def test_refresh():
     debug = True
@@ -18,9 +20,15 @@ def test_refresh():
     # max_noise influences how fast max noise level is reached
     refresher = alice.generate_refresher(max_noise=80)
     classifier = pyc.ACESRefreshClassifier(ac, debug=debug)
-    alg = pyc.ACESAlgebra(**public, debug=debug, refresh_classifier=classifier.refresh_classifier, encrypter=bob, refresher=refresher)
+    alg = pyc.ACESAlgebra(
+        **public,
+        debug=debug,
+        refresh_classifier=classifier.refresh_classifier,
+        encrypter=bob,
+        refresher=refresher,
+    )
 
-    plain_input = [random.randrange(1,ac.p) for _ in range(8)]
+    plain_input = [random.randrange(1, ac.p) for _ in range(8)]
     print("\nplain_input =", plain_input)
 
     equation_schema = "(((0*1+2*3+4*5)*6+7)*3)*2"
@@ -42,9 +50,14 @@ def test_refresh():
 
     decrypted_output = alice.decrypt(cipher_output)
     print("cipher_output.lvl \t=", cipher_output.lvl)
-    print("decrypt(cipher_output) \t=", decrypted_output, f"   (Compare to plaintext output: {plain_output % ac.p})")
+    print(
+        "decrypt(cipher_output) \t=",
+        decrypted_output,
+        f"   (Compare to plaintext output: {plain_output % ac.p})",
+    )
 
     assert decrypted_output == plain_output % ac.p
+
 
 if __name__ == "__main__":
     test_refresh()

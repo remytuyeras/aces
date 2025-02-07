@@ -1,6 +1,8 @@
 import sys
+
 sys.path.insert(1, "./")
 import pyaces as pyc
+
 
 def test_primes():
     """
@@ -48,8 +50,12 @@ def test_primes():
     assert f == {17: 1, 7919: 1}, "Error in factorize()"
 
     # Test case 3: Edge cases for factorization
-    assert primes.factorize(0) is None, "Error in factorize()"  # Factorization of 0 should return None
-    assert primes.factorize(1) == {}, "Error in factorize()"   # Factorization of 1 should return an empty dictionary
+    assert primes.factorize(0) is None, (
+        "Error in factorize()"
+    )  # Factorization of 0 should return None
+    assert primes.factorize(1) == {}, (
+        "Error in factorize()"
+    )  # Factorization of 1 should return an empty dictionary
 
     # Step 3: Use the find_candidates() method to find a valid `q`
     print("\n==== Primes.find_candidates() ====")
@@ -65,10 +71,19 @@ def test_primes():
     upperbound = candidates[-1]["candidate_q"]
 
     # Validate the criteria for the selected candidate `q`
-    print(f"int(sqrt(B)) = int(sqrt({B})) = int(sqrt({upperbound})) = int(sqrt(c['upperbound']))")
-    assert upperbound % 2 != 0, "Error in add_units()"  # Verify that `q` is not divisible by 2
-    assert int(B**0.5) == int(upperbound**0.5), "Error in find_candidates()"  # Verify that `sqrt(q)` matches `sqrt(B)`
-    assert upperbound % 11 == 0 and upperbound % 13 == 0, "Error in find_candidates()"  # Verify divisibility by 11 and 13
+    print(
+        f"int(sqrt(B)) = int(sqrt({B})) = int(sqrt({upperbound})) = int(sqrt(c['upperbound']))"
+    )
+    assert upperbound % 2 != 0, (
+        "Error in add_units()"
+    )  # Verify that `q` is not divisible by 2
+    assert int(B**0.5) == int(upperbound**0.5), (
+        "Error in find_candidates()"
+    )  # Verify that `sqrt(q)` matches `sqrt(B)`
+    assert upperbound % 11 == 0 and upperbound % 13 == 0, (
+        "Error in find_candidates()"
+    )  # Verify divisibility by 11 and 13
+
 
 if __name__ == "__main__":
     test_primes()
