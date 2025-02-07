@@ -15,7 +15,7 @@ The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_mal
 **PyACES** is ...
   - ... most closely related to the **BGV** scheme.
   - ... currently developed primarily for **binary circuits**, similar to **TFHE**.
-  - ... the only known FHE scheme ([ref: page 4](https://ems.press/content/book-chapter-files/33149)) in which both `add` and `mult` are **commutative** and **associative**.
+  - ... the only known FHE scheme ([ref: p. 4](https://ems.press/content/book-chapter-files/33149)) in which both `add` and `mult` are **commutative** and **associative**.
   - ... a **leveled FHE scheme** with a **refresh operation**, positioning it at the intersection of BGV and TFHE.
 
 **PyACES** does not ...
