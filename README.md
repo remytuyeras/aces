@@ -4,7 +4,7 @@
   <p align="center">A python library for the fully homomorphic encryption scheme ACES</p>
 </p>
 
-# Presentation
+# Overview
 
 This package proposes an implementation for the ACES cryptosystem where we take parameters $\omega = 1$. Details are available in the preprint  [<em>"Constructing a Fully Homomorphic Encryption Scheme with the Yoneda Lemma"</em>](https://arxiv.org/abs/2401.13255).
 
@@ -29,22 +29,26 @@ pip install --upgrade pyaces==version_number
 ```
 
 # Facts about PyACES
-- the closest FHE scheme to PyACES is BGV;
-- PyACES is the only known FHE scheme whose addition and multiplication are commutative and weakly-associative (see page 5 [in this review](https://ems.press/content/book-chapter-files/33149));
+
+PyACES is ...
+  - most closely related to the BGV FHE scheme.
+  - designed primarily for binary circuits, similar to TFHE.
+  - the only known FHE scheme in which both addition and multiplication are commutative and weakly associative (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
+
 
 # Progress and upcoming features
 - [ ] Uploading version 0.1.0 to PyPI:
   - ![50%](https://progress-bar.xyz/50)
 
 - [ ] Resolve Issues:
-  - https://github.com/remytuyeras/aces/issues/1 ![80%](https://progress-bar.xyz/80)
+  - [Issue #1](https://github.com/remytuyeras/aces/issues/1) ![80%](https://progress-bar.xyz/80)
 
-- [ ] Add guide to [https://eprint.iacr.org](https://eprint.iacr.org). Current progress:
+- [ ] Add guide [ePrint](https://eprint.iacr.org):
   - ![80%](https://progress-bar.xyz/80?title=Tutorial)
   - ![5%](https://progress-bar.xyz/5?title=Performance)
   - ![10%](https://progress-bar.xyz/10?title=Security)
   
-- [ ] Finish documentation:
+- [ ] Complete documentation:
   - [ ] `algebras.py`
   - [ ] `test_algebras.py`
   - [ ] `test_refresh.py`
