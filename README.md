@@ -42,7 +42,7 @@ pip install --upgrade pyaces==version_number
 ```
 
 # Progress and upcoming features
-- [ ] Uploading version 0.1.0 to PyPI: ![50%](https://progress-bar.xyz/50)
+- [ ] Uploading `version 0.1.0` to PyPI: ![50%](https://progress-bar.xyz/50)
 
 - [x] Resolve Issue #1:
   - PyPI Publication: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
@@ -66,7 +66,7 @@ pip install --upgrade pyaces==version_number
 
 # Quickstart
 
-The following script will encrypt two messages in $\mathbb{Z}_4$ and compute their sum and product modulo 4.
+The following script will encrypt two messages in $\mathbb{Z}_4$ and compute their sum and product modulo $4$.
 
 ```python
 import pyaces as pyc
@@ -104,7 +104,7 @@ plain_add = alice.decrypt()
 print(f"{m1} * {m2} (mod {ac.p}) =", plain_add)
 ```
 
-After running the previous script, you should see the following display in your terminal.
+After running the script, you should see the following display in your terminal.
 
 ```text
 getting primes...
