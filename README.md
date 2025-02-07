@@ -43,7 +43,7 @@ pip install --upgrade pyaces==version_number
 
 # Progress and upcoming features
 
-### To do before next release
+### :construction: To do before next release
 - [ ] Uploading `version 0.1.0` to PyPI: ![50%](https://progress-bar.xyz/50)
 
 - [x] Resolve Issue #1:
