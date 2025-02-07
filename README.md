@@ -56,7 +56,7 @@ pip install --upgrade pyaces==version_number
 
 # Quickstart
 
-Run the following script:
+The following script will encrypt two messages in $\mathbb{Z}_4$ and compute their sum and product modulo 4.
 
 ```python
 import pyaces as pyc
