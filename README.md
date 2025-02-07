@@ -13,13 +13,13 @@ The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_mal
 # Useful facts
 
 **PyACES** is ...
-  - ... most closely related to the **BGV** FHE scheme.
-  - ... currently developed primarily for **binary circuits**, similar to TFHE.
+  - ... most closely related to the **BGV** scheme.
+  - ... currently developed primarily for **binary circuits**, similar to **TFHE**.
   - ... the only known FHE scheme in which both `add` and `mult` are **commutative** and **associative** (see page 5 of [this review](https://ems.press/content/book-chapter-files/33149)).
-  - ... a **leveled FHE scheme** with a **refresh operation**, positioning it at the intersection of the leveled BGV scheme and TFHE, which relies on systematic bootstrapping.
+  - ... a **leveled FHE scheme** with a **refresh operation**, positioning it at the intersection of BGV and TFHE.
 
 **PyACES** does not ...
-  - ... systematically require refreshing ciphertexts after a homomorphic operation.
+  - ... need to systematically refresh ciphertexts after each homomorphic operation.
   - ... require lookup tables for refreshing; instead, it tests whether ciphertexts can be decomposed into an affine-like structure.
 
 
