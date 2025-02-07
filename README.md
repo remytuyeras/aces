@@ -10,7 +10,7 @@ This package proposes an implementation for the ACES cryptosystem where we take 
 
 The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_malleability_](https://en.wikipedia.org/wiki/Malleability_(cryptography)). In the Pisces symbol, the two fishes represent a harmonious interplay between opposite directions, reflecting the dual nature of encryption and decryption.
 
-# Useful facts
+# PyACES at a Glance
 
 **PyACES** is ...
   - ... most closely related to the **BGV** scheme.
