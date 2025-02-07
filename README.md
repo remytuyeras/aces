@@ -65,7 +65,7 @@ pip install --upgrade pyaces==version_number
   - [ ] `test_refresh.py`
   - [ ] `test_classifier.py`
 
-### Technical Optimizations and Improvements
+### Technical Optimizations and Improvements _(subject to funding or sponsorship)_
 - [ ] Create a function to generate cryptographic data with an efficient locator-director database (RAM).  
 - [ ] Enable local storage of cryptographic data (ROM) and implement secure key management.  
 - [ ] Implement file encryption (ROM).  
