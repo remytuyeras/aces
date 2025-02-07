@@ -19,8 +19,8 @@ The name "PyACES" is pronounced "pisces," echoing a symbol synonymous with [_mal
   - ... a **leveled FHE scheme** with a **refresh operation**, positioning it at the intersection of the leveled BGV scheme and TFHE, which relies on systematic bootstrapping.
 
 **PyACES** does not ...
-  - ... systematically require refreshing ciphertexts.
-  - ... require lookup tables for refreshing; instead, it tests whether ciphertexts can be decomposed into an affine-like structure on the fly.
+  - ... systematically require refreshing ciphertexts after a homomorphic operation.
+  - ... require lookup tables for refreshing; instead, it tests whether ciphertexts can be decomposed into an affine-like structure.
 
 
 # Installation
