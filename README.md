@@ -65,7 +65,7 @@ pip install --upgrade pyaces==version_number
   - [ ] `test_refresh.py`
   - [ ] `test_classifier.py`
 
-### :rocket: Technical Optimizations and Improvements _(subject to funding or sponsorship)_
+### :rocket: Major system enhancements _(subject to funding or sponsorship)_
 - [ ] :file_folder: Create a function to generate cryptographic data with an efficient locator-director database (RAM).  
 - [ ] :floppy_disk: Enable local storage of cryptographic data (ROM) and implement secure key management.  
 - [ ] :lock: Implement file encryption (ROM).  
