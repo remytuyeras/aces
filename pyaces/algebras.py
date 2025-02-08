@@ -7,7 +7,6 @@ from .aces import ACESCipher, ACESPseudoCipher, ACES, ACESReader, ArithChannel
 from functools import reduce
 from typing import Union, Optional, Callable, Tuple
 import random
-import pickle
 import json
 import os
 import numpy as np
@@ -482,26 +481,15 @@ class ACESRefreshClassifier(object):
         directors = set()
 
         if file_option is not None:
-            if file_option == "pickle":
-                if os.path.exists(f".aces.classifier.{name}.pkl"):
-                    with open(f".aces.classifier.{name}.pkl", "rb") as f:
-                        try:
-                            pickle_object = pickle.load(f, fix_imports=False)
-                            locators = set(pickle_object["locators"])
-                            directors = set(pickle_object["directors"])
-                        except Exception as e:
-                            print(f"Error unpickling data: {e}")
-
-            elif file_option == "json":
+            if file_option == "json":
                 if os.path.exists(f".aces.classifier.{name}.json"):
                     with open(f".aces.classifier.{name}.json", "r") as f:
                         json_object = json.load(f)
                         locators = set(json_object["locators"])
                         directors = set(json_object["directors"])
-
             else:
                 print(
-                    f"ACESRefreshClassifier.construct: Extension {file_option} non supported"
+                    f"ACESRefreshClassifier.construct: Extension '{file_option}' is currently not supported."
                 )
                 return None
 
@@ -544,11 +532,7 @@ class ACESRefreshClassifier(object):
         print("added_directors:", len(directors) - directors_length)
 
         if file_option is not None:
-            if file_option == "pickle":
-                with open(f".aces.classifier.{name}.pkl", "wb") as f:
-                    pickle.dump(update, f)
-
-            elif file_option == "json":
+            if file_option == "json":
                 with open(f".aces.classifier.{name}.json", "w") as f:
                     json.dump(update, f, indent=2)
 
