@@ -11,8 +11,8 @@
 
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/main)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/main) -->
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/dev)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/dev) -->
-![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))
 ![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/main?label=code%20quality%20(main))
+![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)
 ![GitHub Repo stars](https://img.shields.io/github/stars/remytuyeras/aces)
 
@@ -91,9 +91,7 @@ pip install --upgrade pyaces==version_number
 - [ ] :abacus: Support complex data types (`Int8`, `Int16`, `Int32`, `String`, `Bool`) and their arithmetic operations.  
 
 - [ ] :zap: Optimize for CPU & GPU performance:  
-
   - [ ] :gear: Use `C`, `C++`, or `ctypes` for elementary operations on polynomials and ciphertexts.  
-  
   - [ ] :video_game: Implement GPU acceleration with `CUDA`.
 
 
