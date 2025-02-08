@@ -6,17 +6,18 @@
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pyaces)](https://pypi.org/project/pyaces/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyaces)](https://pypi.org/project/pyaces/)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/remytuyeras/aces)
-![GitHub repo size](https://img.shields.io/github/repo-size/remytuyeras/aces)
+[![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/remytuyeras/aces)](https://github.com/remytuyeras/aces/tree/main)
+[![GitHub repo size](https://img.shields.io/github/repo-size/remytuyeras/aces)](https://github.com/remytuyeras/aces/tree/main)
 
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/main)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/main) -->
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/dev)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/dev) -->
-![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/main?label=code%20quality%20(main))
-![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))
-![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)
-![GitHub Repo stars](https://img.shields.io/github/stars/remytuyeras/aces)
+[![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/main?label=code%20quality%20(main))](https://github.com/remytuyeras/aces/tree/main)
+[![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))](https://github.com/remytuyeras/aces/tree/dev)
+[!![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)](https://pypi.org/project/pyaces/)
+[![GitHub Repo stars](https://img.shields.io/github/stars/remytuyeras/aces)](https://github.com/remytuyeras/aces/tree/main)
 
-![GitHub Sponsors](https://img.shields.io/github/sponsors/remytuyeras) ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/RTuyeras)
+[![GitHub Sponsors](https://img.shields.io/github/sponsors/remytuyeras)](https://github.com/remytuyeras)
+[![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/RTuyeras)](https://x.com/Rtuyeras)
 
 
 # Overview
