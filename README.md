@@ -1,8 +1,9 @@
 <p align="center">
-  <img width="300px" src="img/twofish.png" style="border: 3 solid grey;"/>
-  <h1 align="center">PyACES</a></h1>
-  <p align="center">A python library for the fully homomorphic encryption scheme ACES</p>
+  <img width="300px" src="img/twofish.png" style="border: 3px solid grey; border-radius: 135px;"/>
+  <h1 align="center">PyACES</h1>
+  <p align="center">A Python library for the fully homomorphic encryption scheme ACES</p>
 </p>
+
 
 # Overview
 
