@@ -4,8 +4,8 @@
   <p align="center">A Python library for the fully homomorphic encryption scheme ACES</p>
 </p>
 
-![PyPI - Version](https://img.shields.io/pypi/v/pyaces)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyaces)
+[![PyPI - Version](https://img.shields.io/pypi/v/pyaces)](https://pypi.org/project/pyaces/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyaces)](https://pypi.org/project/pyaces/)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/remytuyeras/aces)
 ![GitHub repo size](https://img.shields.io/github/repo-size/remytuyeras/aces)
 
