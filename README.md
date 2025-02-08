@@ -4,6 +4,21 @@
   <p align="center">A Python library for the fully homomorphic encryption scheme ACES</p>
 </p>
 
+![PyPI - Version](https://img.shields.io/pypi/v/pyaces)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pyaces)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/remytuyeras/aces)
+![GitHub repo size](https://img.shields.io/github/repo-size/remytuyeras/aces)
+
+<!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/main)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/main) -->
+<!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/dev)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/dev) -->
+![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))
+![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/main?label=code%20quality%20(main))
+![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)
+![GitHub Repo stars](https://img.shields.io/github/stars/remytuyeras/aces)
+
+![GitHub Sponsors](https://img.shields.io/github/sponsors/remytuyeras) ![X (formerly Twitter) Follow](https://img.shields.io/twitter/follow/RTuyeras)
+
+
 # Overview
 
 This package proposes an implementation for the ACES cryptosystem where we take parameters $\omega = 1$. Details are available in the preprint  [<em>"Constructing a Fully Homomorphic Encryption Scheme with the Yoneda Lemma"</em>](https://arxiv.org/abs/2401.13255).
@@ -65,7 +80,8 @@ pip install --upgrade pyaces==version_number
   - [ ] `test_refresh.py`
   - [ ] `test_classifier.py`
 
-### :rocket: Major system enhancements _(subject to funding or sponsorship)_
+### :rocket: Major system enhancements _(subject to funding or sponsorship)_ 
+
 - [ ] :file_folder: Create a function to generate cryptographic data with an efficient locator-director database (RAM).  
 - [ ] :floppy_disk: Enable local storage of cryptographic data (ROM) and implement secure key management.  
 - [ ] :lock: Implement file encryption (ROM).  
