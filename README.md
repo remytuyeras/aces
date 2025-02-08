@@ -92,7 +92,9 @@ pip install --upgrade pyaces==version_number
 - [ ] :abacus: Support complex data types (`Int8`, `Int16`, `Int32`, `String`, `Bool`) and their arithmetic operations.  
 
 - [ ] :zap: Optimize for CPU & GPU performance:  
+
   - [ ] :gear: Use `C`, `C++`, or `ctypes` for elementary operations on polynomials and ciphertexts.  
+  
   - [ ] :video_game: Implement GPU acceleration with `CUDA`.
 
 
