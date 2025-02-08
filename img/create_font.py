@@ -2,13 +2,16 @@ from PIL import Image, ImageDraw, ImageFont
 import math
 import os
 
-def create_logo(output_path, text="PyACES", font_size=100, width=500, height=200, font_path=None):
-    """Creates a logo with a custom font and saves it as an image."""
+def create_logo(output_path, text="PyACES", font_size=100, width=500, height=200, font_path=None, add_shadow=True):
+    """Creates a logo with a custom font and saves it as an image with optional gradient text and a shadow effect."""
     
     # Set the starting and ending colors for the gradient
     start_color = (26, 188, 156)  # Teal (start)
     delta = 15
-    end_color = (26+delta, 188-delta, 156+delta)    # Darker Blue (end)
+    end_color = (26+delta, 188-delta, 156+delta)  # Slightly lighter for contrast
+    
+    shadow_color = (10, 50, 40, 100)  # Dark greenish transparent shadow
+    shadow_offset = (6, 6)  # Offset (x, y) for shadow position
 
     # Create an image with transparent background
     img = Image.new("RGBA", (width, height), (0, 0, 0, 0))  # Transparent background
@@ -38,6 +41,13 @@ def create_logo(output_path, text="PyACES", font_size=100, width=500, height=200
     text_x = (width - text_width) // 2
     text_y = (height - text_height) // 2
 
+    # Draw shadow text if enabled
+    if add_shadow:
+        for i, char in enumerate(text):
+            char_x = text_x + i * text_width // len(text)
+            char_y = text_y
+            draw.text((char_x + shadow_offset[0], char_y + shadow_offset[1]), char, font=font, fill=shadow_color)
+
     # Draw the gradient text
     for i, char in enumerate(text):
         # Interpolate the color for the gradient
@@ -46,7 +56,7 @@ def create_logo(output_path, text="PyACES", font_size=100, width=500, height=200
         g = int(start_color[1] * (1 - ratio) + end_color[1] * ratio)
         b = int(start_color[2] * (1 - ratio) + end_color[2] * ratio)
         text_color = (r, g, b)
-        
+
         # Draw the character with the interpolated gradient color
         draw.text((text_x + i * text_width // len(text), text_y), char, font=font, fill=text_color)
 
