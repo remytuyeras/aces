@@ -484,10 +484,13 @@ class ACESRefreshClassifier(object):
         if file_option is not None:
             if file_option == "pickle":
                 if os.path.exists(f".aces.classifier.{name}.pkl"):
-                    with open(f".aces.classifier.{name}.pkl", "r") as f:
-                        pickle_object = pickle.load(f)
-                        locators = set(pickle_object["locators"])
-                        directors = set(pickle_object["directors"])
+                    with open(f".aces.classifier.{name}.pkl", "rb") as f:
+                        try:
+                            pickle_object = pickle.load(f, fix_imports=False)
+                            locators = set(pickle_object["locators"])
+                            directors = set(pickle_object["directors"])
+                        except Exception as e:
+                            print(f"Error unpickling data: {e}")
 
             elif file_option == "json":
                 if os.path.exists(f".aces.classifier.{name}.json"):
@@ -542,7 +545,7 @@ class ACESRefreshClassifier(object):
 
         if file_option is not None:
             if file_option == "pickle":
-                with open(f".aces.classifier.{name}.pkl", "w") as f:
+                with open(f".aces.classifier.{name}.pkl", "wb") as f:
                     pickle.dump(update, f)
 
             elif file_option == "json":
