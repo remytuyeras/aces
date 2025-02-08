@@ -13,7 +13,7 @@
 <!-- [![CodeFactor](https://www.codefactor.io/repository/github/remytuyeras/aces/badge/dev)](https://www.codefactor.io/repository/github/remytuyeras/aces/overview/dev) -->
 [![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/main?label=code%20quality%20(main))](https://github.com/remytuyeras/aces/tree/main)
 [![CodeFactor Grade (with branch)](https://img.shields.io/codefactor/grade/github/remytuyeras/aces/dev?label=code%20quality%20(dev))](https://github.com/remytuyeras/aces/tree/dev)
-[!![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)](https://pypi.org/project/pyaces/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/pyaces)](https://pypi.org/project/pyaces/)
 [![GitHub Repo stars](https://img.shields.io/github/stars/remytuyeras/aces)](https://github.com/remytuyeras/aces/tree/main)
 
 [![GitHub Sponsors](https://img.shields.io/github/sponsors/remytuyeras)](https://github.com/remytuyeras)
