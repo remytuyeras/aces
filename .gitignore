@@ -3,6 +3,7 @@
 *.aces.classifier.*.json
 *.aces.speed.add.jsonl
 *.aces.speed.mult.jsonl
+attacks/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
