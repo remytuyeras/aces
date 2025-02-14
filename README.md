@@ -64,16 +64,16 @@ pip install --upgrade pyaces==version_number
 
 - [x] Resolve Issue #1:
   - PyPI Publication: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
-  - GitHub Actions for Automation: [![0%](https://progress-bar.xyz/0)](https://github.com/remytuyeras/aces/issues/1)
+  - GitHub Actions for Automation: [![50%](https://progress-bar.xyz/50)](https://github.com/remytuyeras/aces/issues/1)
   - Project Structure and Dependency Management: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
   - Testing with Pytest: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
   - Code Quality with Ruff: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
   - Documentation Updates: [![100%](https://progress-bar.xyz/100)](https://github.com/remytuyeras/aces/issues/1)
 
 - [ ] Add guide to [ePrint](https://eprint.iacr.org):
-  - Tutorial: ![80%](https://progress-bar.xyz/80)
-  - Performance analysis: ![10%](https://progress-bar.xyz/5)
-  - Security analysis: ![30%](https://progress-bar.xyz/10)
+  - Tutorial: ![100%](https://progress-bar.xyz/100)
+  - Performance analysis: ![100%](https://progress-bar.xyz/100)
+  - Security analysis: ![33%](https://progress-bar.xyz/33)
   
 - [ ] Complete documentation:
   - [ ] `algebras.py`
